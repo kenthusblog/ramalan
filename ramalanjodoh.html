@@ -1,0 +1,83 @@
+<html>
+<head>
+	<title>Aplikasi Ramalan Primbon Jitu</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+	<link href="styles.css" type="text/css" rel="stylesheet">
+
+	<script type="text/javascript" src="js/phonegap.js"></script>
+	<script type="text/javascript" src="js/gotoapp.js"></script>
+	<script type="text/javascript" src="js/ramaljodoh.js"></script>
+</head>
+<body>
+
+<!-- Header and Logo -->
+<table id="header" width="100%" cellpadding="0" cellspacing="0" height="85">
+	<tbody>
+		<tr>
+			<td id="logo" valign="middle" width="75%" align="left"><h1> <center> Ramalan Jodoh </center></h1></td>
+			<td width="25%" align="left" height="50"></td>
+		</tr>
+	</tbody>
+</table>
+<!-- /Header and Logo -->
+
+
+<!-- Content -->
+<table id="content" width="100%" cellpadding="0" cellspacing="0">
+	<tbody>
+		<tr>
+			<td width="7%">&nbsp;</td>
+			<td width="86%" height="46">
+				<table width="100%" border="0" cellpadding="0" cellspacing="0">
+					<tbody>
+						<tr>
+							<th scope="row">
+								<!--<img src="images/love.jpg" class="img_border" width="100%">-->
+							</th>
+						</tr>
+						<tr>
+							<th scope="row">&nbsp;</th>
+						</tr>
+					</tbody>
+				</table>
+				<div id="intro">
+					<p align="justify">Aplikasi kami akan meramal seberapa besar ukuran jodoh kamu dan pasangan kamu berdasarkan namanya.</p>
+					<p align="justify">Apakah kamu ingin lanjut untuk diramal?</p>
+					<form name="tos" style="width: 100%;">
+					<input type="button" value="Ya, saya ingin lanjut" onClick="introPass()">
+					</form>
+					<input type="button" value="Tidak" >
+					<p>&nbsp;</p>
+				</div>
+				<div id="app" style="display:none">
+					<p align="justify">Masukan nama kamu dan pasangan kamu! Agar hasilnya optimal masukan nama lengkap.</p>
+					<form name="form" onSubmit="hitungJodoh()" style="width: 100%;">
+					<p class="strong">Nama kamu</p>
+					<input type="text" name="nama1" size="30"><br /><br />
+					<p class="strong">Nama pasangan kamu</p>
+					<input type="text" name="nama2" size="30"><br /><br />
+					<input type="button" value=" Ramal " onClick="hitungJodoh()">
+					<p>&nbsp;</p>
+					</form>
+				</div>
+				<div id="result"></div>
+				<div id="button" style="display:none">
+					<form name="result">
+						<p>&nbsp;</p>
+						<input type="button" name="again" value="Ulangi ramalan dengan nama yang berbeda" onClick="ramalLagi()">
+						<p>&nbsp;</p>
+					</form>
+				</div>
+			</td>
+			<td width="7%">&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+<!-- /Content -->
+
+
+
+
+</body>
+</html>
