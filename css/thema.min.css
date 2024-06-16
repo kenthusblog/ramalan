@@ -1,0 +1,7 @@
+.ui-mobile .ui-page {
+    background: #1e5799; /* Old browsers */
+background: url(ramalan.jpg);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+[data-role=page]{height: 100% !important; position:relative !important;}
+[data-role=footer]{bottom:0; position:absolute !important; top: auto !important; width:100%;}  
+}
