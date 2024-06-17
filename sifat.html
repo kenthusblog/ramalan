@@ -512,8 +512,7 @@ function modalx(x){
 	var xmodal = document.getElementById("myModal");
 	var xspan = document.getElementsByClassName("close")[0];
 	$("#textmodal").text(x);
-	xmodal.style.display = "block";
-	
+	xmodal.style.display = "block";	
 	xspan.onclick = function() {
 		xmodal.style.display = "none";
 	}
@@ -556,6 +555,7 @@ function rmlk(e){
 		tgma=new Date(e.tun.value,e.bal.selectedIndex,e.tga.value);
 		hrAN=zyxwhtnsq(tgma);
 		P4Sa=ovmljgfdib(tgma);
+		tgl=new Date(e.tga.value);
 		
 		if ( e.bal.value == "Januari" ){
 			var bulan = 0;
@@ -599,7 +599,7 @@ function rmlk(e){
 			document.getElementById('neptu').innerHTML = Number(neptu[hrAN][P4Sa]);
 			document.getElementById('watak').innerHTML = arrWatak[Number(neptu[hrAN][P4Sa])];
 			document.getElementById('watakpasaran').innerHTML = WatakPasaran[hrAN][P4Sa];
-			document.getElementById('sifathari').innerHTML = SifatHari[tgma];
+			document.getElementById('sifathari').innerHTML = SifatHari[tgl];
 			document.getElementById('sifatpasaran').innerHTML = SifatPasaran[P4Sa];
 			document.getElementById('pasaran1').innerHTML = hrAN + " " + P4Sa;
 			document.getElementById("hasil").style.display = "block";
