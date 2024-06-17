@@ -115,22 +115,22 @@ div.card-hasil{
     }
 		
 #hasil{
-	padding: 5px;
-	border: 1px solid white;
-	border-radius: 5px;
-	margin-top:5px;
+		padding: 5px;
+		border: 1px solid white;
+		border-radius: 5px;
+		margin-top:5px;
 	}
 #hasil {
 	font-size: 100%;
 } 
 .m-date{
-    font-size: 20px;
+		font-size: 20px;
     text-align: center;
     margin: 0 !important;
     padding: 15px 0;
     font-weight: bold;
-}
-.h-date{
+	}
+	.h-date{
 	font-size: 8px;
     text-align: center;
     margin: 0 !important;
@@ -338,9 +338,11 @@ table.cal_table > tbody > tr > td:hover {
 	<div id="watakpasaran" class="note"></div>
 	<div class="inpohasil"><b>Sifat Berdasarkan Hari</b></div>
 	<div id="sifathari" class="note"></div>
-	<div id="beruntung" class="note"></div>
 	<div class="inpohasil"><b>Sifat Berdasarkan Pasaran</b></div>
 	<div id="sifatpasaran" class="note"></div>
+	<div class="inpohasil"><b>Keberuntungan</b></div>
+	<div id="beruntung" class="note">	<span id="beruntung1" class="note"></span>
+</div>
 </div>    
 <script>
 var neptu = {
@@ -395,7 +397,7 @@ var neptu = {
 	}
 };
 
-var SifatHari = {
+var Keberuntungan1 = {
     "7" : "Kaki",		
     "8"	: "Tumit",
     "9"	: "Mata",
@@ -424,7 +426,19 @@ var Keberuntungan = {
 	"17"	: "Sebaiknya bekerja atau berusaha pada bidang perkayuan atau minyak, tetapi tidak bisa diperbesar usahanya.",
 	"18"	: "Sebaiknya bekerja dalam bidang peternakan atau pemenuhan kebutuhan pangan (berjualan produk pangan seperti beras dan sejenisnya) sebagai pengarang atau berjualan batu aji"
 };
-	
+
+
+
+
+var SifatHari = {
+	"Senin" : "Senin : Selalu berubah, indah dan banyak mendapatkan simpati",
+	"Selasa" : "Selasa : Pemarah dan pencemburu, luas pergaulannya",
+	"Rabu" : "Rabu : Pendiam, pemomong dan penyabar",
+	"Kamis" : "Kamis : Sangar menakutkan",
+	"Jumat" : "Jumat : Enerjik mengagumkan",
+	"Sabtu" : "Sabtu : Membuat orang merasa senang, susah ditebak",
+	"Minggu" : "Minngu : Tekun mandiri, berwibawa"
+}
 
 var SifatPasaran = {
 	"Pon" : "Pon : Bicaranya banyak diterima orang, suka tinggal di rumah, tidak mau memakan yang bukan kepunyaannya sendiri, suka marah kepada keluarganya, jalan pikirannya sering berbeda dengan pandangan umum. Suka berbantahan, berani kepada atasan. Rejekinya cukup",
@@ -433,6 +447,7 @@ var SifatPasaran = {
 	"Legi" : "Legi : Bertanggung jawab, murah hati, enak dalam pergaulan, selalu gembira seperti tidak pernah susah, sering kena fitnah, kuat tidak tidur malam hari, berhati-hati namun sering bingung sendiri, bicaranya berisi. Banyak keberuntungan dan kesialannya.",
 	"Pahing" : "Pahing : Selalu ingin memiliki (barang), kesungguhannya penuh perhitungan untuk mendapatkan untung, suka menolong, mandiri, kuat lapar, banyak musuhnya, kalau tersinggung menakutkan marahnya, suka kebersihan. Sering kena tipu dan kalau kehilangan jarang bisa menemukan kembali."
 }
+
 
 var WatakPasaran = {
 	"Senin": {
@@ -529,7 +544,8 @@ function modalx(x){
 	var xmodal = document.getElementById("myModal");
 	var xspan = document.getElementsByClassName("close")[0];
 	$("#textmodal").text(x);
-	xmodal.style.display = "block";	
+	xmodal.style.display = "block";
+	
 	xspan.onclick = function() {
 		xmodal.style.display = "none";
 	}
@@ -552,7 +568,9 @@ function rmlk(e){
 		document.getElementById('watakpasaran').innerHTML = "";
 		document.getElementById('sifathari').innerHTML = "";
 		document.getElementById('sifatpasaran').innerHTML = "";
-		document.getElementById('beruntung').innerHTML = "";
+		document.getElementById('beruntung1').innerHTML = "";
+        document.getElementById('beruntung').innerHTML = "";
+
 		
 		var arrWatak = {
 			"7" : "<div class='dalam'><b>Pendito Kang Lelaku</b></div>orang yang lahir pada Selasa (3) Wage (4) memiliki karakter suka berpergian jauh. Baik untuk kegiatan kerja maupun liburan. Orang degan weton ini juga memiliki karakter pemberani.",		
@@ -572,7 +590,6 @@ function rmlk(e){
 		tgma=new Date(e.tun.value,e.bal.selectedIndex,e.tga.value);
 		hrAN=zyxwhtnsq(tgma);
 		P4Sa=ovmljgfdib(tgma);
-		tgl=new Date(e.tga.value);
 		
 		if ( e.bal.value == "Januari" ){
 			var bulan = 0;
@@ -616,10 +633,11 @@ function rmlk(e){
 			document.getElementById('neptu').innerHTML = Number(neptu[hrAN][P4Sa]);
 			document.getElementById('watak').innerHTML = arrWatak[Number(neptu[hrAN][P4Sa])];
 			document.getElementById('watakpasaran').innerHTML = WatakPasaran[hrAN][P4Sa];
-			document.getElementById('sifathari').innerHTML = SifatHari[Number(neptu[hrAN][P4Sa])];
-			document.getElementById('beruntung').innerHTML = Keberuntungan[Number(neptu[hrAN][P4Sa])];
+			document.getElementById('sifathari').innerHTML = SifatHari[hrAN];
 			document.getElementById('sifatpasaran').innerHTML = SifatPasaran[P4Sa];
 			document.getElementById('pasaran1').innerHTML = hrAN + " " + P4Sa;
+			document.getElementById('beruntung1').innerHTML = Keberuntungan1[Number(neptu[hrAN][P4Sa])];
+			document.getElementById('beruntung').innerHTML = Keberuntungan[Number(neptu[hrAN][P4Sa])];
 			document.getElementById("hasil").style.display = "block";
 		} else {
 			modalx("Maaf bulan " + e.bal.value + " " + e.tun.value + " tidak memiliki tanggal "+ e.tga.value);
