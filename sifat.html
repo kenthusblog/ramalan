@@ -397,7 +397,7 @@ var neptu = {
 	}
 };
 
-var Keberuntungan1 = {
+var KeberuntunganTubuh = {
     "7" : "Kaki",		
     "8"	: "Tumit",
     "9"	: "Mata",
@@ -424,7 +424,7 @@ var Keberuntungan = {
 	"15"	: "Sebaiknya bekerja dalam bidang peternakan, atau menjadi juru sembuh, tidak baik jika bekerja sebagai pedagang.",
 	"16"	: "Sebaiknya bekerja dalam bidang peternakan, jika menjadi pedagang tidak dapat menjadi kaya.",
 	"17"	: "Sebaiknya bekerja atau berusaha pada bidang perkayuan atau minyak, tetapi tidak bisa diperbesar usahanya.",
-	"18"	: "Sebaiknya bekerja dalam bidang peternakan atau pemenuhan kebutuhan pangan (berjualan produk pangan seperti beras dan sejenisnya) sebagai pengarang atau berjualan batu aji"
+	"18"	: "Sebaiknya bekerja dalam bidang peternakan atau pemenuhan kebutuhan pangan (berjualan produk pangan seperti beras dan sejenisnya) sebagai pengarang atau berjualan batu aji."
 };
 
 
@@ -568,7 +568,7 @@ function rmlk(e){
 		document.getElementById('watakpasaran').innerHTML = "";
 		document.getElementById('sifathari').innerHTML = "";
 		document.getElementById('sifatpasaran').innerHTML = "";
-		document.getElementById('beruntung1').innerHTML = "";
+		document.getElementById('beruntungtubuh').innerHTML = "";
         document.getElementById('beruntung').innerHTML = "";
 
 		
@@ -636,7 +636,7 @@ function rmlk(e){
 			document.getElementById('sifathari').innerHTML = SifatHari[hrAN];
 			document.getElementById('sifatpasaran').innerHTML = SifatPasaran[P4Sa];
 			document.getElementById('pasaran1').innerHTML = hrAN + " " + P4Sa;
-			document.getElementById('beruntung1').innerHTML = Keberuntungan1[Number(neptu[hrAN][P4Sa])];
+			document.getElementById('beruntungtubuh').innerHTML = KeberuntunganTubuh[Number(neptu[hrAN][P4Sa])];
 			document.getElementById('beruntung').innerHTML = Keberuntungan[Number(neptu[hrAN][P4Sa])];
 			document.getElementById("hasil").style.display = "block";
 		} else {
