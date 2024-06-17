@@ -315,6 +315,8 @@
 	<div class="infoatas">Tanggal Hijriyah : <span id="11tggl_lahir_hijriyah"></span></div>
 	<div class="infoatas">Tanggal Jawa : <span id="11tggl_lahir_jawa"></span></div>
 	<div class="infobawah">Warsa : <span id="11warsa"></span></div>
+
+	<div class="inpo"><span id="watak"></span></div>	
 </div>
  <!-- The Modal -->
 <div id="myModal" class="modal">
@@ -635,6 +637,25 @@ function modalx(x) {
     }
 }
 
+var arrWatak = {
+			"7" : "<div class='dalam'><b>Pendito Kang Lelaku</b></div>orang yang lahir pada Selasa (3) Wage (4) memiliki karakter suka berpergian jauh. Baik untuk kegiatan kerja maupun liburan. Orang degan weton ini juga memiliki karakter pemberani.",		
+			"8"	: "<div class='dalam'><b>Lakune Geni</b></div>Karakter: suka memendam sesuatu. Orang dengan weton ini seringkali memendam perasaan dan amarah. Akan tetapi, ketika sudah sampai pada puncaknya, amarah yang dikeluarkan bisa tidak terbendung.",
+			"9"	: "<div class='dalam'><b>Lakune Angin</b></div>Karakter: mudah dipengaruhi orang lain. Kebanyakan orang dengan weton ini akan mengikuti orang lain dan cenderung tidak memiliki prinsip atau pegangan hidup.",
+			"10"	: "<div class='dalam'><b>Pendito Mbangun Teki</b></div>Karakter: cenderung sombong dan agak keras kepala. Orang dengan weton ini akan senang menasehati orang lain tapi enggan untuk dinasehati.",
+			"11"	: "<div class='dalam'><b>Lakune Setan</b></div>Karakter: seorang yang tidak memiliki pendirian atau plin-plan. Orang dengan weton ini tidak bisa menjadi seorang pemimpin, dikarenakan sering kebingungan dalam mengambil keputusan.",
+			"12"	: "<div class='dalam'><b>Lakune Kembang</b></div>Karakter: suka mengalah dan membawa kedamaian dimanapun ia berada.",
+			"13"	: "<div class='dalam'><b>Lakune Lintang</b></div>Karakter: seorang dengan weton ini memiliki karisma seorang pemimpin yang luar biasa. Akan tetapi, sikapnya kurang bagus jika dijadikan pemimpin. Karena biasanya orang dengan weton ini tak cakap dalam membimbing orang lain.",
+			"14"	: "<div class='dalam'><b>Lakune Mbulan</b></div>Karakter: menjadi pencerah bagi banyak orang. Seorang dengan weton ini cenderung dijadikan tempat bercerita ketika ada masalah  dikarenakan bisa memberikan beragam solusi.",
+			"15"	: "<div class='dalam'><b>Lakune Geni</b></div>Karakter: pendendam, pemarah, dan memiliki emosi yang tinggi.",
+			"16"	: "<div class='dalam'><b>Lakune Bumi</b></div>Karakter: mudah diatur, suka mengayomi, dewasa, bijaksana.",
+			"17"	: "<div class='dalam'><b>Lakune Gunung</b></div>Karakter: memiliki tingkat suasana hati yang seringkali berubah-ubah. orang dengan weton ini cendetung banyak berpikir.",
+			"18"	: "<div class='dalam'><b>Lakune Paripurna</b></div>Karakter: keras kepala, dimana orang dengan weton ini dipenuhi dengan aura kekuasaan dan ingin semua keinginannya dipenuhi. "
+		};
+
+
+
+
+	
 function rmlk(e) {
         if (!e.tga.value | !e.tun.value) {
         modalx("Mohon dilengkapi..")
@@ -710,15 +731,14 @@ function rmlk(e) {
                 document.getElementById(xtb[i] + 'tggl_lahir_masehi').innerHTML = first_date.getDate() + " " + masehi_month[first_date.getMonth()] + " " + first_date.getFullYear() + " M";
                 document.getElementById(xtb[i] + 'tggl_lahir_hijriyah').innerHTML = first_h.day + " " + hijri_month[first_h.month - 1] + " " + first_h.year + " H";
                 document.getElementById(xtb[i] + 'tggl_lahir_jawa').innerHTML = first_h.day + " " + java_months[first_h.month - 1] + " " + (Number(first_h.year) + 512) + " Ja";
-				document.getElementById(xtb[i] +'warsa').innerHTML = first_tj;
+		document.getElementById(xtb[i] +'warsa').innerHTML = first_tj;
                 document.getElementById(xtb[i] + 'pasar').innerHTML = (pecah[hrAN][P4Sa]);
-				document.getElementById(xtb[i] + 'neptu').innerHTML = Number(neptu[hrAN][P4Sa]);
-				document.getElementById('ikineptu').innerHTML = hrAN1 + " " + P4Sa1;
-				
-				document.getElementById('neptupecah').innerHTML = Number(neptu[hrAN1][P4Sa1]);
-				document.getElementById('masehi').innerHTML = first_date1.getDate() + " " + masehi_month[first_date1.getMonth()] + " " + first_date1.getFullYear() + " ";
-		
-                document.getElementById("hasil").style.display = "block"
+		document.getElementById(xtb[i] + 'neptu').innerHTML = Number(neptu[hrAN][P4Sa]);
+		document.getElementById('ikineptu').innerHTML = hrAN1 + " " + P4Sa1;
+		document.getElementById('neptupecah').innerHTML = Number(neptu[hrAN1][P4Sa1]);
+		document.getElementById('masehi').innerHTML = first_date1.getDate() + " " + masehi_month[first_date1.getMonth()] + " " + first_date1.getFullYear() + " ";
+		document.getElementById('watak').innerHTML = arrWatak[Number(neptu[hrAN][P4Sa])];    
+		document.getElementById("hasil").style.display = "block"
             } else {
                 modalx("Maaf bulan " + e.bal.value + " " + e.tun.value + " tidak memiliki tanggal " + e.tga.value);
                 document.getElementById("hasil").style.display = "none";
