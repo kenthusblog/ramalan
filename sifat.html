@@ -341,7 +341,7 @@ table.cal_table > tbody > tr > td:hover {
 	<div class="inpohasil"><b>Sifat Berdasarkan Pasaran</b></div>
 	<div id="sifatpasaran" class="note"></div>
 	<div class="inpohasil"><b>Keberuntungan</b></div>
-	<div id="beruntung" class="note">	<span id="beruntungtubuh" class="note"></span>
+	<div id="beruntung" class="note">	<span id="beruntung1" class="note"></span>
 </div>
 </div>    
 <script>
@@ -411,24 +411,6 @@ var KeberuntunganTubuh = {
 	"17"	: "Mata",
 	"18"	: "Hidung"
 };
-
-var Keberuntungan = {
-    "7" : "Sebaiknya bekerja dalam bidang peternakan, atau menjadi juru sembuh, tidak baik jika bekerja sebagai pedagang",		
-    "8"	: "Sebaiknya bekerja dalam bidang peternakan, jika menjadi pedagang tidak dapat menjadi kaya.",
-    "9"	: "Sebaiknya bekerja atau berusaha pada bidang perkayuan atau minyak, tetapi tidak bisa diperbesar usahanya.",
-    "10"	: "Sebaiknya bekerja dalam bidang peternakan atau pemenuhan kebutuhan pangan (berjualan produk pangan seperti beras dan sejenisnya) sebagai pengarang atau berjualan batu aji",
-	"11"	: "Sebaiknya bekerja pada bidang yang berhubungan dengan makanan, atau penyediaan makanan, misalnya membuka warung atau restoran.",
-	"12"	: "Sebaiknya bekerja pada bidang perkainan atau bidang yang berhubungan dengan pembuatan pakaian (konveksi).",
-	"13"	: "Sebaiknya bekerja pada bidang yang berkaitan dengan pertanian atau perkebunan (menjadi petani atau pemilik kebun), atau berjualan emas.",
-	"14"	: "Sebaiknya bekerja sebagai seorang mantri, tukang kayu, atau berjualan buah-buahan, tetapi tidak bisa menjadi sukses dalam berjualan hanya secukupnya saja.",
-	"15"	: "Sebaiknya bekerja dalam bidang peternakan, atau menjadi juru sembuh, tidak baik jika bekerja sebagai pedagang.",
-	"16"	: "Sebaiknya bekerja dalam bidang peternakan, jika menjadi pedagang tidak dapat menjadi kaya.",
-	"17"	: "Sebaiknya bekerja atau berusaha pada bidang perkayuan atau minyak, tetapi tidak bisa diperbesar usahanya.",
-	"18"	: "Sebaiknya bekerja dalam bidang peternakan atau pemenuhan kebutuhan pangan (berjualan produk pangan seperti beras dan sejenisnya) sebagai pengarang atau berjualan batu aji."
-};
-
-
-
 
 var SifatHari = {
 	"Senin" : "Senin : Selalu berubah, indah dan banyak mendapatkan simpati",
@@ -587,6 +569,22 @@ function rmlk(e){
 			"18"	: "<div class='dalam'><b>Lakune Paripurna</b></div>Karakter: keras kepala, dimana orang dengan weton ini dipenuhi dengan aura kekuasaan dan ingin semua keinginannya dipenuhi. "
 		};
 		
+		var Keberuntungan = {
+    "7" : "Sebaiknya bekerja dalam bidang peternakan, atau menjadi juru sembuh, tidak baik jika bekerja sebagai pedagang",		
+    "8"	: "Sebaiknya bekerja dalam bidang peternakan, jika menjadi pedagang tidak dapat menjadi kaya.",
+    "9"	: "Sebaiknya bekerja atau berusaha pada bidang perkayuan atau minyak, tetapi tidak bisa diperbesar usahanya.",
+    "10"	: "Sebaiknya bekerja dalam bidang peternakan atau pemenuhan kebutuhan pangan (berjualan produk pangan seperti beras dan sejenisnya) sebagai pengarang atau berjualan batu aji",
+	"11"	: "Sebaiknya bekerja pada bidang yang berhubungan dengan makanan, atau penyediaan makanan, misalnya membuka warung atau restoran.",
+	"12"	: "Sebaiknya bekerja pada bidang perkainan atau bidang yang berhubungan dengan pembuatan pakaian (konveksi).",
+	"13"	: "Sebaiknya bekerja pada bidang yang berkaitan dengan pertanian atau perkebunan (menjadi petani atau pemilik kebun), atau berjualan emas.",
+	"14"	: "Sebaiknya bekerja sebagai seorang mantri, tukang kayu, atau berjualan buah-buahan, tetapi tidak bisa menjadi sukses dalam berjualan hanya secukupnya saja.",
+	"15"	: "Sebaiknya bekerja dalam bidang peternakan, atau menjadi juru sembuh, tidak baik jika bekerja sebagai pedagang.",
+	"16"	: "Sebaiknya bekerja dalam bidang peternakan, jika menjadi pedagang tidak dapat menjadi kaya.",
+	"17"	: "Sebaiknya bekerja atau berusaha pada bidang perkayuan atau minyak, tetapi tidak bisa diperbesar usahanya.",
+	"18"	: "Sebaiknya bekerja dalam bidang peternakan atau pemenuhan kebutuhan pangan (berjualan produk pangan seperti beras dan sejenisnya) sebagai pengarang atau berjualan batu aji."
+};
+		
+		
 		tgma=new Date(e.tun.value,e.bal.selectedIndex,e.tga.value);
 		hrAN=zyxwhtnsq(tgma);
 		P4Sa=ovmljgfdib(tgma);
@@ -636,7 +634,8 @@ function rmlk(e){
 			document.getElementById('sifathari').innerHTML = SifatHari[hrAN];
 			document.getElementById('sifatpasaran').innerHTML = SifatPasaran[P4Sa];
 			document.getElementById('pasaran1').innerHTML = hrAN + " " + P4Sa;
-			
+			document.getElementById('beruntungtubuh').innerHTML = KeberuntunganTubuh[Number(neptu[hrAN][P4Sa])];
+			document.getElementById('beruntung').innerHTML = Keberuntungan[Number(neptu[hrAN][P4Sa])];
 			document.getElementById("hasil").style.display = "block";
 		} else {
 			modalx("Maaf bulan " + e.bal.value + " " + e.tun.value + " tidak memiliki tanggal "+ e.tga.value);
