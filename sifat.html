@@ -331,13 +331,14 @@ table.cal_table > tbody > tr > td:hover {
 <td id="neptu"></td>
 </tr>
 </tbody>
-</table><div id="tanggal" class="note"></div>
+</table>
 	<div class="inpohasil"><b>Berdasarkan Weton</b></div>
 	<div id="watak" class="note"></div>
 	<div class="inpohasil"><b>Karakter <span id="pasaran1"></span></b></div>
 	<div id="watakpasaran" class="note"></div>
 	<div class="inpohasil"><b>Sifat Berdasarkan Hari</b></div>
 	<div id="sifathari" class="note"></div>
+	<div id="keberuntungan" class="note"></div>
 	<div class="inpohasil"><b>Sifat Berdasarkan Pasaran</b></div>
 	<div id="sifatpasaran" class="note"></div>
 </div>    
@@ -409,6 +410,22 @@ var SifatHari = {
 	"18"	: "Hidung"
 };
 
+var Keberuntungan = {
+    "7" : "Sebaiknya bekerja dalam bidang peternakan, atau menjadi juru sembuh, tidak baik jika bekerja sebagai pedagang",		
+    "8"	: "Sebaiknya bekerja dalam bidang peternakan, jika menjadi pedagang tidak dapat menjadi kaya.",
+    "9"	: "Sebaiknya bekerja atau berusaha pada bidang perkayuan atau minyak, tetapi tidak bisa diperbesar usahanya.",
+    "10"	: "Sebaiknya bekerja dalam bidang peternakan atau pemenuhan kebutuhan pangan (berjualan produk pangan seperti beras dan sejenisnya) sebagai pengarang atau berjualan batu aji",
+	"11"	: "Sebaiknya bekerja pada bidang yang berhubungan dengan makanan, atau penyediaan makanan, misalnya membuka warung atau restoran.",
+	"12"	: "Sebaiknya bekerja pada bidang perkainan atau bidang yang berhubungan dengan pembuatan pakaian (konveksi).",
+	"13"	: "Sebaiknya bekerja pada bidang yang berkaitan dengan pertanian atau perkebunan (menjadi petani atau pemilik kebun), atau berjualan emas.",
+	"14"	: "Sebaiknya bekerja sebagai seorang mantri, tukang kayu, atau berjualan buah-buahan, tetapi tidak bisa menjadi sukses dalam berjualan hanya secukupnya saja.",
+	"15"	: "Sebaiknya bekerja dalam bidang peternakan, atau menjadi juru sembuh, tidak baik jika bekerja sebagai pedagang.",
+	"16"	: "Sebaiknya bekerja dalam bidang peternakan, jika menjadi pedagang tidak dapat menjadi kaya.",
+	"17"	: "Sebaiknya bekerja atau berusaha pada bidang perkayuan atau minyak, tetapi tidak bisa diperbesar usahanya.",
+	"18"	: ""Sebaiknya bekerja dalam bidang peternakan atau pemenuhan kebutuhan pangan (berjualan produk pangan seperti beras dan sejenisnya) sebagai pengarang atau berjualan batu aji"
+};
+	
+
 var SifatPasaran = {
 	"Pon" : "Pon : Bicaranya banyak diterima orang, suka tinggal di rumah, tidak mau memakan yang bukan kepunyaannya sendiri, suka marah kepada keluarganya, jalan pikirannya sering berbeda dengan pandangan umum. Suka berbantahan, berani kepada atasan. Rejekinya cukup",
 	"Wage" : "Wage : Menarik tetapi angkuh, setia dan penurut, malas mencari nafkah perlu dibantu orang lain, kaku hati, tidak bisa berpikir panjang, sering gelap pikiran dan mendapat fitnah.",
@@ -416,11 +433,6 @@ var SifatPasaran = {
 	"Legi" : "Legi : Bertanggung jawab, murah hati, enak dalam pergaulan, selalu gembira seperti tidak pernah susah, sering kena fitnah, kuat tidak tidur malam hari, berhati-hati namun sering bingung sendiri, bicaranya berisi. Banyak keberuntungan dan kesialannya.",
 	"Pahing" : "Pahing : Selalu ingin memiliki (barang), kesungguhannya penuh perhitungan untuk mendapatkan untung, suka menolong, mandiri, kuat lapar, banyak musuhnya, kalau tersinggung menakutkan marahnya, suka kebersihan. Sering kena tipu dan kalau kehilangan jarang bisa menemukan kembali."
 }
-
-
-
-
-		
 
 var WatakPasaran = {
 	"Senin": {
@@ -540,7 +552,7 @@ function rmlk(e){
 		document.getElementById('watakpasaran').innerHTML = "";
 		document.getElementById('sifathari').innerHTML = "";
 		document.getElementById('sifatpasaran').innerHTML = "";
-		document.getElementById('tanggal').innerHTML = "";
+		document.getElementById('beruntung').innerHTML = "";
 		
 		var arrWatak = {
 			"7" : "<div class='dalam'><b>Pendito Kang Lelaku</b></div>orang yang lahir pada Selasa (3) Wage (4) memiliki karakter suka berpergian jauh. Baik untuk kegiatan kerja maupun liburan. Orang degan weton ini juga memiliki karakter pemberani.",		
@@ -605,6 +617,7 @@ function rmlk(e){
 			document.getElementById('watak').innerHTML = arrWatak[Number(neptu[hrAN][P4Sa])];
 			document.getElementById('watakpasaran').innerHTML = WatakPasaran[hrAN][P4Sa];
 			document.getElementById('sifathari').innerHTML = SifatHari[Number(neptu[hrAN][P4Sa])];
+			document.getElementById('keberuntungan').innerHTML = Keberuntungan[Number(neptu[hrAN][P4Sa])];
 			document.getElementById('sifatpasaran').innerHTML = SifatPasaran[P4Sa];
 			document.getElementById('pasaran1').innerHTML = hrAN + " " + P4Sa;
 			document.getElementById("hasil").style.display = "block";
