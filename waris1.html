@@ -2341,84 +2341,9 @@
 			$('.pc').removeClass('hidden');
 			$('.android').addClass('hidden');
 		}
-		else{		
-			const arrIklan = [
-				{
-					href: 'https://play.google.com/store/apps/details?id=com.tohakepriben.fathulqorib',
-					img: 'res/fathul-qorib.png'
-				},{
-					href: 'https://play.google.com/store/apps/details?id=com.tohakepriben.majmunadhom',
-					img: 'res/majmu-nadham.png'
-				},{
-					href: 'https://play.google.com/store/apps/details?id=com.tohakepriben.quranutsmani',
-					img: 'res/quran-utsmani-featured.png'
-				}
-			];
-
-			let cntIklan = Number(localStorage.getItem('cntIklan') || 0) + 1;
-			if(cntIklan>10){
-				let rnd = Math.floor(Math.random() * arrIklan.length);
-				ctlIklan = '<a href="'+arrIklan[rnd].href+'"><img src="'+arrIklan[rnd].img+'"></a>';
-				$('#iklan').html(ctlIklan);
-			}else{
-				localStorage.getItem('cntIklan', cntIklan)
-			}
-
-			$('.android').removeClass('hidden');
-			$('.pc').addClass('hidden');
-			
-			closeModal = function(){
-				if(document.getElementById('flying-menu').offsetHeight>50){
-					more();
-					return 1;
-				}
-				if($('.popup_content.show').length){
-					$('.popup_content.show').removeClass('show');
-					return 1;
-				}
-				if(curMenu !== 'menuKalk'){
-					$('.select-menu').val('menuKalk').change();
-					return 1;
-				}
-				if(!$('#step3').hasClass('hidden')){
-					lanjut('step2');
-					return 1;
-				}
-				if(!$('#step2').hasClass('hidden')){
-					lanjut('step1');
-					return 1;
-				}
-				return 0;
-			}
-		}
+		
 	}
-	$(function(){
-		if (typeof JsInterface === 'undefined' && typeof dhc === 'undefined'){
-			if(urlParams.get('android') != 1) location.replace('info.html');
-		}
-		//$('section').load(lang+suffix+'.html', null, function(){
-			gantiMenu('menuKalk');
-			let menuItems=document.querySelectorAll('#flying-menu a');
-			let fontSize = parseInt(localStorage.getItem('fontSize'));
-			for(var i=0;i<menuItems.length-1;i++){
-				menuItems[i].addEventListener('click', function(){more();});
-			}
-			if(fontSize>0){
-				document.querySelector('#fontSize').textContent=fontSize;
-				document.querySelector('body').style.fontSize='1.'+fontSize+'em';
-			}
-			document.querySelector("#theme").textContent=localStorage.getItem("theme")==="Gelap"?"Cerah":"Gelap";
-			changeTheme();
-			$('#flying-menu-back').click(more);
-			
-			let isiTbl= '<tr><td><label>Jml.</label><button class="btn-reset" onclick="resetJml()" style="float:right;"><span style="transform: rotate(180deg);font-weight:bold">&olarr;<span></button></td><td><label>Ahli Waris</label></td></tr>';
-			$.each(arrAw, function(){
-				if(this.i !== '100') isiTbl += '<tr><td><div class="ig"><div class="ig-icon" onclick="minplus(this,-1);">&laquo;</div><div class="ig-area"><label>0</label></div><div class="ig-icon" onclick="minplus(this,1);">&raquo;</div></div></td><td data-id="'+this.i+'"><label>'+this.ar+'</label>'+(this[lang] !== 'ar' ? '<br>('+this[lang]+')' : '') +'</td></tr>';
-			});
-			$('#tbl-kalk-aw').html(isiTbl);
-			setup()
-			checkUpdate()
-		});
+	
 	//});
 </script>
 <script src="js/kw7.js"></script>
