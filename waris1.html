@@ -1,0 +1,2428 @@
+<!DOCTYPE html>
+<html class="thm-gelap">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Kalkulator Waris v1.4 | Tohakepriben</title>
+	<meta content="./res/favicon.png" itemprop="image">
+  <link href="./res/favicon.png" rel="icon" type="image/png" />	
+	<link href="css/fonts.css" rel="stylesheet">
+	<link href="css/style3.css" rel="stylesheet">
+	<script src="js/jq.js"></script>
+	<script src="js/aws4.js"></script>
+	<script src="js/lang.js"></script>
+</head>
+<body id="body" style="font-size:1.3em;font-family:'Katibeh', cursive; padding:5px;">
+<section>
+	<div class="top-menu no-print">
+		<div>
+			<select class="select-menu" style="font-family:none;" onchange="gantiMenu(this.value)">
+				<option value='menuKalk'>KALKULATOR WARIS</option>
+				<option value='menuPendahuluan'>PENDAHULUAN</option>
+				<option value='menuMateri'>MATERI WARIS</option>
+				<option value='menuCara'>CARA HITUNG WARIS</option>
+				<option value='menuSyadz'>MASAIL SYADZAH</option>
+				<option value='menuAWmubham'>AW TIDAK JELAS</option>
+				<option value='menuLain'>LAIN-LAIN</option>
+				<option value='menuKuis'>KUIS TEBAK SIHAM</option>
+				<option value='menuPengaturan'>PENGATURAN APLIKASI</option>
+				<option value='menuTentang'>TENTANG</option>
+				<option value='menuDownload'>DOWNLOAD KITAB</option>
+				<option value='menuIklan' class="hidden">ADS</option>
+			</select>
+		</div>
+		<hr>
+	</div>
+	<div class="content" style="position:relative;height: 88vh">
+	<div class="scrollable" style="max-height:100%;overflow:auto;">
+		<div id="page-top" style="display: none"></div>
+		
+		<!--menuKalk-->
+		<div id="menuKalk">
+			<div id="step1">
+				<div class="rounded" style="padding: 5px">
+					<h4>Tentukan Jenis Kelamin Mayit dan<br>Jumlah Harta Warisan:</h4>
+					<label>Jenis Kelamin Mayit</label>
+					<div style="display: flex;margin-bottom: 10px">
+						<div style="flex: 50%"><input type="radio" name="jk" value="lk" checked="" /> Laki-laki</div>
+						<div style="flex: 50%"><input type="radio" name="jk" value="pr" /> Perempuan</div>
+					</div>
+					
+					<label>Harta Warisan *</label>
+					<div style="width: 100%;margin-bottom: 10px">
+						<input type="number" name="jml-harta" value="4800" style="font-size:1em; width:calc(100% - 10px)" />
+					</div>
+					
+					<label>Satuan Harta</label><br>
+					<select name="satuan-harta" style="text-align-last: left;">
+						<optgroup label="Uang">
+							<option value="Rp">Rupiah (Rp)</option>
+							<option value="RM">Ringgit Malaysia (RM)</option>
+							<option value="SR">Saudi Riyal (SR)</option>
+							<option value="$">Dollar ($)</option>
+							<option value="£">Pound (£)</option>
+							<option value="¥">Yuan (¥)</option>
+						</optgroup>
+						<optgroup label="Panjang">
+							<option value="mm">Mili Meter (mm)</option>
+							<option value="cm">Centi Meter (cm)</option>
+							<option value="m">Meter (m)</option>
+							<option value="km">Kilo Meter (km)</option>
+						</optgroup>
+						<optgroup label="Berat">
+							<option value="mg">Mili Gram (mg)</option>
+							<option value="cg">Centi Gram (cg)</option>
+							<option value="g">Gram (g)</option>
+							<option value="ons">Hekto Gram (ons)</option>
+							<option value="kg">Kilo Gram (kg)</option>
+						</optgroup>
+					</select>
+					<div class="red" style="font-size:.8em">*) Pastikan sudah dikeluarkan untuk pelunasan hutang dlsb (lihat penjelasan tentang <strong>Pengeluaran Sebelum Warisan</strong> dalam menu <strong>Materi Waris</strong>)</div>
+				</div>
+				<div id="flying-navigator">
+					<table class="tblKet"><tr>
+						<td width="50%"><button style="width: 100%" onclick="showPop('#pop_petunjuk')">Petunjuk</button></td>
+						<td id="td-blink" width="50%"><button style="width: 100%" onclick="lanjut('step2')">Lanjut &raquo;</button></td>
+					</tr></table>
+				</div>
+        <div style="text-align: center" id="iklan"></div>
+			</div>
+			<div id="step2" class="hidden">
+				<div class="rounded" style="padding: 5px">
+					<div><h4>Tentukan Ahli Waris</h4>
+						<h3 style="font-weight: normal; text-align: justify;margin-top: 0;"><span class="red">Perhatikan!</span> Pastikan ahli waris yang anda pilih di bawah ini statusnya MASIH HIDUP ketika si mayit meninggal walaupun beberapa saat kemudian juga ikut meninggal.<br>
+							Jika meninggal sebelum mayit atau tidak diketahui apakah meninggal sebelum atau setelah mayit (seperti dalam kasus kecelakaan bersama) maka jangan dimasukkan sebagai ahli waris karena BUKAN AHLI WARIS!</h3>
+					</div>
+					<table id="tbl-kalk-aw">
+
+					</table>
+					<label>Penting!!</label> Ketika paman si mayit tidak ada, sepupu juga tidak ada, maka pamannya ayah (saudara kakek) bisa mendapat warisan atas nama paman, begitu pula sepupu lk-nya ayah (anak lk-nya saudara kakek) bisa mendapat warisan atas nama sepupu, dan begitu seterusnya<a class="quest" href="javascript:showPop('#pop_paman_ayah')"><sup>?</sup></a>. Ketahui selengkapnya tentang Ahli Waris pada menu <label>Materi Waris</label>
+				</div>
+				<div id="flying-navigator">
+					<table class="tblKet"><tr>
+						<td width="50%"><button style="width: 100%" onclick="lanjut('step1')">&laquo; Kembali</button></td>
+						<td width="50%"><button style="width: 100%" onclick="lanjut('step3')">Hitung</button></td>
+					</tr></table>
+				</div>
+			</div>
+			<div id="step3" class="hidden">
+				<div class="rounded" style="padding: 5px">
+					<h4>Hasil Penghitungan</h4>
+					<div id="statistik-perhitungan" style="padding: 0 5px 5px"></div>
+					<div id="masail-syadzah" style="padding: 0 5px 5px"></div>
+					<table id="tbl-kalk-hasil" width="auto"></table>
+					<div id="logs" style="padding-top: 10px;"></div>
+					<div class="center android" style="padding: 20px">
+						<hr style="margin-bottom: 20px;">
+						<a class="abtn" href="javascript:showPop('#pop_whatsapp')">WAG Diskusi Ilmu Waris</a>
+					</div>
+				</div>
+				<div id="flying-navigator" class="no-print">
+					<table class="tblKet"><tr>
+						<td width="50%"><button style="width: 100%" onclick="lanjut('step2')">&laquo; Kembali</button></td>
+						<td width="50%"><button class="" style="width: 100%" onclick="JsInterface.openExternal('https://drive.google.com/drive/folders/11WRB7e91Qz6mODKw4aKmnjkYRc8DgVla?usp=drive_link');">Versi Komputer</button></td>
+					</tr></table>
+				</div>
+			</div>
+			<div style="height: 45px"></div>
+
+		</div>
+		
+		<!--menuPendahuluan-->
+		<div id="menuPendahuluan">
+			<div style="text-align: center">
+				<label>بسم الله الرحمن الرحيم</label><br>
+				<label>الحمد لله الموجود بلا مكان ولا زمان</label><br>
+				<label>والصلاة والسلام على المعصوم من الرذائل والمنفر والنقصان</label><br>
+				<label>سيدنا ومولانا محمد طه العرب والعجم</label><br>
+				<label>وعلى آله وصحبه ينابيع العلوم والحكم</label>
+			</div>
+			<div id="pdef" class="title">DEFINISI ILMU WARIS</div>
+			Disebut juga Ilmu Faroidl (bagian-bagian yang sudah ditentukan) karena al-Qur'an dan Hadits menyebutnya demikian.<br>
+			Definisinya adalah gabungan dari Ilmu Fiqih dan Ilmu Perhitungan (matematika) yang menghantarkan pada pengetahuan tentang hak-hak yang dimiliki Ahli Waris atas harta warisan.<br>
+			Hukum memperlajarinya adalah Fardlu Kifayah (kolektif). Artinya jika pada suatu daerah sudah ada yang mengetahui dan mengamalkan maka gugurlah kewajiban bagi orang lain. Dan sebaliknya, jika belum ada satupun secara yakin atau diragukan keberadaan orang yang mengetahui dan mengamalkannya maka berdosalah seluruh orang mukallaf di daerah tersebut.
+			<div id="pkeu" class="title">KEUTAMAAN ILMU WARIS</div>
+			<ol>
+				<li>
+					Perspektif al-Qur'an.<br>
+					Ilmu Waris merupakan salah satu ilmu syari'at yang eksklusif karena perinciannya dijelaskan secara langsung oleh al-Qur'an, yakni dalam tiga ayat dalam Surat an-Nisa, yaitu ayat 11, 12 dan 176.<br>
+					Berbeda dengan ilmu yang lain seperti Sholat, Puasa dan Zakat, al-Qur'an hanya menyebutkannya secara global sedangkan perinciannya dijelaskan oleh Nabi Muhammad <cite>shollallahu 'alaihi wa sallam</cite>.
+				</li>
+				<li>
+					Perspektif Hadits.<br>
+					Di antara Hadits yang menunjukkan keutamaan Ilmu Waris adalah sebuah Hadits riwayat Ibnu Majah:<br>
+					<label>تعلموا الفرائض وعلموها فإنه نصف العلم وهو ينسى وهو أول علم ينزع من أمتي</label><br>
+					<cite>"Pelajarilah Ilmu Faroidl dan ajarkanlah (kepada orang lain) karena sesungguhnya Ilmu Faroidl adalah setengah dari ilmu (syari'at) dan Ilmu Faroidl kelak akan dilupakan dan merupakan ilmu yang pertama akan dicabut dari umatku."</cite><br>
+					Beberapa poin yang bisa diambil dari Hadits tersebut adalah:<br>
+					<ul>
+						<li>Wajib hukumnya mempelajari dan mengajarkannya karena diperintah oleh Nabi.</li>
+						<li>Ilmu Faroidl merupakan setengah dari ilmu syari'at. Karena manusia mengalami dua fase, kehidupan dan kematian, sedangkan Ilmu Faroidl objek sasarannya adalah harta seseorang setelah meninggal. Berbeda dengan ilmu yang lain, dimana pembahasannya berputat pada kehidupan seseorang.</li>
+						<li>Nabi memberi isyarah bahwa Ilmu Faroidl akan punah pertama kali sebelum punahnya ilmu-ilmu syariat yang lain. Hal ini sudah sangat dapat kita rasakan karena memang kebanyakan orang enggan mempelajarinya, dan banyak orang alim Ilmu Faroidl yang meninggal namun tidak ada penerusnya. Dan ini juga sekaligus menunjukkan mu'jizat Nabi yang dapat mengetahui sesuatu yang akan datang (belum terjadi).</li>
+					</ul>
+				</li>
+				<li>
+					Perspektif Ulama.<br>
+					Diceritakan bahwa al-Walid bin Muslim (seorang ulama bergelar al-hafidz) bermimpi memasuki sebuah kebun kemudian memakan seluruh buah-buahan kecuali satu yang tidak beliau makan yaitu buah anggur putih. Setelah bangun dari tidurnya beliau menceritakan mimpi tersebut kepada gurunya, Imam al-Auza'i (seorang ulama mujtahid mutlak). Beliau menjawab, 
+					<cite>"Engkau akan menguasai seluruh ilmu kecuali satu yang tidak dapat engau kuasai, yaitu Ilmu Faroidl. Sesungguhnya Ilmu Faroidl adalah permatanya ilmu, sebagaimana anggur putih yang engkau tidak memakannya dalam mimpimu adalah permatanya buah anggur"</cite>
+				</li>
+			</ol>
+			<div id="psy" class="title">ILMU WARIS MADZHAB ASY-SYAFI'I</div>
+			Ilmu Waris versi Imam asy-Syafi'i <cite>-rodliyallohu 'anhu-</cite> memiliki kelebihan dari pada mdzhab lain, karena hasil ijtihad beliau dalam masalah ini paling sesuai dengan hasil ijtihad Sahabat Zaid bin Tsabit <cite>-rodliyallohu 'anhu-</cite>.<br>
+			Sisi kelebihannya adalah bahwa Sahabat Zaid merupakan sahabat Nabi yang oleh Beliau disebut sebagai orang yang paling memahami Ilmu Faroidl. Dalam sebuah Hadits riwayat Ahmad, Tirmidzi dan selainnya disebutkan:<br>
+			<label>وأعلمها اي أمتي بالفرائض زيد بن ثابت</label><br>
+			dalam Hadits lain:<br>
+			<label>أفرض أمتي زيد بن ثابت</label><br>
+			dalam Hadits lain:<br>
+			<label>أعلم أمتي بعلم الفرائض زيد بن ثابت</label><br>
+			Karena keistimewaan ini banyak sahabat lain yang mengikuti pendapat Zaid bin Tsabit dalam masalah warisan sebagamaina dituturkan oleh al-Hafidz al-Munawi
+			<div id="psr" class="title">SUMBER RUJUKAN ILMU WARIS</div>
+			Ada tiga sumber utama yang dijadikan sebagai rujukan dalam masalah ini.
+			<ol>
+				<li>
+					Al-Qur'an Surat an-Nisa ayat 11, 12 dan 176.<br>
+					Ayat-ayat ini menjelaskan tentang jatah-jatah pasti (<label>الفروض المقدرة</label>)
+					<div><p dir="rtl" style="text-align: justify">
+						<label>يُوصِيكُمُ ٱللَّهُ فِىٓ أَوْلَٰدِكُمْ ۖ لِلذَّكَرِ مِثْلُ حَظِّ ٱلْأُنثَيَيْنِ ۚ فَإِن كُنَّ نِسَآءً فَوْقَ ٱثْنَتَيْنِ فَلَهُنَّ ثُلُثَا مَا تَرَكَ ۖ وَإِن كَانَتْ وَٰحِدَةً فَلَهَا ٱلنِّصْفُ ۚ وَلِأَبَوَيْهِ لِكُلِّ وَٰحِدٍ مِّنْهُمَا ٱلسُّدُسُ مِمَّا تَرَكَ إِن كَانَ لَهُۥ وَلَدٌ ۚ فَإِن لَّمْ يَكُن لَّهُۥ وَلَدٌ وَوَرِثَهُۥٓ أَبَوَاهُ فَلِأُمِّهِ ٱلثُّلُثُ ۚ فَإِن كَانَ لَهُۥٓ إِخْوَةٌ فَلِأُمِّهِ ٱلسُّدُسُ ۚ مِنۢ بَعْدِ وَصِيَّةٍ يُوصِى بِهَآ أَوْ دَيْنٍ ۗ ءَابَآؤُكُمْ وَأَبْنَآؤُكُمْ لَا تَدْرُونَ أَيُّهُمْ أَقْرَبُ لَكُمْ نَفْعًا ۚ فَرِيضَةً مِّنَ ٱللَّهِ ۗ إِنَّ ٱللَّهَ كَانَ عَلِيمًا حَكِيمًا</label>
+						</p><p style="font-style: italic">Allah mensyari'atkan bagimu tentang (pembagian pusaka untuk) anak-anakmu. Yaitu: bahagian seorang anak lelaki sama dengan bagahian dua orang anak perempuan; dan jika anak itu semuanya perempuan lebih dari dua, maka bagi mereka dua pertiga dari harta yang ditinggalkan; jika anak perempuan itu seorang saja, maka ia memperoleh separo harta. Dan untuk dua orang ibu-bapa, bagi masing-masingnya seperenam dari harta yang ditinggalkan, jika yang meninggal itu mempunyai anak; jika orang yang meninggal tidak mempunyai anak dan ia diwarisi oleh ibu-bapanya (saja), maka ibunya mendapat sepertiga; jika yang meninggal itu mempunyai beberapa saudara, maka ibunya mendapat seperenam. (Pembagian-pembagian tersebut di atas) sesudah dipenuhi wasiat yang ia buat atau (dan) sesudah dibayar hutangnya. (Tentang) orang tuamu dan anak-anakmu, kamu tidak mengetahui siapa di antara mereka yang lebih dekat (banyak) manfaatnya bagimu. Ini adalah ketetapan dari Allah. Sesungguhnya Allah Maha Mengetahui lagi Maha Bijaksana. [An Nisa : 11]</p>
+					</div>
+					<div><p dir="rtl" style="text-align: justify">
+						<label>۞ وَلَكُمْ نِصْفُ مَا تَرَكَ أَزْوَٰجُكُمْ إِن لَّمْ يَكُن لَّهُنَّ وَلَدٌ ۚ فَإِن كَانَ لَهُنَّ وَلَدٌ فَلَكُمُ ٱلرُّبُعُ مِمَّا تَرَكْنَ ۚ مِنۢ بَعْدِ وَصِيَّةٍ يُوصِينَ بِهَآ أَوْ دَيْنٍ ۚ وَلَهُنَّ ٱلرُّبُعُ مِمَّا تَرَكْتُمْ إِن لَّمْ يَكُن لَّكُمْ وَلَدٌ ۚ فَإِن كَانَ لَكُمْ وَلَدٌ فَلَهُنَّ ٱلثُّمُنُ مِمَّا تَرَكْتُم ۚ مِّنۢ بَعْدِ وَصِيَّةٍ تُوصُونَ بِهَآ أَوْ دَيْنٍ ۗ وَإِن كَانَ رَجُلٌ يُورَثُ كَلَٰلَةً أَوِ ٱمْرَأَةٌ وَلَهُۥٓ أَخٌ أَوْ أُخْتٌ فَلِكُلِّ وَٰحِدٍ مِّنْهُمَا ٱلسُّدُسُ ۚ فَإِن كَانُوٓا۟ أَكْثَرَ مِن ذَٰلِكَ فَهُمْ شُرَكَآءُ فِى ٱلثُّلُثِ ۚ مِنۢ بَعْدِ وَصِيَّةٍ يُوصَىٰ بِهَآ أَوْ دَيْنٍ غَيْرَ مُضَآرٍّ ۚ وَصِيَّةً مِّنَ ٱللَّهِ ۗ وَٱللَّهُ عَلِيمٌ حَلِيمٌ</label>
+						</p><p style="font-style: italic">Dan bagimu (suami-suami) seperdua dari harta yang ditinggalkan oleh isteri-isterimu, jika mereka tidak mempunyai anak. Jika isteri-isterimu itu mempunyai anak, maka kamu mendapat seperempat dari harta yang ditinggalkannya sesudah dipenuhi wasiat yang mereka buat atau (dan) seduah dibayar hutangnya. Para isteri memperoleh seperempat harta yang kamu tinggalkan jika kamu tidak mempunyai anak. Jika kamu mempunyai anak, maka para isteri memperoleh seperdelapan dari harta yang kamu tinggalkan sesudah dipenuhi wasiat yang kamu buat atau (dan) sesudah dibayar hutang-hutangmu. Jika seseorang mati, baik laki-laki maupun perempuan yang tidak meninggalkan ayah dan tidak meninggalkan anak, tetapi mempunyai seorang saudara laki-laki (seibu saja) atau seorang saudara perempuan (seibu saja), maka bagi masing-masing dari kedua jenis saudara itu seperenam harta. Tetapi jika saudara-saudara seibu itu lebih dari seorang, maka mereka bersekutu dalam yang sepertiga itu, sesudah dipenuhi wasiat yang dibuat olehnya atau sesudah dibayar hutangnya dengan tidak memberi mudharat (kepada ahli waris). (Allah menetapkan yang demikian itu sebagai) syari'at yang benar-benar dari Allah, dan Allah Maha Mengetahui lagi Maha Penyantun. [An Nisa : 12]</p>
+					</div>
+					<div><p dir="rtl" style="text-align: justify">
+						<label>يَسْتَفْتُونَكَ قُلِ ٱللَّهُ يُفْتِيكُمْ فِى ٱلْكَلَٰلَةِ ۚ إِنِ ٱمْرُؤٌا۟ هَلَكَ لَيْسَ لَهُۥ وَلَدٌ وَلَهُۥٓ أُخْتٌ فَلَهَا نِصْفُ مَا تَرَكَ ۚ وَهُوَ يَرِثُهَآ إِن لَّمْ يَكُن لَّهَا وَلَدٌ ۚ فَإِن كَانَتَا ٱثْنَتَيْنِ فَلَهُمَا ٱلثُّلُثَانِ مِمَّا تَرَكَ ۚ وَإِن كَانُوٓا۟ إِخْوَةً رِّجَالًا وَنِسَآءً فَلِلذَّكَرِ مِثْلُ حَظِّ ٱلْأُنثَيَيْنِ ۗ يُبَيِّنُ ٱللَّهُ لَكُمْ أَن تَضِلُّوا۟ ۗ وَٱللَّهُ بِكُلِّ شَىْءٍ عَلِيمٌۢ</label>
+						</p><p style="font-style: italic">Mereka meminta fatwa kepadamu (tentang kalalah). Katakanlah: "Allah memberi fatwa kepadamu tentang kalalah (yaitu): jika seorang meninggal dunia, dan ia tidak mempunyai anak dan mempunyai saudara perempuan, maka bagi saudaranya yang perempuan itu seperdua dari harta yang ditinggalkannya, dan saudaranya yang laki-laki mempusakai (seluruh harta saudara perempuan), jika ia tidak mempunyai anak; tetapi jika saudara perempuan itu dua orang, maka bagi keduanya dua pertiga dari harta yang ditinggalkan oleh yang meninggal. Dan jika mereka (ahli waris itu terdiri dari) saudara-saudara laki dan perempuan, maka bahagian seorang saudara laki-laki sebanyak bahagian dua orang saudara perempuan. Allah menerangkan (hukum ini) kepadamu, supaya kamu tidak sesat. Dan Allah Maha Mengetahui segala sesuatu. [An Nisa : 176]</p>
+					</div>
+				</li>
+				<li>
+					Hadits riwayat Bukhori dan Muslim:<br>
+					<label>ألحقوا الفرائض بأهلها فما بقي فلأولى رجل ذكر</label><br>
+					<cite>"Berikanlah jatah-jatah pasti kepada pemiliknya. Maka jika ada sisa, maka itu milik orang lelaki yang paling utama (paling dekat dengan si mayit)."</cite><br>
+					Hadits ini menjelaskan tentang jatah tidak pasti (jatah sisa / ashobah).
+				</li>
+				<li>
+					Atsar dari para Sahabat Nabi. Dalam hal ini adalah Sahabat Umar <cite>-rodliyallohu 'anhu-</cite> tentang masalah Ghorowain dan Musytarokah. Dan Sahabat Zaid bin Tsabit <cite>-rodliyallohu 'anhu-</cite> dalam masalah Jadd Ikhwah
+				</li>
+			</ol>
+		</div>
+		
+		<!--menuMateri-->
+		<div id="menuMateri">
+			<div id="mrw">
+				<div class="title">RUKUN-RUKUN WARISAN (<label>أركان الإرث</label>)</div>
+				<ol>
+					<li>Muwarrots: Orang yang akan diwaris hartanya (si mayit / pewaris).</li>
+					<li>Muwarrits: Orang yang berhak menerima warisan (ahli waris).</li>
+					<li>Tirkah: Harta peninggalan yang akan diwaris.</li>
+				</ol>
+				<label>Penting! </label>Tirkah adalah harta yang di miliki mayit semasa hidupnya. Sehingga harta yang datang setelah meninggal, seperti santunan dan pensiunan, tidak bisa disebut tirkah dan tidak bisa diwaris. Tentang pentasharufannya harus disesuaikan dengan maksud si pemberi, apakah untuk biaya pemakaman, pasangan (suami/istri) mayit, anak-anaknya atau lainnya.
+			</div>
+			<div id="mspw">
+				<div class="title">SYARAT PELAKSANAAN WARISAN (<label>شروط الإرث</label>)</div>
+				<ol>
+					<li>Tetapnya status meninggalnya muwarrots.</li>
+					<li>Tetapnya status hidupnya muwarrits setelah muwarrots meninggal.</li>
+					<li>Mengetahui ilmu warisan</li>
+				</ol>
+			</div>
+			<div id="msw">
+				<div class="title">SEBAB WARISAN (<label>أسباب الإرث</label>)</div>
+				<span>Seseorang bisa mendapat warisan (tergolong ahli waris) jika memiliki kriteria berikut:</span>
+				<ol>
+					<li>Nikah: Hubungan pernikahan. Walaupun sudah bercerai (talak raj'iy) namun masih dalam masa 'idah.</li>
+					<li>Qarabah: Hubungan kerabat.</li>
+					<li>Walaa: Hubungan antara budak dan majikannya.</li>
+				</ol>
+				<label>Catatan: </label>
+				<ol>
+					<li>
+						Selain tiga kriteria di atas tidak dapat menjadikan seseorang sebagai ahli waris<a class="quest" href="javascript:showPop('#pop_sebabwaris')"><sup>?</sup></a>. Seperti mertua, tiri, persusuan<a class="quest" href="javascript:showPop('#pop_persusuan')"><sup>?</sup></a>, adopsi dll
+					</li>
+					<li>
+						Seorang ahli waris terkadang memiliki dua atau bahkan tiga sebab di atas. Seperti seorang wanita yang berstatus sebagai istri sekaligus mantan majikan. Atau seperti seorang pria yang berstatus sebagai suami, sepupu, juga mantan majikan mayit.<br>
+						Dalam kasus seperti ini dia berhak mendapat dua atau bahkan tiga jatah sesuai statusnya.
+					</li>
+				</ol>
+			</div>
+			<div id="mpw">
+				<div class="title">PENGHALANG WARISAN (<label>موانع الإرث</label>)</div>
+				<span>Ahli waris tidak berhak mendapat warisan jika memiliki kriteria berikut:</span>
+				<ol>
+					<li>Membunuh muwarrots. Sengaja maupun tidak, dengan hak maupun tanpa hak.</li>
+					<li>Berbeda agama, walaupun karena riddah (murtad).</li>
+					<li>Status budak.</li>
+				</ol>
+			</div>
+			<div id="mpsw">
+				<div class="title">PENGELUARAN WAJIB SEBELUM WARISAN (<label>الحقوق المتعلقة بالتركة</label>)<a class="quest" href="javascript:showPop('#pop_pengeluaran_sebelum_waris')"><sup>?</sup></a></div>
+				<span>Harta tirkah (peninggalan mayit) tidak boleh dibagi waris kecuali setelah membayarkan tanggungan-tanggungan berikut secara berurutan:</span>
+				<ol>
+					<li>Tanggungan barang (tanggungan yang berkaitan langsung dengan harta mayit sehingga tidak bisa ditukar dengan barang lain). Seperti menebus gadai, zakat yang barangnya masih, mengembalikan barang pinjaman atau sewaan. Termasuk dalam tahap ini adalah membagi harta gono-gini (jika ada).</li>
+					<li>Biaya pengurusan jenazah secara umum (tidak boleh berlebihan). Kecuali jika mayitnya perempuan yang sudah bersuami, maka biaya ini dibebankan kepada suaminya, tidak diambil dari tirkah. Namun ketentuan ini berlaku jika si istri tersebut ketika meninggalnya masih dalam keadaan taat kepada suami, dan si suami mampu membiayainya.</li>
+					<li>Tanggungan hutang, zakat yang barangnya sudah tidak ada, haji yang sudah wajib namun belum dilaksanakan, fidyah puasa (jika tidak memilih qodlo).</li>
+					<li>Wasiat kepada selain ahli waris yang nominalnya &le; 1/3 dari tirkah (setelah dikurangi 3 pengeluaran di atas). Jika seluruh harta habis untuk melunasi hutang maka wasiatnya gugur.
+						<div style="margin-left: -10px;">Jika ada sisa setelah 4 pengeluaran tersebut, sisa itulah yang boleh diwariskan. Dan selama 4 pengeluaran tersebut belum direalisasikan, pembagian waris tidak boleh dilakukan</div>
+					</li>
+				</ol>	
+				<label>Catatan: </label>
+				4 pengeluaran di atas hukumnya wajib dan tidak memerlukan persetujuan ahli waris untuk merealisasikannya. Sedangkan selain 4 pengeluaran tersebut, seperti wakaf yang tidak diwasiatkan dan biaya tahlilan, harus berdasarkan kesepakatan seluruh ahli waris. Jika sebagian ahli waris tidak setuju atau kondisinya masih kecil atau gangguan mental, maka khusus jatah warisnya harus diberikan utuh dan tidak boleh diambil untuk selain 4 pengeluaran tersebut
+			</div>
+			<div id="maw">
+				<div class="title">AHLI WARIS (<label>أهل الورثة</label>)</div>
+				<table>
+					<tr><td>No</td><td>Ahli Waris</td><td>Penjelasan</td></tr>
+					<tr><td>1</td><td><label>زوج</label></td><td>Suami</td></tr>
+					<tr><td>2</td><td><label>زوجة</label></td><td>Istri</td></tr>
+					<tr><td colspan="3">Suami / Istri yang sudah cerai/talak masih berhak mendapat warisan jika talaknya raj'iy dan masa iddahnya belum habis</td></tr>
+					<tr><td>3</td><td><label>ابن</label></td><td>Anak lk</td></tr>
+					<tr><td>4</td><td><label>بنت</label></td><td>Anak pr</td></tr>
+					<tr><td>5</td><td><label>ابن ابن</label></td><td>Cucu lk jalur anak lk dan sebawahnya (selama jalurnya murni laki-laki)</td></tr>
+					<tr><td>6</td><td><label>بنت ابن</label></td><td>Cucu pr jalur anak lk dan sebawahnya (selama jalurnya murni laki-laki)</td></tr>
+					<tr><td>7</td><td><label>اب</label></td><td>Ayah</td></tr>
+					<tr><td>8</td><td><label>ام</label></td><td>Ibu</td></tr>
+					<tr><td>9</td><td><label>جد</label></td><td>Kakek jalur ayah, dan seatasnya (selama jalurnya murni laki-laki)</td></tr>
+					<tr><td>10</td><td><label>جدة لأم</label></td><td>Nenek jalur ibu, dan seatasnya (selama jalurnya murni perempuan)</td></tr>
+					<tr><td>11</td><td><label>جدة لأب</label></td><td>Nenek jalur ayah, dan seatasnya (selama jalurnya murni laki-laki seperti <label>أم أب أب أب</label> atau murni perempuan setelah murni laki-laki seperti <ul><li>أم أم أب أب</li><li>أم أم أم أب</li></ul>)Jika jalurnya terputus laki-laki di antara dua perempuan maka tidak termasuk ahli waris, seperti <ul><li>أم أب أم أب</li><li>أم أم أب أم</li></ul></td></tr>
+					<tr><td>12</td><td><label>اخ ق</label></td><td>Saudara kandung</td></tr>
+					<tr><td>13</td><td><label>اخت قة</label></td><td>Saudari kandung</td></tr>
+					<tr><td>14</td><td><label>اخ لأب</label></td><td>Saudara seayah</td></tr>
+					<tr><td>15</td><td><label>اخت لأب</label></td><td>Saudari seayah</td></tr>
+					<tr><td>16</td><td><label>اخ لأم</label></td><td>Saudara seibu</td></tr>
+					<tr><td>17</td><td><label>اخت لأم</label></td><td>Saudari seibu</td></tr>
+					<tr><td>18</td><td><label>ابن اخ ق</label></td><td>Anak lk dari saudara kandung (keponakan), dan sebawahnya (anak, cucu dan cicitnya keponakan, selama jalurnya murni laki-laki)</td></tr>
+					<tr><td>19</td><td><label>ابن اخ لأب</label></td><td>Anak lk dari saudara seayah (keponakan), dan sebawahnya (anak, cucu dan cicitnya keponakan, selama jalurnya murni laki-laki)</td></tr>
+					<tr><td>20</td><td><label>عم ق</label></td><td>Paman kandung (saudara kandungnya ayah, kakek, buyut dan seterusnya)</td></tr>
+					<tr><td>21</td><td><label>عم لأب</label></td><td>Paman seayah (saudara seayahnya ayah, kakek, buyut dan seterusnya)</td></tr>
+					<tr><td>22</td><td><label>ابن عم ق</label></td><td>Anak lk dari paman kandung (sepupu), dan sebawahnya (anak, cucu dan cicitnya sepupu, selama jalurnya murni laki-laki)</td></tr>
+					<tr><td>23</td><td><label>ابن عم لأب</label></td><td>Anak lk dari paman seayah (sepupu), dan sebawahnya (anak, cucu dan cicitnya sepupu, selama jalurnya murni laki-laki)<a class="quest" href="javascript:showPop('#pop_paman_ayah')"><sup>?</sup></a></td></tr>
+					<tr><td>24</td><td><label>معتق</label></td><td>Mantan majikan lk yang memerdekakan atau ahli waris ashobahnya</td></tr>
+					<tr><td>25</td><td><label>معتقة</label></td><td>Mantan majikan pr yang memerdekakan atau ahli waris ashobahnya</td></tr>
+				</table>
+				<label>Catatan: </label>
+				Anggota keluarga yang statusnya tidak tercantum disebut sebagai dzawil arham <label>ذوي الأرحام</label>, bukan ahli waris. <br>Seperti cucu dari jalur anak perempuan, kakek dari jalur ibu, paman dari jalur ibu, bibi dari jalur ayah maupun ibu, keponakan dan sepupu perempuan<br>
+			</div>
+			<div id="ms">
+				<div class="title">SIHAM / JATAH WARISAN (<label>السهم</label>)</div>
+				<table>
+					<tr><td>No</td><td>Siham</td><td>Penjelasan</td></tr>
+					<tr><td>1</td><td><label>نصف</label><br>(1/2)</td><td>Setengah</td></tr>
+					<tr><td>2</td><td><label>ثلثان</label><br>(2/3)</td><td>Dua pertiga </td></tr>
+					<tr><td>3</td><td><label>ثلث</label><br>(1/3)</td><td>Sepertiga </td></tr>
+					<tr><td>4</td><td><label>ربع</label><br>(1/4)</td><td>Seperempat </td></tr>
+					<tr><td>5</td><td><label>سدس</label><br>(1/6)</td><td>Seperenam </td></tr>
+					<tr><td>6</td><td><label>ثمن</label><br>(1/8)</td><td>Seperdelapan </td></tr>
+					<tr><td>7</td><td><label>سدس والباقي</label><br>(1/6 & A)</td><td>Seperenam dan Sisa</td></tr>
+					<tr><td>8</td><td><label>ثلث الباقي</label><br>(1/3 A)</td><td>Sepertiga dari sisa</td></tr>
+					<tr id="abn"><td>9</td><td><label>عصبة بالنفس</label><br>(ABN)</td><td>Jatah sisa yang tidak disebabkan keberadaan ahli waris lain. Seluruh ahli waris lk, selain suami dan saudara seibu, memiliki kemungkinan mendapat jatah ini</td></tr>
+					<tr id="abg"><td>10</td><td><label>عصبة بالغير</label><br>(ABG)</td><td>Jatah sisa untuk anak pr, cucu pr, saudarai kandung dan seayah yang disebabkan keberadaan ahli waris lain yang statusnya merupakan saudara kandungnya sendiri.<br>Jika ada yang mendapat jatah ini, maka saudara kandungnya dihitung 2x lipat (<label>للذكر مثل حظ الأنثيين</label>)</td></tr>
+					<tr id="amg"><td>11</td><td><label>عصبة مع الغير</label><br>(AMG)</td><td>Jatah sisa untuk saudari kandung dan seayah yang disebabkan keberadaan ahli waris lain yang statusnya merupakan keponakan pr-nya sendiri (anak pr atau cucu pr mayit).<br>Jika ada yang mendapat jatah ini, maka posisinya dianggap seperti saudara kandungnya sendiri dalam hal dapat memahjubkan ahli waris sebawahnya. Saudari kandung dianggap seperti saudara kandung, dan saudari seayah dianggap seperti saudara seayah</td></tr>
+					<tr><td colspan="3">Perlu diketahui bahwa seluruh jatah ashobah hakikatnya sama, yakni jatah sisa. Pemilahan-pemilahan di atas tadi hanya karena penyebab dan konsekwensi hukumnya berbeda</td></tr>
+					<tr><td>12</td><td><label>مسقوط</label><br>(X)</td><td>Tidak mendapat jatah karena mengharap jatah sisa namun tidak ada</td></tr>
+					<tr id="mahjub"><td>13</td><td><label>محجوب</label><br>(M)</td><td>Tidak mendapat jatah karena terhalang ahli waris lain</td></tr>
+				</table>
+				<label>Catatan: </label>
+				<ol>
+					<li>Urutan pertama hingga ke-7 disebut dengan <label>الفروض المقدرة</label> (jatah pasti)</li>
+					<li>Urutan ke-8 hingga ke-11 disebut dengan <label>العصبات</label> (jatah sisa / tidak pasti)</li>
+				</ol>			</div>
+			<div id="mjs">
+				<div class="title">JADWAL SIHAM (<label>جدول السهام</label>)</div>
+				<table class="tbl-siham">
+					<tr><td>Ahli Waris</td><td>Siham</td><td>Syarat</td></tr>
+					<tr>
+						<td rowspan="2"><label>زوج</label></td>
+						<td><label>نصف</label></td>
+						<td>Tidak ada keturunan (anak/cucu) lk maupun pr</td>
+						</tr><tr>
+						<td><label>ربع</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+					<tr>
+						<td rowspan="2"><label>زوجة</label></td>
+						<td><label>ربع</label></td>
+						<td>Tidak ada keturunan (anak/cucu) lk maupun pr</td>
+						</tr><tr>
+						<td><label>ثمن</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							Catatan! Jumlah istri tidak mempengaruhi perincian jatahnya. Sehingga jika jumlah istri ada 4 dan jatahnya 1/8 (karena mayit memiliki anak) maka mereka bersekutu dalam jatah 1/8 (masing-masing mendapat 1/32).
+						</td>
+					</tr>
+					<tr>
+						<td><label>ابن</label></td>
+						<td><label>عصبة بالنفس</label></td>
+						<td>Tanpa syarat</td>
+					</tr>
+					<tr>
+						<td rowspan="3"><label>بنت</label></td>
+						<td><label>عصبة بالغير</label></td>
+						<td>Ada <label>ابن</label></td></tr>
+						<tr><td><label>ثلثان</label></td><td><label>بنت</label> lebih dari satu</td></tr>
+						<tr><td><label>نصف</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+					<tr>
+						<td rowspan="2"><label>ابن ابن</label></td>
+						<td><label>محجوب</label></td>
+						<td>Ada <label>ابن</label> atau <label>إبن إبن</label> yang lebih tinggi derajatnya</td></tr>
+						<tr><td><label>عصبة بالنفس</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+					<tr>
+						<td rowspan="5"><label>بنت ابن</label></td>
+						<td><label>محجوب</label></td>
+						<td>
+						&bull; Ada <label>ابن</label> atau <label>ابن ابن</label> yang lebih tinggi derajatnya secara mutlak<br>
+						&bull; Ada lebih dari satu <label>بنت</label> atau <label>بنت ابن</label> yang lebih tinggi derajatnya namun tidak ada <label>ابن ابن</label> yang sederajat maupun sebawahnya<br>
+						<label>Catatan:</label> Prinsip mahjub dari poin kedua ini adalah adanya bagian <label>ثلثان</label> (dua pertiga) baik yang dimiliki oleh <label>بنت</label> atau <label>بنت ابن</label> yang lebih tinggi derajatnya maupun kombinasi keduanya. Contoh:<br>
+						<ul>
+							<li><label>بنت ابن</label> bersama dua <label>بنت</label></li>
+							<li><label>بنت ابن ابن</label> bersama <label>بنت ابن</label> dan <label>بنت</label></li>
+						</ul>
+						</td>
+						</tr><tr>
+						<td><label>ع بغ</label></td>
+						<td>Ada <label>ابن ابن</label> baik yang sederajat maupun sebawahnya <a class="quest" href="javascript:showPop('#pop_akh_mubarok')"><sup>?</sup></a></td>
+						</tr><tr>
+						<td><label>سدس</label></td>
+						<td>Ada satu <label>بنت</label> atau <label>بنت ابن</label> yang lebih tinggi derajatnya</td>
+						</tr><tr>
+						<td><label>ثلثان</label></td>
+						<td>Tidak sendirian (lebih dari satu)</td>
+						</tr><tr>
+						<td><label>نصف</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+					<tr>
+						<td rowspan="3"><label>اب</label></td>
+						<td><label>سدس</label></td>
+						<td>Ada keturunan lk</td>
+						</tr><tr>
+						<td><label>سدس والباقي</label></td>
+						<td>Ada keturunan pr</td>
+						</tr><tr>
+						<td><label>عصبة بالنفس</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+					<tr>
+						<td rowspan="3"><label>ام</label></td>
+						<td><label>سدس</label></td>
+						<td>Ada keturunan lk/pr satu atau lebih atau saudara lk/pr kandung, seayah maupun seibu yang lebih dari satu</td>
+						</tr><tr>
+						<td><label>ثلث الباقي</label></td>
+						<td>Khusus dalam kasus dimana ahli warisnya adalah <label>ام</label> dan<label>اب</label> dan <label>زوج</label> atau <label>زوجة</label> dan tidak ada ahli waris lain atau ada namun tidak mempengaruhi jatah orang-orang tersebut<br>[<label>غراوين</label>]</td>
+						</tr><tr>
+						<td><label>ثلث</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+					<tr>
+						<td rowspan="4"><label>جد</label></td>
+						<td><label>محجوب</label></td>
+						<td>Ada <label>اب</label></td>
+						</tr><tr>
+						<td><label>سدس</label></td>
+						<td>Ada keturunan lk</td>
+						</tr><tr>
+						<td><label>سدس والباقي</label></td>
+						<td>Ada keturunan pr</td>
+						</tr><tr>
+						<td><label>عصبة بالنفس</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+					<tr>
+						<td rowspan="2"><label>جدة لأم</label></td>
+						<td><label>محجوب</label></td>
+						<td>Ada <label>ام</label></td>
+						</tr><tr>
+						<td><label>سدس</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+					<tr>
+						<td rowspan="2"><label>جدة لأب</label></td>
+						<td><label>محجوب</label></td>
+						<td>Ada <label>ام</label> atau <label>اب</label></td>
+						</tr><tr>
+						<td><label>سدس</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+					<tr>
+						<td colspan="3"><label>Penting: </label>Ketika <label>جدة</label> lebih dari satu dan tidak ada yang mahjub maka mereka bersekutu dalam mendapatkan jatah 1/6 sebagaimana dalam contoh kasus yang ahli warisnya terdiri dari <label>زوجة</label> dan <label>جدة لأب</label> dan <label>جدة لأم</label> </td>
+					</tr>
+					<tr>
+						<td rowspan="3"><label>اخ ق</label></td>
+						<td><label>محجوب</label></td>
+						<td>Ada keturunan lk atau <label>اب</label></td>
+						</tr><tr>
+						<td><label>ثلث</label></td>
+						<td>Khusus dalam kasus dimana ahli warisnya adalah <label>زوج</label> dan <label>أم</label> dan <label>أخ ق</label> dan <label>ولد الأم</label> yang lebih dari satu<br />[مشتركة]</td>
+						</tr><tr>
+						<td><label>عصبة بالنفس</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+					<tr>
+						<td rowspan="5"><label>اخت قة</label></td>
+						<td><label>محجوب</label></td>
+						<td>Ada orang yang memahjubkan <label>اخ ق</label></td>
+						</tr><tr>
+						<td><label>عصبة بالغير</label></td>
+						<td>Ada <label>اخ ق</label></td>
+						</tr><tr>
+						<td><label>عصبة مع الغير</label></td>
+						<td>Ada keturunan pr</td>
+						</tr><tr>
+						<td><label>ثلثان</label></td>
+						<td><label>اخت قة</label> lebih dari satu</td>
+						</tr><tr>
+						<td><label>نصف</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+					<tr>
+						<td rowspan="2"><label>اخ لأب</label></td>
+						<td><label>محجوب</label></td>
+						<td>
+						&bull; Ada orang yang memahjubkan <label>اخ ق</label><br>
+						&bull; Ada <label>اخ ق</label><br>
+						&bull; Ada <label>اخت قة</label> yang mendapat jatah <label>عصبة مع الغير</label></td>
+						</tr><tr>
+						<td><label>عصبة بالنفس</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+					<tr>
+						<td rowspan="6"><label>اخت لأب</label></td>
+						<td><label>محجوب</label></td>
+						<td>
+						&bull; Ada orang yang memahjubkan <label>اخ لأب</label><br>
+						&bull; Ada <label>اخ ق</label> secara mutlak<br> 
+						&bull; Ada <label>اخت قة</label> yang lebih dari satu namun tidak ada <label>اخ لأب</label><br>
+						Catatan: Dalam kasus ketiga ini, yang dapat menyelamatkan <label>اخت لأب</label> hanyalah <label>اخ لأب</label> saja, sedangkan <label>ابن أخ لأب</label> tidak bisa
+						</td>
+						</tr><tr>
+						<td><label>عصبة بالغير</label></td>
+						<td>Ada <label>اخ لأب</label></td>
+						</tr><tr>
+						<td><label>عصبة مع الغير</label></td>
+						<td>Ada keturunan pr</td>
+						</tr><tr>
+						<td><label>سدس</label></td>
+						<td>Ada satu <label>اخت قة</label></td>
+						</tr><tr>
+						<td><label>ثلثان</label></td>
+						<td><label>اخت لأب</label> lebih dari satu</td>
+						</tr><tr>
+						<td><label>نصف</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+					<tr>
+						<td rowspan="3"><label>ولد الأم</label><br>(<label>اخ لأم</label> atau <label>اخت لأم</label>)</td>
+						<td><label>محجوب</label></td>
+						<td>
+						&bull; Ada keturunan lk/pr<br>
+						&bull; Ada <label>اب</label><br>
+						&bull; Ada <label>جد</label></td>
+						</tr><tr>
+						<td><label>ثلث</label></td>
+						<td><label>ولد الأم</label> lebih dari satu</td>
+						</tr><tr>
+						<td><label>سدس</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+					<tr>
+						<td rowspan="2"><label>ابن اخ ق</label></td>
+						<td><label>محجوب</label></td>
+						<td>
+						&bull; Ada orang yang memahjubkan <label>اخ لأب</label><br>
+						&bull; Ada <label>اخ لأب</label> atau <label>جد</label><br>
+						&bull; Ada <label>اخت قة</label> atau <label>اخت لأب</label> yang mendapat jatah <label>عصبة مع الغير</label></td>
+						</tr><tr>
+						<td><label>عصبة بالنفس</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+					<tr>
+						<td rowspan="2"><label>ابن اخ لأب</label></td>
+						<td><label>محجوب</label></td>
+						<td>
+						&bull; Ada orang yang memahjubkan <label>ابن اخ ق</label><br>
+						&bull; Ada <label>ابن اخ ق</label></td>
+						</tr><tr>
+						<td><label>عصبة بالنفس</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+					<tr>
+						<td rowspan="2"><label>عم ق</label></td>
+						<td><label>محجوب</label></td>
+						<td>
+						&bull; Ada orang yang memahjubkan <label>ابن اخ لأب</label><br>
+						&bull; Ada <label>ابن اخ لأب</label></td>
+						</tr><tr>
+						<td><label>عصبة بالنفس</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+					<tr>
+						<td rowspan="2"><label>عم لأب</label></td>
+						<td><label>محجوب</label></td>
+						<td>
+						&bull; Ada orang yang memahjubkan <label>عم ق</label><br>
+						&bull; Ada <label>عم ق</label></td>
+						</tr><tr>
+						<td><label>عصبة بالنفس</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+					<tr>
+						<td rowspan="2"><label>ابن عم ق</label></td>
+						<td><label>محجوب</label></td>
+						<td>
+						&bull; Ada orang yang memahjubkan <label>عم لأب</label><br>
+						&bull; Ada <label>عم لأب</label></td>
+						</tr><tr>
+						<td><label>عصبة بالنفس</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+					<tr>
+						<td rowspan="2"><label>ابن عم لأب</label></td>
+						<td><label>محجوب</label></td>
+						<td>
+						&bull; Ada orang yang memahjubkan <label>ابن عم ق</label><br>
+						&bull; Ada <label>ابن عم ق</label></td>
+						</tr><tr>
+						<td><label>عصبة بالنفس</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+					<tr>
+						<td rowspan="2"><label>معتق</label> atau <label>معتقة</label></td>
+						<td><label>محجوب</label></td>
+						<td>
+						&bull; Ada orang yang memahjubkan <label>ابن عم لأب</label><br>
+						&bull; Ada <label>ابن عم لأب</label></td>
+						</tr><tr>
+						<td><label>عصبة بالنفس</label></td>
+						<td>Syarat sebelumnya tidak terpenuhi</td>
+					</tr>
+				</table>
+				<label style="color: red">Penting!</label> Pilihan siham-siham tersebut harus diurutkan sebagaimana urutan dalam tabel di atas. Jika urutan pertama tidak terpenuhi maka berpindah ke urutan berikutnya, dan begitu pula seterusnya.<br>
+				Contoh: Dua <label>أخت لأب</label> ketika bersama <label>أخت قة</label> dan <label>أخ لأب</label><br>
+				Di sini <label>أخت لأب</label> memiliki 3 kemungkinan
+				<ol>
+					<li><label>ثلثان<i>i</i>(2/3)</label> karena lebih dari 1</li>
+					<li><label>سدس<i>i</i>(1/6)</label> karena ada <label>أخت قة</label></li>
+					<li><label>عصبة بالغير<i>i</i>(ABG)</label> karena ada <label>أخ لأب</label></li>
+				</ol>
+				Namun dalam contoh ini siham bagi <label>أخت لأب</label> adalah <label>عصبة بالغير<i>i</i>(ABG)</label> karena urutannya berada pada posisi teratas. (lihat tabel!)
+			</div>
+			<div id="mam">
+				<div class="title">ASAL MASALAH (<label>أصل المسألة</label>)</div>
+				Definisi Asal Masalah akan berbeda tergantung siham ahli waris dalam kasus warisan yang terjadi<br>
+				<ol>
+					<li>
+						Jika ada ahli waris yang mendapat jatah pasti (baik ada yang mendapat jatah sisa maupun tidak) maka Asal Masalah adalah penyebut siham ahli waris (jika hanya satu) atau Kelipatan Persekutuan Terkecil (KPK) dari kumpulan penyebut dari siham ahli waris yang mendapat jatah pasti (jika lebih dari satu).<br>
+						Contoh #1
+						<table>
+							<tr>
+								<td colspan="3">Asal Masalah: 4<br>Dari penyebut sihamnya istri (4)</td>
+							</tr>
+							<tr>
+								<td>4</td>
+								<td>Istri</td>
+								<td>1/4</td>
+							</tr>
+						</table>
+						<br>Contoh #2
+						<table>
+							<tr>
+								<td colspan="3">Asal Masalah: 12<br>Dari KPK penyebut sihamnya suami (4), anak pr (3) dan ibu (6)</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>Suami</td>
+								<td>1/4</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Anak pr</td>
+								<td>2/3</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>Ibu</td>
+								<td>1/6</td>
+							</tr>
+						</table>
+						<br>Contoh #3
+						<table>
+							<tr>
+								<td colspan="3">Asal Masalah: 6<br>Dari KPK penyebut sihamnya ibu (3) dan saudari (2)<br>Dalam contoh ini keberadaan keponakan tidak mempengaruhi asal masalah karena jatahnya ashobah (ABN)</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>Ibu</td>
+								<td>1/3</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>Saudari</td>
+								<td>1/2</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Keponakan lk</td>
+								<td>ABN</td>
+							</tr>
+						</table>
+						<br>
+					</li>
+					<li>
+						Jika tidak ada ahli waris yang mendapat jatah pasti maka Asal Masalah adalah jumlah orang-orang yang mendapat jatah sisa<br>
+						Contoh #1
+						<table>
+							<tr>
+								<td colspan="3">Asal Masalah: 2<br>Dari jumlah anak lk (2)</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Anak lk</td>
+								<td>ABN</td>
+							</tr>
+						</table>
+						<br>Contoh #2
+						<table>
+							<tr>
+								<td colspan="3">Asal Masalah: 5<br>Dari jumlah anak lk (4) dan anak pr (1)<br>Dalam contoh ini anak lk dihitung 2x lipat karena bersama anak pr</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Anak lk</td>
+								<td>ABN</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>Anak pr</td>
+								<td>ABG</td>
+							</tr>
+						</table>
+					</li>
+				</ol>
+				<div id="mari" class="title">'AUL, RODD DAN INKISAR</div>
+				<ol>
+					<li>'Aul (<label>العول</label>) secara bahasa artinya <cite>naik</cite>. Sedangkan secara istilah adalah bertambahnya jumlah Asal Masalah karena jumlah total jatah melebihi Asal Masalah.</li>
+					<li>Rodd (<label>الرد</label>) adalah kebalikan 'Aul, secara bahasa artinya <cite>kembalian</cite>. Sedangkan secara istilah adalah adanya sisa setelah asal masalah dibagikan kepada ahli waris yang mendapat jatah pasti, namun tidak ada ahli waris yang mendapat jatah sisa.</li>
+					<li>Inkisar (<label>الإنكسار</label>) secara bahasa artinya <cite>pecah</cite>. Secara istilah adalah tidak utuhnya hasil bagi antara jatah dengan jumlah ahli waris (menghasilkan bilangan desimal)</li>
+				</ol>
+				Penjelasan lengkap mengenai tiga istilah ini dapat dilihat pada menu <cite>Cara Menghitung Warisan</cite>
+				<div id="mds" class="title">DAFTAR SINGKATAN</div>
+				<table>
+					<tr><td>Singkatan</td><td>Kepanjangan</td><td>Penjelasan</td></tr>
+					<tr><td>ق</td><td>شقيق</td><td>Kandung (lk)</td></tr>
+					<tr><td>قة</td><td>شقيقة</td><td>Kandung (pr)</td></tr>
+					<tr><td>ABN</td><td>Ashobah bin Nafsi</td><td>Lihat penjelasan <a href="#abn"><label>عصبة بالنفس</label></a></td></tr>
+					<tr><td>ABG</td><td>Ashobah bil Ghoir</td><td>Lihat penjelasan <a href="#abg"><label>عصبة بالغير</label></a></td></tr>
+					<tr><td>AMG</td><td>Ashobah ma'al Ghoir</td><td>Lihat penjelasan <a href="#amg"><label>عصبة مع الغير</label></a></td></tr>
+					<tr><td>M</td><td>Mahjub</td><td>Lihat penjelasan <a href="#mahjub"><label>محجوب</label></a></td></tr>
+				</table>
+			</div>
+			<div style="height:80px"></div>
+		</div>
+		
+		<!--menuCara-->
+		<div id="menuCara">
+		<div id="clmw">
+			<div class="title">LANGKAH-LANGKAH MENGHITUNG WARISAN</div>
+			<ol>
+				<li>
+					Ketika ada orang meninggal, identifikasi seluruh hartanya kemudian ikuti 4 langkah berikut: (abaikan jika tidak ada)
+					<ol>
+						<li>
+							<ul>
+								<li>Bagi harta gono-gini suami dan istri sesuai prosentase yang mereka sepakati ketika masih hidup. Jika terjadi konflik maka harus diselesaikan di pengadilan atau muhakkam.</li>
+								<li>Kembalikan barang-barang (bukan hutang) milik orang lain, seperti barang pinjaman dan sewaan.</li>
+								<li>Lunasi hutang gadai dan ambil barang yang digadaikan.</li>
+								<li>Bayarkan zakat yang harta zakatnya masih ada. Seperti orang yang memiliki emas seberat 100gram dan emas tersebut masih ada (walaupun tidak utuh).</li>
+							</ul>
+						</li>
+						<li>
+							Bayarkan sewajarnya (sesuai kondisi ekonomi mayit) biaya pengurusan jenazah mulai dari memandikan hingga menguburkan. Kecuali jika mayitnya seorang istri, maka pengeluaran ini dibebankan atas suaminya.
+						</li>
+						<li>
+							<ol>
+								<li>Bayarkan zakat yang harta zakatnya sudah tidak ada.</li>
+								<li>Bayarkan biaya haji yang sudah wajib namun belum dikerjakan.</li>
+								<li>Lunasi hutang yang selain dari poin pertama.</li>
+							</ol>
+						</li>
+						<li>
+							Tunaikan wasiat yang nominalnya &le; 1/3 dari total harta (setelah dikurangi 3 pengeluaran di atas).<br>Penjelasan selengkapnya tentang wasiat silakan lihat pada menu <label>Lain-lain</label>
+						</li>
+					</ol>
+					Setelah harta mayit diambil untuk pengeluar-pengeluaran tersebut dan masih ada sisa. Bagikan sisa harta tersebut kepada ahli waris dengan mengikuti langkah-langkah kedua dan seterusnya
+				</li><hr>
+				<li>
+				Tentukan Anggota Keluarga yang masuk dalam golongan Ahli Waris.<br>
+				Sebagai contoh, perhatikan bagan keluarga berikut:<br>
+				<img src="res/contoh.png" style="width: 70%"/>
+				<br>
+				Keterangan:
+				<ul>
+					<li>Orang yang akan diwaris hartanya pada contoh tersebut adalah Zaid</li>
+					<li>Zaid menikah dengan Fatimah dan memiliki dua putri (Ani dan Eni)</li>
+					<li>Sebelum menikah dengan Zaid, Fatimah seorang janda dan sudah memiliki putra (Ali)</li>
+					<li>Kedua orang tua Zaid bernama Umar dan Zainab</li>
+					<li>Memiliki kakek dari jalur ibu bernama Usman</li>
+					<li>Memiliki saudari, (Aisyah) dan saudara (Farid) namun sudah meninggal</li>
+					<li>Juga memiliki keponakan, dari Aisyah bernama Amir dan dari Farid bernama Asim</li>
+				</ul>
+				Maka ahli waris Zaid adalah:
+				<table>
+					<tr><td>Jml</td><td>Ahli Waris</td><td>Keterangan</td></tr>
+					<tr><td>1</td><td><label>زوجة</label></td><td>Istri (Fatimah)</td></tr>
+					<tr><td>2</td><td><label>بنت</label></td><td>Anak pr (Ani &amp; Eni)</td></tr>
+					<tr><td>1</td><td><label>أب</label></td><td>Ayah (Umar)</td></tr>
+					<tr><td>1</td><td><label>أم</label></td><td>Ibu (Zainab)</td></tr>
+					<tr><td>1</td><td><label>أخت قة</label></td><td>Saudari kandung (Aisyah)</td></tr>
+					<tr><td>1</td><td><label>ابن أخ</label></td><td>Keponakan lk (Asim)</td></tr>
+				</table>
+				Keterangan:
+				<ul>
+					<li>Ali bukan ahli waris karena bukan anak kandung Zaid</li>
+					<li>Usman (kakek) bukan ahli waris karena dari jalur ibu</li>
+					<li>Amir (keponakan) bukan ahli waris karena dari jalur saudari</li>
+				</ul>			
+				</li><hr>
+				<li>
+					Tentukan Siham untuk masing-masing ahli waris dan Asal Masalahnya
+				<table>
+					<tr><td colspan="4">Asal Masalahnya adalah: 24<br>Dihasilkan dari KPK 8, 3 dan 6 (penyebut siham istri, anak pr, ayah dan ibu)</td></tr>
+					<tr><td>Jml</td><td>Ahli Waris</td><td>Siham</td><td>Alasan</td></tr>
+					<tr><td>1</td><td><label>زوجة</label></td><td>1/8</td><td>Ada anak</td></tr>
+					<tr><td>2</td><td><label>بنت</label></td><td>2/3</td><td>Lebih dari 1 dan tidak ada anak lk</td></tr>
+					<tr><td>1</td><td><label>أب</label></td><td>1/6 dan Ashobah</td><td>Ada anak pr</td></tr>
+					<tr><td>1</td><td><label>أم</label></td><td>1/6</td><td>Ada anak</td></tr>
+					<tr><td>1</td><td><label>أخت قة</label></td><td>Mahjub</td><td>Ada ayah</td></tr>
+					<tr><td>1</td><td><label>ابن أخ</label></td><td>Mahjub</td><td>Ada ayah</td></tr>
+				</table>
+				</li><hr>
+				<li>
+					Tentukan jatah masing-masing ahli waris dengan rumus: <code style="display: inline-block;">siham&times;asal_masalah</code>
+				<table>
+					<tr><td colspan="5">Asal Masalah: 24<br>'Aul (3) menjadi 27</td></tr>
+					<tr><td>Jml</td><td>Ahli Waris</td><td>Siham</td><td>Jatah</td><td>Ket.</td></tr>
+					<tr><td>1</td><td><label>زوجة</label></td><td>1/8</td><td>3</td><td>(1/8)x24</td></tr>
+					<tr><td>2</td><td><label>بنت</label></td><td>2/3</td><td>16</td><td>(2/3)x24</td></tr>
+					<tr><td>1</td><td><label>أب</label></td><td>1/6 dan Ashobah</td><td>4</td><td>(1/6)x24</td></tr>
+					<tr><td>1</td><td><label>أم</label></td><td>1/6</td><td>4</td><td>(1/6)x24</td></tr>
+					<tr><td>1</td><td><label>أخت قة</label></td><td>Mahjub</td><td>0</td><td>-</td></tr>
+					<tr><td>1</td><td><label>ابن أخ</label></td><td>Mahjub</td><td>0</td><td>-</td></tr>
+				</table>
+				Dalam contoh ini terjadi 'Aul, yaitu jumlah total jatah melebihi Asal Masalah. Maka Asal Masalah dinaikkan menjadi jumlah total jatah
+				</li><hr>
+				<li>
+					Bagikan harta warisan (misalnya 54jt) kepada masing-masing ahli waris dengan rumus: <code style="display: inline-block;">harta&divide;asal_masalah&times;jatah</code><br>
+					Catatan: Asal Masalah dan Jatah yang digunakan sebagai acuan dalam rumus tersebut adalah Asal Masalah dan Jatah yang paling terakhir jika mengalami 'Aul, Rodd dan Inkisar
+				<table>
+					<tr><td colspan="5">Harta Warisan: 54jt<br>Asal Masalah: 27</td></tr>
+					<tr><td>Jml</td><td>Ahli Waris</td><td>Siham</td><td>Jatah</td><td>Rp</td></tr>
+					<tr><td>1</td><td><label>زوجة</label></td><td>1/8</td><td>3</td><td>6jt</td></tr>
+					<tr><td>2</td><td><label>بنت</label></td><td>2/3</td><td>16</td><td>32jt</td></tr>
+					<tr><td>1</td><td><label>أب</label></td><td>1/6 dan Ashobah</td><td>4</td><td>8jt</td></tr>
+					<tr><td>1</td><td><label>أم</label></td><td>1/6</td><td>4</td><td>8jt</td></tr>
+					<tr><td>1</td><td><label>أخت قة</label></td><td>Mahjub</td><td>0</td><td>-</td></tr>
+					<tr><td>1</td><td><label>ابن أخ</label></td><td>Mahjub</td><td>0</td><td>-</td></tr>
+				</table>
+				</li>
+			</ol>
+		</div>
+
+		<div id="caul">
+			<div class="title">'AUL (<label>العول</label>)</div>
+			Jika dalam proses penghitungan mengalami 'Aul (jumlah total jatah melebihi Asal Masalah) maka Asal Masalah dinaikkan sesuai jumlah total jatah.
+				<table>
+					<tr><td colspan="4">Asal Masalah: 6<br>'Aul (1) menjadi 7</td></tr>
+					<tr><td>Jml</td><td>Ahli Waris</td><td>Siham</td><td>Jatah</td></tr>
+					<tr><td>1</td><td><label>زوج</label></td><td>1/2</td><td>3</td></tr>
+					<tr><td>2</td><td><label>أخت قة</label></td><td>2/3</td><td>4</td></tr>
+					<tr><td colspan="3" style="text-align: right">Total Jatah&nbsp;</td><td>7</td></tr>
+				</table>
+		</div>
+
+		<div id="crodd">
+			<div class="title">RODD (<label>الرد</label>)</div>
+				Setelah Asal Masalah dibagikan kepada dzawil furudl (ahli waris yang mendapat jatah pasti), jika masih ada sisa, maka sisa tersebut diberikan kepada Ahli Waris yang jatahnya ashobah/sisa
+				<table>
+					<tr><td colspan="4">Asal Masalah: 4</td></tr>
+					<tr><td>Jml</td><td>Ahli Waris</td><td>Siham</td><td>Jatah</td></tr>
+					<tr><td>1</td><td><label>زوج</label></td><td>1/4</td><td>1</td></tr>
+					<tr><td>1</td><td><label>ابن</label></td><td>ABN</td><td>3</td></tr>
+				</table>
+				Namun jika tidak ada ahli waris yang mendapat jatah ashobah, kasus seperti ini disebut dengan istilah Rodd.<br><br>
+				<label class="red">PENTING!</label> Jatah rodd harus diberikan kepada ahli waris yang memiliki hubungan kekerabatan dengan mayit. Sehingga mengecualikan suami/istri berdasarkan ijma' ulama, karena hubungan keduanya dengan mayit bukan kekerabatan, melainkan pernikahan <a class="quest" href="javascript:showPop('#pop_ijma_rod')"><sup>?</sup></a>, kecuali suami yang statusnya adalah sepupu mayit / <label>ابن عم</label><br>
+				Jika tidak ada ahli waris yang memenuhi kriteria sebagaimana penjelasan diatas, maka jatah rodd diberikan kepada Baitul Mal. Namun dengan syarat pengelolanya merupakan orang-orang adil dan sesuai aturan syariat.<br>
+				Jika tidak ada, atau ada namun tidak memenuhi kriteria, maka diberikan kepada Dzawil Arham (kerabat mayit yang bukan ahli waris, seperti cucu jalur anak pr dan kakek jalur ibu)<br><br>
+				Sebelum masuk pembahasan, kita harus memahami variabel-variabel berikut yang akan digunakan dalam menyelesaikan kasus Rodd.
+				<table>
+					<tr><td>No</td><td>Var</td><td>Penjelasan</td></tr>
+					<tr><td>1</td><td>MR</td><td><label>مسألة الرد</label><br>Asal Masalah yang digunakan sebagai acuan penghitungan jatah ahli waris dalam kasus Rodd</td></tr>
+					<tr><td>2</td><td>BQ</td><td><label>الباقي</label><br>Sisa Asal Masalah setelah dibagikan kepada seluruh ahli waris</td></tr>
+					<tr><td>3</td><td>MZ</td><td><label>مخرج فرض الزوجية</label><br>Penyebut siham suami/istri</td></tr>
+					<tr><td>4</td><td>BZ</td><td><label>الباقي من مخرج فرض الزوجية</label><br>Sisa setelah suami/istri mengambil jatah dari Asal Masalah</td></tr>
+					<tr><td>5</td><td>MM</td><td><label>مسألة من يرد عليه</label><br>Jumlah total jatah <label>أصحاب الرد</label> (ahli waris selain suami/istri) dengan penghitungan tersendiri tanpa mengikutkan suami/istri</td></tr>
+				</table>
+				Karena ahli waris yang berhak mendapat Rodd (<label>أصحاب الرد</label>) adalah selain suami/istri, maka sistem penghitungannya dibagi menjadi dua:
+				<ol>
+					<li>
+						<label>Tidak Ada Suami/Istri</label>
+						<ul>
+							<li>
+								Jika <label>أصحاب الرد</label> hanya satu orang, maka seluruh BQ diberikan kepadanya, sedangkan MR menggunakan Asal Masalah sebelumnya.
+								<table>
+									<tr><td colspan="4">Asal Masalah: 2, rodd (1) menjadi 2(MR)</td></tr>
+									<tr><td>1</td><td><label>بنت</label></td><td>1/2</td><td>1 + 1(BQ) <em>-&rsaquo;</em> 2</td></tr>
+									<tr><td colspan="4">BQ: 1</td></tr>
+								</table>
+							</li>
+							<li>
+								Jika <label>أصحاب الرد</label> lebih dari satu orang namun satu golongan, maka MR menggunakan jumlah ahli waris.
+								<table>
+									<tr><td colspan="4">Asal Masalah: 3, rodd (1) menjadi 5(MR)</td></tr>
+									<tr><td>5</td><td><label>بنت</label></td><td>2/3</td><td>2</td></tr>
+									<tr><td colspan="4">BQ: 1</td></tr>
+								</table>
+							</li>
+							<li>
+								Jika <label>أصحاب الرد</label> lebih dari satu golongan, maka MR menggunakan jumlah total jatah ahli waris.
+								<table>
+									<tr><td colspan="4">Asal Masalah: 6, rodd (2) menjadi 4(MR)</td></tr>
+									<tr><td>1</td><td><label>أم</label></td><td>1/6</td><td>1</td></tr>
+									<tr><td>1</td><td><label>بنت</label></td><td>1/2</td><td>3</td></tr>
+									<tr><td colspan="4">BQ: 2</td></tr>
+								</table>
+							</li>
+						</ul>		
+					</li>
+					<li>
+						<label>Ada Suami/Istri</label><br>
+						Apabila ada suami/istri maka dia hanya berhak mendapat jatah dari MZ, kemudian sisanya (BZ) diberikan kepada <label>أصحاب الرد</label> sesuai dengan kadar siham mereka. Agar BZ dapat terbagi rata kepada mereka ada dua cara untuk menyelesaikannya:
+						<h4 style="margin-bottom: 2px; font-weight: bold;">Cara Pertama</h4>
+						<ul>
+							<li>
+								Jika <label>أصحاب الرد</label> satu golongan (jumlah orangnya satu atau lebih) maka MR menggunakan MZ, setelah suami/istri mengambil jatahnya, BZ diberikan kepada <label>أصحاب الرد</label>
+								<table>
+									<tr><td colspan="4">Asal Masalah: 4, rodd (1) menjadi 4(MR)</td></tr>
+									<tr><td>1</td><td><label>زوج</label></td><td>1/4</td><td>1 <em>-&rsaquo;</em> 1</td></tr>
+									<tr><td>1</td><td><label>بنت</label></td><td>1/2</td><td>2 <em>-&rsaquo;</em> 3</td></tr>
+									<tr><td colspan="4">BQ: 1<br>BZ: 3</td></tr>
+								</table>
+							</li>
+							<li>
+								Jika <label>أصحاب الرد</label> lebih dari satu golongan maka kita harus mencari MM, dengan cara membuat penghitungan khusus <label>أصحاب الرد</label> (tanpa menyertakan suami/istri). Kemudian kita lihat apakah MM dapat terbagi (tidak inkisar) dengan BZ atau tidak.
+								<ul>
+									<li>
+										Jika dapat terbagi maka:
+										<ol>
+											<li>Penentuan MR sama seperti ketentuan sebelumnya, yakni menggunakan MZ</li>
+											<li>Kemudian BZ diberikan kepada <label>أصحاب الرد</label> sesuai kadar siham mereka. Selengkapnya lihat <a href="#pembagianbz">Cara Membagi BZ</a> di bawah</li>
+										</ol>
+										<table>
+											<tr><td colspan="4">Asal Masalah: 12, rodd (3) menjadi 4(MR)</td></tr>
+											<tr><td>1</td><td><label>زوجة</label></td><td>1/4</td><td>3 <em>-&rsaquo;</em> 1</td></tr>
+											<tr><td>1</td><td><label>أم</label></td><td>1/6</td><td>2 <em>-&rsaquo;</em> 1</td></tr>
+											<tr><td>2</td><td><label>أخت لأم</label></td><td>1/3</td><td>4 <em>-&rsaquo;</em> 2</td></tr>
+											<tr>
+												<td colspan="4">
+													BQ: 3 &bull; MZ: 4 &bull; BZ: 9 &bull; MM: 3<br>BZ &divide; MM = 9 &divide; 3 = 3 (tidak inkisar)<br>
+													Maka MR: 3 (MZ)
+												</td>
+											</tr>
+										</table>
+										Tabel bantu untuk mencari MM:
+										<table>
+											<tr><td colspan="4">Asal Masalah: 6</td></tr>
+											<tr><td>1</td><td><label>أم</label></td><td>1/6</td><td>1</td></tr>
+											<tr><td>2</td><td><label>أخت لأم</label></td><td>1/3</td><td>2</td></tr>
+											<tr><td colspan="3" style="text-align: right">Jumlah total jatah (MM):&nbsp;</td><td>3</td></tr>
+										</table>
+									</li>
+									<li>
+										Jika tidak dapat terbagi (inkisar) maka:
+										<ol>
+											<li>MR menggunakan hasil perkalian antara MZ dengan MM.</li>
+											<li>BZ diberikan kepada <label>أصحاب الرد</label> sesuai kadar siham mereka. Selengkapnya lihat <a href="#pembagianbz">Cara Membagi BZ</a> di bawah</li>
+										</ol>
+										<table>
+											<tr><td colspan="4">Asal Masalah: 12, rodd (1) menjadi 16(MR)</td></tr>
+											<tr><td>1</td><td><label>زوج</label></td><td>1/4</td><td>3 <em>-&rsaquo;</em> 4</td></tr>
+											<tr><td>1</td><td><label>بنت ابن</label></td><td>1/2</td><td>6 <em>-&rsaquo;</em> 9</td></tr>
+											<tr><td>1</td><td><label>أم</label></td><td>1/6</td><td>2 <em>-&rsaquo;</em> 3</td></tr>
+											<tr>
+												<td colspan="4">
+													BQ: 1 &bull; MZ: 4 &bull; BZ: 3 &bull; MM: 4 <br> BZ&divide;MM = 9&divide;4 = 2.25 (inkisar)<br>
+													Maka MR: MZ&times;MM =4&times;4 =16
+												</td>
+											</tr>
+										</table>
+										Tabel bantu untuk mencari MM:
+										<table>
+											<tr><td colspan="4">Asal Masalah: 6</td></tr>
+											<tr><td>1</td><td><label>بنت ابن</label></td><td>1/2</td><td>3</td></tr>
+											<tr><td>1</td><td><label>أم</label></td><td>1/6</td><td>1</td></tr>
+											<tr><td colspan="3" style="text-align: right">Jumlah total jatah (MM):&nbsp;</td><td>4</td></tr>
+										</table>
+									</li>
+								</ul>
+								<hr>
+								<label id="pembagianbz">Cara membagi BZ kepada أصحاب الرد</label><br>
+								<table class="tblKet">
+									<tr><td>Rumus:</td><td><code>hasil=JB&divide;TS</code></td></tr>
+									<tr><td colspan="2">Keterangan Variable:</td></tr>
+									<tr><td>JB:</td><td>Jatah BZ untuk <label>أصحاب الرد</label> berdasarkan sihamnya</td></tr>
+									<tr><td>TS:</td><td>Total penjumlahan siham-siham <label>أصحاب الرد</label></td></tr>
+								</table>
+								Contoh kasus:
+								<table>
+									<tr><td colspan="4">Asal Masalah: 24, rodd (1) menjadi 40(MR)</td></tr>
+									<tr><td>1</td><td><label>زوجة</label></td><td>1/8</td><td>3 <em>-&rsaquo;</em> 5</td></tr>
+									<tr><td>2</td><td><label>بنت</label></td><td>2/3</td><td>16 <em>-&rsaquo;</em> 28</td></tr>
+									<tr><td>2</td><td><label>أم</label></td><td>1/6</td><td>4 <em>-&rsaquo;</em> 7</td></tr>
+									<tr>
+										<td colspan="4">
+											BZ: 35 (sisa setelah istri mengambil 1/8 dari MR)<br>
+											TS: 0.83 (hasil dari (2/3)+(1/6))<br>
+											Diketahui, JB <label>بنت</label><br>
+											&nbsp;&nbsp;&nbsp;=35&times;(2/3) =23.33<br>
+											Maka jatah Rodd <label>بنت</label><br>
+											&nbsp;&nbsp;&nbsp;=23.33&divide;0.83 =28<br>
+											Diketahui, JB <label>أم</label><br>
+											&nbsp;&nbsp;&nbsp;=35&times;(1/6) =5.83<br>
+											Maka jatah Rodd <label>أم</label><br>
+											&nbsp;&nbsp;&nbsp;=5.83&divide;0.83 =7<br>
+										</td>
+									</tr>
+								</table>
+
+							</li>
+						</ul>
+						<h4 style="margin-bottom: 2px; font-weight: bold;">Cara Kedua</h4>
+						Cara kedua ini hanya untuk memudahkan ketika <label>أصحاب الرد</label> lebih dari satu. Dan untuk menggunakan cara ini setidaknya anda sudah memahami cara yang pertama terutama tentang MM.
+						<ol>
+							<li>MR menggunakan Asal Masalah sebelumnya</li>
+							<li>Setelah mendapatkan MM, bagikan BZ kepada <label>أصحاب الرد</label> sesuai siham mereka dengan mengacu MM sebagai asal masalah mereka dengan rumus <code>MM &times; Siham</code></li>
+							<li>Kalikan masing-masing jatah <label>أصحاب الرد</label> dengan BZ. Sedangkan untuk jatahnya suami/istri dan Asal Masalah, dikalikan dengan MM</li>
+						</ol>
+						Contoh:
+						<table>
+							<tr><td colspan="5">Asal Masalah: 24, rodd (1)<br>MR: 24 &times; 5(MM) = 120</td></tr>
+							<tr><td>1</td><td><label>زوجة</label></td><td>1/8</td><td colspan="2">3 &times; 5(MM) <em>-&rsaquo;</em> 15</td></tr>
+							<tr><td>1</td><td><label>أم</label></td><td>1/6</td><td rowspan="3">21</td><td>&times; 1 <em>-&rsaquo;</em> 21</td></tr>
+							<tr><td>1</td><td><label>بنت</label></td><td>1/2</td><td>&times; 3 <em>-&rsaquo;</em> 63</td></tr>
+							<tr><td>1</td><td><label>بنت ابن</label></td><td>1/6</td><td>&times; 1 <em>-&rsaquo;</em> 21</td></tr>
+							<tr><td colspan="5">BQ: 1 &bull; BZ: 21<br>Asal Masalah <label>أصحاب الرد</label> (ibu, anak dan cucu) : 6<br>MM: 5</td></tr>
+						</table>
+						
+					</li>
+				</ol>
+			</div>
+
+		<div id="cinkisar">
+			<div class="title">INKISAR (<label>الإنكسار</label>)</div>
+			Inkisar terjadi ketika jatah tidak dapat terbagi kepada masing-masing ahli waris secara sempurna. Seperti ketika ada dua <label>بنت</label> yang mendapat jatah sebanyak 5. Tentu saja 5&divide;2 akan menghasilkan 2.5 (hasil bagi berupa bilangan desimal/pecah/tidak sempurna)<br>
+			<table>
+				<tr><td colspan="4">Asal Masalah: 24</td></tr>
+				<tr><td>1</td><td><label>زوجة</label></td><td>1/8</td><td>3</td></tr>
+				<tr><td>3</td><td><label>بنت</label></td><td>2/3</td><td>16<br>(@5.33)</td></tr>
+				<tr><td>2</td><td><label>أخ ق</label></td><td>ABN</td><td>5<br>(@2.5)</td></tr>
+				<tr><td colspan="4">Pada contoh ini, <label>بنت</label> dan <label>أخ ق</label> mengalami inkisar</td></tr>
+			</table>
+
+			Untuk mengatasi hal tersebut, asal masalah harus dinaikkan dengan cara mengalikan dengan Juz Siham (<code>js</code>), begitu pula jatah masing-masing ahli waris dikalikan dengan <code>JS</code><br>
+			Juz Siham adalah sebuah angka bebas dari 2 sampai bilangan yang tidak terhingga. Prinsipnya, hasil akhirnya berupa bilangan bulat (integer).<br>
+			Karena isi variable tersebut terlalu spekulatif dan harus mencoba beberapa kali untuk menghasilkan bilangan bulat, maka para ulama memberika rumus berikut:<br>
+			<ol>
+				<li>
+					Jika ahli waris yang mengalami inkisar hanya satu golongan maka <code>js</code> = jumlah ahli waris yang mengalami inkisar.
+					<table>
+						<tr><td colspan="4">Asal Masalah: 24, inkisar (3) menjadi 72</td></tr>
+						<tr><td>1</td><td><label>زوجة</label></td><td>1/8</td><td>3 <em>-&rsaquo;</em> 9</td></tr>
+						<tr><td>3</td><td><label>بنت</label></td><td>2/3</td><td>16 <em>-&rsaquo;</em> 48</td></tr>
+						<tr><td>1</td><td><label>أخ ق</label></td><td>ABN</td><td>5 <em>-&rsaquo;</em> 15</td></tr>
+						<tr><td colspan="4"><code>js=3</code> dimana 3 adalah jumlah <label>بنت</label></td></tr>
+					</table>				
+				</li>
+				<li>
+					Jika ahli waris yang mengalami inkisar lebih dari satu golongan maka <code>js</code> = KPK masing-masing jumlah ahli waris yang mengalami inkisar.
+					<table>
+						<tr><td colspan="4">Asal Masalah: 24, inkisar (6) menjadi 144</td></tr>
+						<tr><td>1</td><td><label>زوجة</label></td><td>1/8</td><td>3 <em>-&rsaquo;</em> 18</td></tr>
+						<tr><td>3</td><td><label>بنت</label></td><td>2/3</td><td>16 <em>-&rsaquo;</em> 96</td></tr>
+						<tr><td>2</td><td><label>أخ ق</label></td><td>ABN</td><td>5 <em>-&rsaquo;</em> 30</td></tr>
+						<tr><td colspan="4"><code>js=kpk(3,2)</code> dimana 3 dan 2 adalah jumlah <label>بنت</label> dan <label>أخ ق</label></td></tr>
+					</table>
+				</li>
+			</ol>
+			<div id="cinkisar2" class="title">INKISAR DALAM JADD IKHWAH</div>
+			Karena kompleknya proses perhitungan Jadd Ikhwah, dua Rumus Inkisar pada penjelasan sebelumnya tidak dapat diterapkan dalam masalah ini.<br>
+			Kami (al-faqir), dalam kasus Jadd Ikhwah, hanya menemukan referensi untuk menentukan Juz Siham hanya dalam 4 kasus saja, yaitu kasus <label>عشرية</label><i>i</i>,<i>i</i><label>عشرينية</label><i>i</i>,<i>i</i><label>مختصرية</label> dan <label>تسعينية</label><i>i</i>. Sedangkan untuk kasus-kasus Jadd Ikhwah yang lain tidak dijelaskan.<br>
+			Kemudian kami melihat pada contoh-contoh perhitungan selain 4 kasus tersebut dalam penentuan Juz Sihamnya terkesan tidak menggunakan pola tertentu. Begitu pula dalam 4 kasus tersebut, terkesan ambigu dan tidak beraturan. Sehingga kami berkesimpulan <cite>"tidak ada rumusnya"</cite>.<br>
+			Maka dari itu, kami kembali ke konsep awal, Juz Siham dalam dua masalah ini menggunakan angka bebas dari 2 sampai bilangan yang tidak terhingga. Dimulai dari angka 2, jika masih inkisar beralih ke angka 3, jika masih inkisar beralih ke angka 4, dan seterusnya hingga tidak terjadi inkisar.<br>
+			
+		</div>
+
+		<div id="cpenting">
+			<div class="title">PENTING!!!</div>
+			Untuk menghindari konflik pembagian warisan, sebaiknya harta warisan jangan dijadikan satu kemudian baru dibagi. 
+			Akan tetapi masing-masing aset dibagi sesuai hasil perhitungan ilmu waris.<br>
+			Sebagai contoh, ahli warisnya ada dua, anak lk dengan jatah dua, dan anak pr dengan satu (rasio 2:1). 
+			Kemudian harta warisannya adalah uang dan dua rumah yang lokasinya berbeda. 
+			Maka, uang tersebut dibagi dua sesuai jatah masing-masing. 
+			Rumah juga demikian, masing-masing dibagi dengan teknis sebagai berikut (pilih salah satu):
+			<ul>
+				<li>Dijual, lalu uangnya dibagi dua.</li>
+				<li>Disewakan, lalu uang hasil sewanya dibagi dua.</li>
+				<li>Dipakai secara bergilir, misalnya, anak lk dua tahun sedangkan anak pr satu tahun, dan seterusnya.</li>
+			</ul>
+			<label>والله أعلم</label>
+		</div>
+		
+		<div style="height:80px"></div>
+		
+		</div>
+		
+		<!--menuLain-->
+		<div id="menuLain">
+			<div id="lainGonogini">
+				<div class="title"><label>HARTA GONO-GINI</label></div>
+				Harta gono-gini adalah harta bersama milik suami dan istri. Jika hanya milik salah satu pihak maka tidak disebut gono-gini.<br>
+				Dalam perspektif fiqih, gono-gini bisa disebut harta yang tercampur (المال المختلط) jika tidak ada akad, atau disebut harta syirkah/syarikah jika memang ada akad syirkah.<br>
+				Syirkah dianggap sah ketika dua orang atau lebih mengucapkan akad syirkah kemudian mencampur harta mereka dengan tujuan untuk modal usaha atau dipakai bersama.<br>
+				Contoh si A dan B patungan uang masing-masing 10 juta untuk membeli motor, maka motor tersebut menjadi milik mereka berdua dengan saham kepemilikan masing-masing 50%. Praktek syirkah seperti ini hukumnya sah.<br>
+				Namun ketika yang dicampur adalah penghasilan, sebagaimana yang terjadi antara suami & istri dimana masing-masing berkomitmen bahwa apapun yang suami hasilkan maka istri berhak memilikinya dan begitu pula sebaliknya, ini disebut syirkah abdan (شركة الأبدان) yang tidak dilegalkan dalam madzhab Syafi'i. Sedangkan madzhab Maliki menganggapnya sah dengan beberapa ketentuan, dan madzhab Hanafi mengatakan sah secara mutlak.<a class="quest" href="javascript:showPop('#pop_syirkahabdan')"><sup>?</sup></a><br>
+				Yang perlu ditekankan dalam pembahasan ini adalah bahwa akad syirkah termasuk kategori Aqdun Jaizun Min Thorofain (عقد جائز من الطرفين) yang mana salah satu ketentuannya adalah akad tersebut akan otomatis rusak/batal ketika salah satu pihak meninggal dunia. Sehingga harta syirkah harus segera dibagi tanpa menunggu kedua pihak meninggal semua. Dan karena harta gono-gini berkaitan langsung dengan harta tirkah mayit maka pembagiannya harus didahulukan sebelum pelunasan hutang dan wasiat<br>
+				Tentang rasio pembagiannya harus sesuai dengan komitmen suami dan istri ketika pertama memulai akad gono-gini. Jika terjadi konflik maka harus diselesaikan di pengadilan atau di depan muhakkam.
+			</div>
+			
+			<div id="lainWasiat">
+				<div class="title"><label>WASIAT (الوصية)</label></div>
+				Wasiat adalah akad tabarru' (pemberian tanpa imbalan, seperti hibah, sodaqoh, hadiah, wakaf dan pembebasan hutang) yang perealisasiannya ditanggunhkan setelah meninggal. Atau tidak menangguhkan setelah meninggal namun menggunakan kata "wasiat" dalam ucapannya. Hukum perealisasian wasiat adalah wajib jika memenuhi syarat dan ketentuannya.
+				<div class="rounded" style="padding: 10px 10px 5px;">
+					<label>Catatan!</label> Jika yang dipesankan bukan tabarru', seperti berpesan untuk: 1) Mengasuh anak kecilnya; 2) Menguburkan di pemakaman tertentu; 3) Mengurusi pelunasan hutang dan sebagainya maka tidak disebut wasiat, melainkan disebut iysho (الإيصاء), sehingga hukum perealisasiannya tidak wajib<a class="quest" href="javascript:showPop('#pop_iysho')"><sup>?</sup></a>.
+				</div>
+				Berikut ini adalah contoh-conton ucapan wasiat:
+				<ul>
+					<li>Saya wasiat sebidang tanah ini wakaf untuk masjid</li>
+					<li>Jika saya meninggal maka sebidang tanah ini milik kamu</li>
+					<li>Jika saya meninggal maka hutangmu gugur</li>
+					<li>Saya berikan uang ini kepadamu setelah saya meninggal</li>
+				</ul>
+				Sedangkan contoh "Sebidang tanah ini untuk masjid" bukan wasiat karena tidak menggunakan kata "wasiat" dan tidak ada penangguhan "setelah saya meninggal" dalam ucapan tersebut<br>
+				Ketentuan wasiat terbagi dua berdasarkan status orang yang menerima wasiat.
+				<ol>
+					<li>
+						Jika status si penerima bukan ahli waris dari si mayit, atau ahli waris namun statusnya mahjub<a class="quest" href="javascript:showPop('#pop_wasiat_kpd_ahli_waris_mahjub')"><sup>?</sup></a>, maka diperinci sebagai berikut
+						<ul>
+							<li>Jika nominal wasiat tidak melebihi 1/3 dari seluruh harta mayit maka wasiat harus direalisasikan walaupun ahli warisnya tidak setuju</li>
+							<li>Jika nominalnya lebih dari 1/3 maka yang harus direalisasikan hanya 1/3 saja, sedangkan sisanya harus menunggu kesepakatan seluruh ahli waris. Jika mereka sepakat maka bisa direalisasikan, namun jika tidak sepakat maka tidak boleh di realisasikan.</li>
+						</ul>
+					</li>
+					<li>Jika si penerima merupakan ahli waris, seperti anaknya atau saudaranya, maka perealisasiannya harus menunggu kesepakatan ahli waris walaupun nominal wasiatnya sedikit (tidak melebihi 1/3)</li>
+				</ol>
+				Penerima wasiat jika perorangan disyaratkan
+				<ol>
+					<li>Sudah hidup ketika akad wasiat terjadi walaupun masih dalam kandungan dengan catatan:
+					<ul>
+						<li>Lahir sebelum 6 bulan setelah akad wasiat, baik ibunya masih berstatus sebagai istri maupun sudah janda. Atau</li>
+						<li>Lahir setelah 6 bulan dan sebelum 4 tahun dari akad wasiat dengan syarat ibunya sudah janda ketika akad wasiat.</li>
+					</ul>
+					</li>
+					<li>Masih hidup ketika pemberi wasiat meninggal. Jika meninggal sebelum atau bersamaan dengan pemberi wasiat maka batal wasiatnya.</li>
+					<li>Secara lisan menerima pemberian wasiat setelah meninggalnya pemberi wasiat.</li>
+					
+				</ol>
+				<h3>Membatalkan Wasiat<a class="quest" href="javascript:showPop('#pop_mencabut_wasiat')"><sup>?</sup></a></h3>
+				Wasiat dihukumi batal jika dicabut langsung oleh orang yang berwasiat sebelum meninggal. Pencabutan bisa dilakukan dengan ucapan atau perbuatan, pada sebagian wasiat atau seluruhnya, dalam kondisi ingat pernah wasiat maupun lupa.<br>
+				Contoh pencabutan dengan ucapan:
+				<ol>
+					<li>Saya membatalkan seluruh wasiat yang pernah saya ucapkan</li>
+					<li>Saya mencabut kembali wasiat kepada masjid</li>
+					<li>Saya tidak jadi wasiat atas tanah ini</li>
+					<li>Tanah ini untuk ahli waris saya</li>
+				</ol>
+				Contoh pencabutan dengan perbuatan:
+				<ol>
+					<li>Segala bentuk perbuatan yang menyebabkan hilangnya hak milik atas barang yang diwasiatkan seperti jual-beli dan hibah</li>
+					<li>Menanami tanah yang diwasiatkan dengan pepohonan (bukan sayuran), atau membangun bangunan di atasnya</li>
+				</ol>
+				<label>Penting!!</label> Termasuk hukum wasiat (harus menggunakan aturan-aturan wasiat) adalah pemberian, wakaf atau pembebasah hutang oleh seseorang semasa hidupnya namun dalam kondisi sakit yang menjadi sebab meninggalnya, atau kondisi lain yang kemungkinan meninggalnya tinggi seperti di tengah medan perang yang sengit, pesawat yang sedang jatuh atau kapal laut yang hampir tenggelam.
+			</div>
+			
+			<div id="lainHutangSetelahWarisan">
+			<div class="title"><label>TAGIHAN / PELUNASAN HUTANG SETELAH WARISAN</label></div>
+			Pembagian waris sebelum menyelesaikan 4 pengeluaran tirkah hukumnya tidak diperbolehkan. Jika dirasa sudah menyelesaikannya dan pembagian warispun dilaksanakan, ternyata ada hutang mayit yang belum terlunaskan, maka ahli waris harus melunasinya berdasarkan jatah warisnya.<br>
+			Contoh: Ada tagihan sebesar 6jt setelah pembagian waris. Ahli warisnya terdiri dari 3 orang: istri, anak lk dan anak pr. Maka beban istri 750.000; beban anak lk 3.500.000; beban anak pr 1.750.000;<br>
+			Begitu pula ketika ada pelunasan hutang dari seseorang sebesar 6jt. Maka uang ini harus dibagi 3 orang ahli warisnya sesuai hitungan tersebut. Untuk istri 750.000; untuk anak lk 3.500.000; untuk anak pr 1.750.000;
+			</div>
+
+			<div id="lainTarodli">
+			<div class="title"><label>PEMBAGIAN WARIS SALING RIDLO</label></div>
+			Pada dasarnya, perhitungan warisan dengan kaidah Ilmu Faroidl harus dilakukan (wajib) dalam rangka untuk mengetahui siapa saja yang mendapat warisan dan berapa jatahnya masing-masing.<br>
+			Setelah masing-masing mengetahui jatah warisannya berdasarkan Ilmu Faroidl, selanjutnya harta warisan boleh dibagi sesuai perhitungan waris tersebut maupun secara rata atau yang lain.<br>
+			Apabila pembagian warisan dilakukan sebelum masing-masing ahli waris mengetahui jatahnya berdasarkan Ilmu Faroidl maka hukumnya haram dan tidak sah walaupun saling ridlo<a class="quest" href="javascript:showPop('#pop_tarodli')"><sup>?</sup></a>. Karena sistem seperti ini mengandung unsur <span style="font-style: italic">ghurur</span> (berpotensi menimbulkan penyesalan di kemudian hari). 
+			Karena ketika ahli waris mengetahui jatah yang semestinya berdasarkan perhitungan ilmu waris, misal, harusnya dapat 4 tapi karena bagi rata akhirnya dapat 3, sangat mungkin dia tidak terima dan menuntut agar dihitung ulang sesuai ilmu waris.<br>
+			<label>Penting! </label>Praktek pembagian waris semacam ini hanya diperbolehkan bagi ahli waris yang sudah dewasa dan tidak mahjur. Sedangkan ahli waris yang statusnya mahjur (karena masih kecil atau gila) tidak boleh diikutkan dalam praktek pembagian seperti ini, sehingga jatahnya harus diberikan secara utuh sebagaimana mestinya. Hal yang sama berlaku bagi ahli waris yang tidak mahjur namun menghendaki pembagian secara ilmu waris, maka jatahnya harus diberika secara utuh.<br>
+			Contoh: Ahli waris ada 5 orang. Satu orang di antaranya masih kecil, dan satu orang lagi menghendaki pembagian secara hukum waris. Maka khusus dua orang ini jatahnya harus diberika secara utuh. Sedangkan bagi 3 orang lainnya boleh menggunakan sistem bagi rata.
+			</div>
+			
+			<div id="lainBiayaTahlilan">
+			<div class="title"><label>BIAYA TRADISI TAHLILAN</label></div>
+			Perlu di pahami bahwa sebelum pembagian waris, harta tirkah harus dikeluarkan untuk 4 pengeluaran yang bersifat wajib yaitu tanggungan barang, perawatan jenazah, tanggungan hutang dan wasiat.<br>
+			Pengeluaran selain untuk 4 hal itu tidak boleh menggunakan harta tirkah kecuali atas kesepakatan seluruh ahli waris. Namun menurut Madzhab Maliki, apabila hal tersebut sudah mentradisi seperti tahlilan maka dihukumi wasiat<a class="quest" href="javascript:showPop('#pop_biaya_tahlilan')"><sup>?</sup></a>. 
+			</div>
+			
+			<div id="lainHitungTanah">
+			<div class="title"><label>CARA MEMBAGI TANAH</label></div>
+			Pembagian aset selain uang yang paling ideal adalah diuangkan (dijual) dahulu kemudian uang tersebut diwaris. Namun jika ahli waris tidak menghendaki penjualan tanah, maka cara penghitungan dan pembagiannya sebagai berikut:
+			<ol>
+				<li>Ukurlah lebar bagian depan dan belakang tanah yang akan diwaris. Misalnya, depan 4.000cm dan belakang 3.500cm</li>
+				<li>Hitung masing-masing sesuai ahli waris yang ada. Misalnya istri, anak lk dan 2 anak pr</li>
+				<li>
+					Maka, dari hasil penghitungan dihasilkan sebagai berikut:
+					<table>
+							<tr>
+								<td>Ahli Waris</td>
+								<td>Jatah Depan (4.000cm)</td>
+								<td>Jatah Belakang (3.500cm)</td>
+							</tr>
+							<tr>
+								<td>Istri</td>
+								<td>500cm</td>
+								<td>437,5cm</td>
+							</tr>
+							<tr>
+								<td>Anak Lk</td>
+								<td>1.750cm</td>
+								<td>1.531,3cm</td>
+							</tr>
+							<tr>
+								<td>2 Anak Pr</td>
+								<td>1.750cm<br>(@ 875cm)</td>
+								<td>1.531,3cm<br>(@ 765,6cm)</td>
+							</tr>
+					</table>
+				</li>
+			</ol>
+			</div>
+		
+			<div id="lainWali">
+			<div class="title"><label>Wali Yatim, Gila dan sesamanya <a class="quest" href="javascript:showPop('#pop_perwalian')"><sup>?</sup></a></label></div>
+			Orang yang hartanya harus dikelola orang lain seperti anak kecil, yatim, gila dan sebagainya disebut mahjur 'alaih (<label>محجور عليه</label>). Wali / orang yang berhak mengelola hartanya berurutan sebagai berikut:
+			<ol>
+				<li>Ayah</li>
+				<li>Kakek</li>
+				<li>Ibu (menurut sebuah pendapat)</li>
+				<li>Orang yang diberi wasiat menjadi wali</li>
+				<li>Qodli/Hakim</li>
+				<li>Orang islam yang kompeten menjadi wali</li>
+			</ol>
+			Bagi qodli/hakim hendaknya menunjuk orang yang paling tinggi kasih sayangnya terhadap mahjur.<br>
+			<label>Catatan!</label> Bagi selain wali tidak boleh mengelola hartanya mahjur kecuali hal-hal yang sepele, seperti biaya pendidikan.
+			</div>
+<!--			
+			<div id="lain....">
+			<div class="title"><label>Judul</label></div>
+			</div>
+-->	
+		<div style="height:80px"></div>
+		</div>
+		
+		<!--menuSyadz-->
+		<div id="menuSyadz">
+			<div class="rounded" style="padding: 10px 10px 5px;">
+				Masail Syadzah (<label>مسائل الشاذة</label>) adalah masalah-masalah warisan yang sistem penghitungannya tidak menggunakan rumus warisan, melainkan berdasarkan fatwa sahabat Nabi
+				<br>Masalah-masalah tersebut totalnya ada 4:
+				<ol>
+					<li>Masalah Ghorowain (<label>الغروين</label>)</li>
+					<li>Masalah Musytarokah (<label>المشتركة</label>)</li>
+					<li>Masalah Jadd Ikhwah (<label>الجد والإخوة</label>)</li>
+					<li>Masalah Akdariyah (<label>الأكدرية</label>)</li>
+				</ol>
+			</div>
+			<!-- Ghorowain -->
+			<div id="sygh">
+				<div class="title">
+					<label>GHOROWAIN (الغراوين)</label>
+				</div>
+				Disebut Ghorowain (dua bintang yang bersinar) karena masyhurnya dua masalah ini, diibaratkan seberti dua bintang yang bersinar. Yang dimaksud dua masalah ini adalah masalah ghorowain yang di dalamnya terdapat <label>زوج</label> dan masalah yang di dalamnya terdapat <label>زوجة</label><br>
+				Disebut juga Umariyatain karena masalah ini berdasarkan fatwa Sahabat Umar RA.<br>
+				Adalah sebuah masalah warisan dimana ahli warisnya terdiri dari:<br>
+				<ol>
+					<li><label>زوج</label> atau <label>زوجة</label> baik satu atau lebih</li>
+					<li><label>أم</label></li>
+					<li><label>أب</label></li>
+				</ol>
+				Dalam kasus ini sebenarnya <label>أب</label> mendapat jatah 1 (sisa)<br>
+				<table>
+					<tr><td colspan="4"><label>Asal Masalah 6</label></td></tr>
+					<tr><td>1</td><td><label>زوج</label></td><td>1/2</td><td>3</td></tr>
+					<tr><td>1</td><td><label>أم</label></td><td>1/3</td><td>2</td></tr>
+					<tr><td>1</td><td><label>أب</label></td><td>ABN</td><td>1</td></tr>
+				</table>
+				Namun, ternyata jatahnya di bawah 2x jatah <label>أم</label> (harusnya 4), padahal ketika ada dua ahli waris yang satu laki-laki dan satunya perempuan dan satu derajat harusnya laki-laki mendapat jatah 2x lipat dari jatah perempuan (<label>للذكر مثل حظ الأنثيين</label>)<br>
+				Oleh karena itu Sahabat Umar RA memutuskan bahwa <label>أم</label> mendapat jatah 1/3 dari sisa, kemudian selebihnya diberikan kepada <label>أب</label>
+				Sehingga hasil perhitungannya menjadi:<br>
+				<table>
+					<tr><td colspan="4"><label>Asal Masalah 2 inkisar (3) menjadi 6</label></td></tr>
+					<tr><td>1</td><td><label>زوج</label></td><td>1/2</td><td>1 <em>-&rsaquo;</em> 3</td></tr>
+					<tr><td>1</td><td><label>أم</label></td><td>1/3 sisa</td><td>0.33 <em>-&rsaquo;</em> 1</td></tr>
+					<tr><td>1</td><td><label>أب</label></td><td>ABN</td><td>0.67 <em>-&rsaquo;</em> 2</td></tr>
+				</table>
+			</div>
+			<!-- Musytarokah -->
+			<div id="syms">
+				<div class="title">
+				<label>MUSYTAROKAH (المشتركة)</label>
+				</div>
+				Sebuah kasus warisan dimana ahli warisnya terdiri dari:<br>
+				<ol>
+					<li><label>زوج</label></li>
+					<li><label>أم</label> atau <label>جدة</label> baik dari jalur ayah maupun dari jalur ibu</li>
+					<li><label>اخ او اخت لأم</label> yang jumlahnya lebih dari satu</li>
+					<li><label>اخ ق</label> baik hanya satu atau lebih, baik ada <label>أخت قة</label> maupun tidak</li>
+				</ol>
+				Catatan:<br>
+				Dalam masalah ini, <label>اخ ق</label> tidak dihitung 2x ketika bersama <label>أخت قة</label> (tidak berlaku kaidah <label>للذكر مثل حظ الأنثيين</label>)<br>
+				Disebut Musytarokah (milik bersama) karena sebenarnya <label>اخ ق</label> tidak mendapat jatah, karena jatahnya adalah sisa sedangkan tidak ada sisa setelah asal masalah dibagi kepada ahli waris lain.<br>
+				Masalah ini disebut juga dengan Yammiyah, Hajariyah dan Himariyah
+				<table>
+					<tr><td colspan="4"><label>Asal Masalah 6</label></td></tr>
+					<tr><td>1</td><td><label>زوج</label></td><td>1/2</td><td>3</td></tr>
+					<tr><td>1</td><td><label>أم</label></td><td>1/6</td><td>1</td></tr>
+					<tr><td>2</td><td><label>أخ لأم</label></td><td>1/3</td><td>2</td></tr>
+					<tr><td>1</td><td><label>أخ ق</label></td><td>ABN</td><td>-</td></tr>
+				</table>
+				Namun, --Imam Syafi'i RA meriwayatkan-- saudara kandung usul kepada Sahabat Umar RA, <cite>"Wahai Amirul Mukminin, amggaplah ayah kami adalah sebuah batu yang dilempar ke lautan!"</cite>, dalam riwayat lain <cite>"anggaplah ayah kami seekor himar! Bukankan kami (saudara kandung dan saudara seibu) satu ibu?".</cite><br>
+				Maksud dari ucapan tersebut adalah, jika saudara seibu mendapat jatah karena memiliki hubungan keluarga dengan mayit dari jalur ibu, maka saudara kandung juga memiliki jalur yang sama. Hanya saja, saudara kandung juga memiliki jalur lain yaitu dari ayah yang menjadikannya mendapat jatah ABN.<br>
+				Kemudian Sahabat Umar menganggap baik usulan tersebut dan menjadikan saudara kandung sebagai saudara seibu<br>
+				Sehingga hasil perhitungannya menjadi:
+				<table>
+					<tr><td colspan="4"><label>Asal Masalah 6, inkisar (3) menjadi 18</label></td></tr>
+					<tr><td>1</td><td><label>زوج</label></td><td>1/2</td><td>3 <em>-&rsaquo;</em> 9</td></tr>
+					<tr><td>1</td><td><label>أم</label></td><td>1/6</td><td>1 <em>-&rsaquo;</em> 3</td></tr>
+					<tr><td>2</td><td><label>أخ لأم</label></td><td rowspan="2">1/3</td><td rowspan="2">2 <em>-&rsaquo;</em> 6</td></tr>
+					<tr><td>1</td><td style="border-right: none"><label>أخ ق</label></td></tr>
+				</table>
+			</div>
+			<!-- Jadd Ikhwah -->
+			<div id="syji">
+				<div class="title">
+				<label>JADD IKHWAH (الجد والإخوة)</label>
+				</div>
+				Dalam Madzhab Syafi'i, keberadaan <label>جد</label> tidak menghalangi jatah saudara lakai-laki maupun perempuan, kandung maupun seayah (kecuali saudara seibu, maka jatahnya terhalang)<br>
+				Sedangkan dalam madzhab lain, <label>جد</label> dapat menghalangi seluruh saudara. Mereka mengqiyaskan <label>جد</label> dengan <label>ابن إبن</label> (sama-sama laki-laki dan bernasab kepada mayit dari jalur laki-laki)<br>
+				Syafi'iyyah beranggapan karena <label>جد</label> yang bersama saudara tidak dijelaskan langsung baik oleh al-Qur'an maupun Hadits, sehingga para Sahabat Nabi berijtihad sendiri untuk menentukannya.<br>
+				Ketentuan dalam masalah ini adalah
+				<ol>
+					<li> <!-- 1 -->
+						Tidak ada ahli waris lain yang memahjubkan <label>جد</label> dan atau saudara
+					</li>
+					<li> <!-- 2 -->
+						Saudara yang dimaksud dalam masalah ini adalah saudara kandung lk/pr dan saudara seayah lk/pr, bukan saudara seibu<label></label>
+					</li>
+					<li> <!-- 3 -->
+						<label>جد</label> dan saudara sama-sama dalam mengambil jatah sisa
+					</li>
+					<li> <!-- 4 -->
+						Jika ada Dzawil Furudl (ahli waris yang mendapat jatah pasti), seperti <label>زوج</label>, maka <label>جد</label> mengambil jatah terbanyak dari tiga pilihan:
+						<ul style="margin-left: -22px;">
+							<li><label>ثلث الباقي</label><i>i</i> (1/3 dari sisa)</li>
+							<li><label>مقاسمة</label><i>i</i> (bagi rata jatah sisa bersama saudara)</li>
+							<li><label>سدس المال</label><i>i</i> (1/6 dari Asal Masalah)</li>
+						</ul>
+						<table>
+							<tr><td colspan="8"><label>Asal Masalah 3</label></td></tr>
+							<tr><td>1</td><td><label>أم</label></td><td>1/3</td><td colspan="4">1</td><!--colspan--><!--colspan--><!--colspan--><td>1</td></tr>
+							<tr><td>1</td><td><label>جد</label></td><td rowspan="2">ABN</td><td rowspan="2">2</td><td><label>لث</label><i>i</i>: 0.67</td><td><label>مة</label><i>i</i>: 1</td><td><label>دس</label><i>i</i>: 0.5</td><td>1</td></tr>
+							<tr><td>1</td><td><label>أخ ق</label></td><!--rowspan--><!--rowspan--><td>1.33</td><td>1</td><td>1.5</td><td>1</td></tr>
+							<tr><td colspan="8" style="font-style: italic">* Dalam contoh ini jatah terbanyak bagi <label>جد</label> adalah <label>مقاسمة</label><i>i</i>: 1</td></tr>
+						</table>
+					</li>
+					<li> <!-- 5 -->
+						Jika tidak ada Dzawil Furudl, maka <label>جد</label> mengambil jatah terbanyak dari dua pilihan:
+						<ul style="margin-left: -22px;">
+							<li><label>ثلث المال</label><i>i</i> (1/3 dari Asal Masalah)</li>
+							<li><label>مقاسمة</label><i>i</i> (bagi rata jatah sisa bersama saudara)</li>
+						</ul>
+						<table>
+							<tr><td colspan="7"><label>Asal Masalah 4, inkisar (9) menjadi 36</label></td></tr>
+							<tr><td>1</td><td><label>جد</label></td><td rowspan="2">ABN</td><td rowspan="2">4</td><td><label>لث</label><i>i</i>: 1.33</td><td><label>مة</label><i>i</i>: 1</td><td>1.33 <em>-&rsaquo;</em> 12</td></tr>
+							<tr><td>3</td><td><label>أخ ق</label></td><!--rowspan--><!--rowspan--><td>2.67</td><td>3</td><td>2.67 <em>-&rsaquo;</em> 24</td></tr>
+							<tr><td colspan="7" style="font-style: italic">* Dalam contoh ini jatah terbanyak bagi <label>جد</label> adalah <label>ثلث المال</label><i>i</i>: 1.33</td></tr>
+						</table>
+					</li>
+					<li> <!-- 6 -->
+						Setelah <label>جد</label> mengambil jatahnya, selebihnya diberikan kepada saudara</li>
+					<li> <!-- 7 -->
+						Ketika bersama Dzawil Furudl, jatah <label>جد</label> tidak boleh kurang dari 1/6 dari Asal Masalah. Jika kurang maka <label>جد</label> diberi jatah 1/6 kemudian Asal Masalah dinaikkan ('Aul)
+						<table>
+							<tr><td colspan="4"><label>Asal Masalah 12, 'aul (1) menjadi 13</label></td></tr>
+							<tr><td>1</td><td><label>زوج</label></td><td>1/4</td><td>3</td></tr>
+							<tr><td>2</td><td><label>بنت</label></td><td>2/3</td><td>8</td></tr>
+							<tr><td>1</td><td><label>جد</label></td><td>ABN</td><td>2</td></tr>
+							<tr><td>1</td><td><label>أخ ق</label></td><td>ABN</td><td>-</td></tr>
+						</table>
+					</li>
+					<li> <!-- 8 -->
+						Ketika ada saudari maka status <label>جد</label> sama seperti saudara dalam mendapat jatah 2x dari saudari (<label>للذكر مثل حظ الأنثيين</label>), namun tidak dalam hal mempengaruhi jatah <label>أم</label>
+						<table>
+							<tr><td colspan="8"><label>Asal Masalah 3, inkisar (3) menjadi 9</label></td></tr>
+							<tr><td>1</td><td><label>أم</label></td><td>1/3</td><td colspan="4">1</td><!--colspan--><!--colspan--><!--colspan--><td>1 <em>-&rsaquo;</em> 3</td></tr>
+							<tr><td>1</td><td><label>جد</label></td><td rowspan="2">ABN</td><td rowspan="2">2</td><td><label>لث</label><i>i</i>: 0.67</td><td><label>مة</label><i>i</i>: 1.33</td><td><label>دس</label><i>i</i>: 0.5</td><td>1.33 <em>-&rsaquo;</em> 4</td></tr>
+							<tr><td>1</td><td><label>أخت لأب</label></td><!--rowspan--><!--rowspan--><td>1.33</td><td>0.67</td><td>1.5</td><td>0.67 <em>-&rsaquo;</em> 2</td></tr>
+							<tr>
+								<td colspan="8" style="font-style: italic">
+									* Dalam contoh ini jatah terbanyak bagi <label>جد</label> adalah <label>مقاسمة</label><i>i</i>: 1.33<br>
+									* Jika <label>جد</label> ditempati oleh <label>أخ لأب</label> maka siham <label>أم</label> menjadi 1/6 karena ada saudara lebih dari satu
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li> <!-- 9 -->
+						<label>أخ ق</label> yang bersama <label>أخت قة</label> atau <label>أخ لأب</label> yang bersama <label>أخت لأب</label> tetap diberlakukan kaidah <label>للذكر مثل حظ الأنثيين</label>
+						<table>
+							<tr><td colspan="7"><label>Asal Masalah 5</label></td></tr>
+							<tr><td>1</td><td><label>جد</label></td><td rowspan="3">ABN</td><td rowspan="3">5</td><td><label>لث</label><i>i</i>: 1.67</td><td><label>مة</label><i>i</i>: 2</td><td>2</td></tr>
+							<tr><td>1</td><td><label>أخ ق</label></td><!--rowspan--><!--rowspan--><td>2.22</td><td>2</td><td>2</td></tr>
+							<tr><td>1</td><td><label>أخت قة</label></td><!--rowspan--><!--rowspan--><td>1.11</td><td>1</td><td>1</td></tr>
+							<tr><td colspan="7" style="font-style: italic">* Dalam contoh ini jatah terbanyak bagi <label>جد</label> adalah <label>مقاسمة</label><i>i</i>: 2</td></tr>
+						</table>
+					</li>
+					<li> <!-- 10 -->
+						Ketika <label>أخ لأب</label> bersama <label>أخت قة</label> maka dihitung 2x lipat ketika tidak ada saudara <label>أخ ق</label>.<br>
+						Begitu juga <label>أخ ق</label> dihitung 2x lipat ketika bersama <label>أخت لأب</label> jika tidak ada <label>أخ لأب</label>
+						<table>
+							<tr><td colspan="7"><label>Asal Masalah 7, inkisar (12) menjadi 84</label></td></tr>
+							<tr><td>1</td><td><label>جد</label></td><td rowspan="3">ABN</td><td rowspan="3">7</td><td><label>لث</label><i>i</i>: 2.33</td><td><label>مة</label><i>i</i>: 2</td><td>2.33 <em>-&rsaquo;</em> 28</td></tr>
+							<tr><td>1</td><td><label>أخت قة</label></td><!--rowspan--><!--rowspan--><td>3.50</td><td>3.50</td><td>3.50 <em>-&rsaquo;</em> 42</td></tr>
+							<tr><td>2</td><td><label>أخ لأب</label></td><!--rowspan--><!--rowspan--><td>1.17</td><td>1.50</td><td>1.17 <em>-&rsaquo;</em> 14</td></tr>
+							<tr><td colspan="7" style="font-style: italic">* Dalam contoh ini jatah terbanyak bagi <label>جد</label> adalah <label>ثلث المال</label><i>i</i>: 2.33</td></tr>
+						</table>
+					</li>
+					<li> <!-- 11 -->
+						Jika ada <label>أخ ق</label> maka saudara seayah tidak mendapat jatah warisan, namun dalam proses penghitungan tetap diikutkan walaupun akhirnya jatahnya diberikan untuk <label>أخ ق</label>
+						<div style="color: #750003"><label>Catatan: </label>Mulai point ke-11 ini dan seterusnya (ketika saudara kandung bersama saudara seayah) disebut juga dengan masalah Mu&apos;adah (<label>معادة</label>)</div>
+						<table>
+							<tr><td colspan="7"><label>Asal Masalah 5</label></td></tr>
+							<tr><td>1</td><td><label>جد</label></td><td rowspan="2">ABN</td><td rowspan="3">5</td><td><label>لث</label><i>i</i>: 1.67</td><td><label>مة</label><i>i</i>: 2</td><td>2</td></tr>
+							<tr><td>1</td><td><label>أخ ق</label></td><!--rowspan--><!--rowspan--><td>3.33</td><td>3</td><td>3</td></tr>
+							<tr><td>1</td><td><label>أخت لأب</label></td><td>M</td><!--rowspan--><td>0</td><td>0</td><td>0</td></tr>
+							<tr><td colspan="7" style="font-style: italic">* Dalam contoh ini jatah terbanyak bagi <label>جد</label> adalah <label>مقاسمة</label><i>i</i>: 2</td></tr>
+						</table>
+					</li>
+					<li> <!-- 12 -->
+						Dua atau lebih <label>أخت قة</label> tidak menghalangi jatah saudara seayah baik lk/pr. Dia memiliki jatah maksimal sebagaimana akan dijelaskan pada point 13 dan 14, jika ada lebih maka diberikan kepada saudara seayah.
+					</li>
+					<li> <!-- 13 -->
+						Jika ada satu <label>أخت قة</label> dan ada saudara seayah, maka <label>أخت قة</label> hanya berhak mendapat jatah maksimal 1/2 dari Asal Masalah, kemudian selebihnya diberikan kepada saudara seayah
+						<table>
+							<tr><td colspan="7"><label>Asal Masalah 5, inkisar (4) menjadi 20</label></td></tr>
+							<tr><td>1</td><td><label>جد</label></td><td rowspan="3">ABN</td><td rowspan="3">5</td><td><label>لث</label><i>i</i>: 1.67</td><td><label>مة</label><i>i</i>: 2</td><td>2 <em>-&rsaquo;</em> 8</td></tr>
+							<tr><td>1</td><td><label>أخت قة</label></td><!--rowspan--><!--rowspan--><td>2.50</td><td>2.50</td><td>2.50 <em>-&rsaquo;</em> 10</td></tr>
+							<tr><td>2</td><td><label>أخت لأب</label></td><!--rowspan--><!--rowspan--><td>0.83</td><td>0.50</td><td>0.50 <em>-&rsaquo;</em> 2</td></tr>
+							<tr><td colspan="7" style="font-style: italic">* Dalam contoh ini jatah terbanyak bagi <label>جد</label> adalah <label>مقاسمة</label><i>i</i>: 2</td></tr>
+						</table>
+					</li>
+					<li> <!-- 14 -->
+						Jika <label>أخت قة</label> ada dua atau lebih dan ada saudara seayah, maka <label>أخت قة</label> hanya berhak mendapat jatah maksimal 2/3 dari Asal Masalah, kemudian selebihnya diberikan kepada saudara seayah
+						<table>
+							<tr><td colspan="7"><label>Asal Masalah 6</label></td></tr>
+							<tr><td>1</td><td><label>جد</label></td><td rowspan="3">ABN</td><td rowspan="3">6</td><td><label>لث</label><i>i</i>: 2</td><td><label>مة</label><i>i</i>: 2</td><td>2</td></tr>
+							<tr><td>2</td><td><label>أخت قة</label></td><!--rowspan--><!--rowspan--><td>4</td><td>4</td><td>4</td></tr>
+							<tr><td>2</td><td><label>أخت لأب</label></td><!--rowspan--><!--rowspan--><td>0</td><td>0</td><td>-</td></tr>
+							<tr><td colspan="7" style="font-style: italic">* Dalam contoh ini jatah terbanyak bagi <label>جد</label> adalah <label>ثلث المال</label><i>i</i>: 2</td></tr>
+						</table>
+					</li>
+					<li> <!-- 15 -->
+						Jika jatah <label>أخت قة</label> kurang dari 1/2 (dalam poin 13) atau kurang dari 2/3 (dalam poin 14) maka Asal Masalah tidak dinaikkan (tidak seperti <label>جد</label> ketika jatahnya kurang dari 1/6; lihat poin 7)
+						<table>
+							<tr><td colspan="8"><label>Asal Masalah 4</label></td></tr>
+							<tr><td>1</td><td><label>زوجة</label></td><td>1/4</td><td colspan="4">1</td><td>1</td></tr>
+							<tr><td>1</td><td><label>جد</label></td><td rowspan="3">ABN</td><td rowspan="3">3</td><td><label>لث</label><i>i</i>: 1</td><td><label>مة</label><i>i</i>: 0.75</td><td><label>دس</label><i>i</i>: 0.67</td><td>1</td></tr>
+							<tr><td>2</td><td><label>أخت قة</label></td><!--rowspan--><!--rowspan--><td>2</td><td>2.25</td><td>2.33</td><td>2</td></tr>
+							<tr><td>2</td><td><label>أخ لأب</label></td><!--rowspan--><!--rowspan--><td>0</td><td>0</td><td>0</td><td>-</td></tr>
+							<tr>
+								<td colspan="8" style="font-style: italic">
+									* Dalam contoh ini jatah terbanyak bagi <label>جد</label> adalah <label>ثلث الباقي</label><i>i</i>: 1<br>
+									* Jatah maksimal bagi <label>أخت قة</label> dalam contoh ini bisa mencapai 2.67 (2/3 dari 4)
+								</td>
+							</tr>
+						</table>
+					</li>
+				</ol>
+			</div>
+			<!-- Akdariyah -->
+			<div id="syak">
+				<div class="title">
+				<label>AKDARIYAH (الأكدرية)</label>
+				</div>
+				Merupakan anakan dari masalah Jadd Ikhwah, namun dengan ketentuan lebih spesifik<br>
+				Ahli Waris dalam masalah ini adalah:
+				<ol>
+					<li><label>زوج</label></li>
+					<li><label>أم</label></li>
+					<li><label>جد</label></li>
+					<li>Satu <label>أخت قة</label> atau <label>أخت لأب</label></li>
+				</ol>
+				Kronologi dalam masalah ini adalah:
+				<ol>
+					<li><label>جد</label> tidak mengambil jatah ABN, melainkan 1/6</li>
+					<li>Karena tidak ada yang mengasobahkan, maka <label>أخت</label> tidak mendapat ABG, melainkan 1/2</li>
+					<li>Setelah Asal Masalah dibagi, <label>جد</label> mendapat 1 sedangkan <label>أخت</label> mendapat 3 </li>
+					<li><label>جد</label> berubah pikiran dan merubah jatahnya menjadi ABN agar mendapat 2x lipat dari <label>أخت</label> namun proses penghitungan tidak diulangi dari awal</li>
+					<li>Karena <label>جد</label> mengambil jatah ABN, maka jatah <label>أخت</label> berubah menjadi ABG sehingga jatah mereka berdua digabung menjadi 4 (1+3)</li>
+					<li>Gabungan jatah mereka kemudian dibagi dua dengan rasio 2:1 (2 untuk <label>جد</label> dan 1 untuk <label>أخت</label>) sebagaimana dalam kasus Jadd Ikhwah biasa</li>
+				</ol>
+				Dari kronologi tersebut dapat dipahami bahwa penyebutan Akdariyah (keruh) disebabkan karena <label>جد</label> mengeruhkan penghitungan warisan (tidak konsisten).
+				<table id="tbl-kalk-hasil" width="auto">
+					<tr>
+						<td colspan="7">
+							<label>Asal Masalah 6, 'Aul (3) menjadi 9, Inkisar (3) menjadi 27</label>
+						</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td><label>زوج</label></td>
+						<td>1/2</td>
+						<td>3</td>
+						<td colspan="2" style="text-align: center"><em>-&rsaquo;</em></td>
+						<td><em>-&rsaquo;</em> 9</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td><label>أم</label></td>
+						<td>1/3</td>
+						<td>2</td>
+						<td colspan="2" style="text-align: center"><em>-&rsaquo;</em></td>
+						<td><em>-&rsaquo;</em> 6</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td><label>جد</label></td>
+						<td>1/6</td>
+						<td>1</td>
+						<td>ABN</td>
+						<td rowspan="2">4</td>
+						<td>2.67 <em>-&rsaquo;</em> 8</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td><label>أخت قة</label></td>
+						<td>1/2</td>
+						<td>3</td>
+						<td>ABG</td>
+						<!--rowspan-->
+						<td>1.33 <em>-&rsaquo;</em> 4</td>
+					</tr>
+				</table>
+				<div style="text-align: center; margin-top: 15px;"><label>والله أعلم</label></div>
+			</div>
+			<div style="height:80px"></div>
+		</div>
+		
+		<!--menuAWmubham-->
+		<div id="menuAWmubham">
+			<div class="rounded" style="padding: 10px 10px 5px;">
+				Ahli Waris (AW) yang statusnya tidak jelas adalah:
+				<ol>
+					<li>
+						Dalam kandungan, maka kemungkinannya adalah:
+						<ul>
+							<li>Lahir selamat dan berjenis kelamin laki-laki</li>
+							<li>Lahir selamat dan berjenis kelamin perempuan</li>
+							<li>Lahir dalam kondisi sudah meninggal/keguguran</li>
+						</ul>
+					</li>
+					<li>
+						Hilang, maka kemungkinannya adalah:
+						<ul>
+							<li>Masih hidup</li>
+							<li>Sudah meninggal</li>
+						</ul>
+					</li>
+					<li>
+						Banci (status lk dan pr-nya belum jelas), maka kemungkinannya adalah:
+						<ul>
+							<li>Laki-laki</li>
+							<li>Perempuan</li>
+						</ul>
+					</li>
+				</ol>
+			</div>
+			Ketika terjadi demikian, keberadaannya harus diperhitungkan dengan memperkirakan kemungkinan terbaik baginya. <br>
+			Dan bagi ahli waris lain yang jatahnya terpengaruh oleh keberadaannya harus memperkirakan kemungkinan terburuk, sedangkan bagi yang tidak terpengaruh boleh mengambil jatah secara utuh.<br>
+			<label>Contoh kasus:</label>
+			<table>
+				<tr><td>Ahli Waris</td><td>Siham</td></tr>
+				<tr><td><label>زوجة</label></td><td>1/4 (ambil)</td></tr>
+				<tr><td><label>أم</label></td><td>1/6 (ambil)<br>1/6 (pending)</td></tr>
+				<tr><td><label>أخ ق</label></td><td>Setengah dari sisa (ambil)<br>Setengan sisanya (pending)</td></tr>
+				<tr><td><label>أخ ق / أخة قة</label><br>(jabang bayi)</td><td>?</td></tr>
+				<!--<tr><td><label>aaa</label></td><td>aaa</td><td>aaa</td></tr>-->
+			</table>
+			Rincian kemungkinan si jabang bayi:
+			<ul>
+				<li>
+					<label>Laki-laki:</label><br>
+					Jatahnya ABN, maka berhak mendapat setengah dari sisa yang dipending dari <label>أخ ق</label>. Sedangkan bagian 1/6 yang dipending dari <label>أم</label> dibagi dua untuk dua <label>أخ ق</label> (masing-masing 1/12)
+				</li>
+				<li>
+					<label>Perempuan:</label><br>
+					Jatahnya ABG, maka berhak mendapat 1/3 dari total harta sisa (termasuk menghitung 1/6 yang dipending dari <label>أم</label>), dan sisanya (2/3) untuk <label>أخ ق</label>
+				</li>
+				<li>
+					<label>Sudah meninggal/keguguran:</label><br>
+					Tidak berhak mendapat jatah, maka ahli waris yang jatahnya dipending berhak mendapatkannya.
+				</li>
+			</ul>
+			
+		</div>
+		
+		<!--menuKuis-->
+		<div id="menuKuis" class="center">
+			<div id="box" class="rounded">
+				<table id="tbl-acak-aw">
+					<thead><tr><th>Ahli Waris</th><th>Siham</th></tr></thead>
+					<tbody></tbody>
+				</table>
+			</div>
+			<label>Jumlah ahli waris:</label>
+			<select id="jml-acak" style="width:40px;margin:20px;">
+				<option value='1'>1</option>
+				<option value='2'>2</option>
+				<option value='3'>3</option>
+				<option value='4'>4</option>
+				<option value='5'>5</option>
+				<option value='6'>6</option>
+				<option value='7'>7</option>
+				<option value='8'>8</option>
+				<option value='9'>9</option>
+			</select>
+			<br>
+			<button onclick="acak();">=&gt; Acak &lt;= </button>
+			<button onclick="jawab();">=&gt; Jawab &lt;= </button>
+			<br><br><br>
+			<label>==== Petunjuk ====</label>
+			<ol style="text-align: left">
+				<li>Tentukan jumlah ahli waris lalu klik tombol Acak</li>
+				<li>Tentukan masing-masing siham ahli waris dengan cara meng-klik kolom sebelah kanan pada tabel kemudian pilih salah satu dari daftar siham yang tersedia</li>
+				<li>Klik tombol Jawab</li>
+				<li>Jika siham yang anda pilih benar akan berwarna hijau, jika salah akan berwarna merah</li>
+			</ol>
+		</div>
+
+		<div id="menuPengaturan">
+			<label>Ukuran Font</label>
+			<div class="title" style="font-size: 20px;margin:0 0 5px">
+				<div class="ig">
+				  <div class="ig-icon">
+						<button style="width:80px;height:30px" onclick="changeFontSize(-1)">&laquo;</button>
+				  </div>
+				  <div class="ig-area" style="padding:8px">
+				  	<label id="fontSize">3</label>
+				  </div>
+				  <div class="ig-icon">
+				  	<button style="width:80px;height:30px" onclick="changeFontSize(1)">&raquo;</button>
+				  </div>
+				</div>
+			</div>
+			<label>Warna Tema</label>
+			<div class="title" style="font-size: 20px;margin:0 0 5px">
+				<div class="ig">
+				  <div class="ig-icon">
+						<button style="width:80px;height:30px" onclick="changeTheme()">&laquo;</button>
+				  </div>
+				  <div class="ig-area" style="padding:8px">
+				  	<label id="theme">Gelap</label>
+				  </div>
+				  <div class="ig-icon">
+				  	<button style="width:80px;height:30px" onclick="changeTheme()">&raquo;</button>
+				  </div>
+				</div>
+			</div>
+<!--			<label>Bahasa / Language / اللغة</label>
+			<div class="title" style="font-size: 20px;margin:0 0 5px">
+				<div class="ig">
+				  <div class="ig-icon">
+						<button style="width:80px;height:30px" onclick="changeLang(-1)">&laquo;</button>
+				  </div>
+				  <div class="ig-area" style="padding:8px">
+				  	<label id="lang">id</label>
+				  </div>
+				  <div class="ig-icon">
+				  	<button style="width:80px;height:30px" onclick="changeLang(1)">&raquo;</button>
+				  </div>
+				</div>
+			</div>
+-->
+		</div>
+		
+		<!--menuTentang-->
+		<div id="menuTentang">
+			<div class="center">
+			<label>KALKULATOR WARIS</label><br>
+			Menurut Madzhab Syafi'i<br>
+			Sumber Rujukan dari Kitab 'Uddatul Faridl<br>
+			<br>
+  		Fitur Utama:<br>
+  		1. Kalkulator Waris. Termasuk Penghitungan Kasus Jadd Ikhwah, Akdariyah, Ghorowain dan Musytarokah.<br>
+  		2. Materi Lengkap Tentang Ilmu Waris berikut Panduan Penghitungan Waris.<br>
+  		3. Kuis Tebak Siham untuk melatih kemampuan menentukan siham waris.<br><br>
+			Jika ada kendala, hubungi kami di:<br>
+			HP/WA: +62 896 7058 1924 <br>
+			Email: tohakepriben@gmail.com<br>
+			<p><a class="abtn" href="javascript:showPop('#pop_whatsapp')">Whatsapp Grup</a></p>
+
+			<p class="android hidden">
+				<a class="abtn" href="javascript:void(0)" onclick="JsInterface.shareApp();">Share</a>
+				<a class="abtn" href="javascript:void(0)" onclick="showPop('#pop_komputer')">Versi Komputer</a>
+				<a class="abtn" href="javascript:void(0)" onclick="JsInterface.reviewApp()">Rate</a>
+			</p>
+			<p class="pc hidden">
+				<a class="abtn" href="javascript:showPop('#pop_donasi')">Donasi</a>
+				<a class="abtn" href="javascript:go('https://play.google.com/store/apps/details?id=com.tohakepriben.kalkulatorwaris',0)">Download Versi Android</a>
+				<a class="abtn" href="javascript:go('https://drive.google.com/embeddedfolderview?id=11WRB7e91Qz6mODKw4aKmnjkYRc8DgVla#list')">Cek Update</a>
+			</p>
+			<br>
+			<label class="engraved android"><span>Kalkulator Waris Versi Android</span><br>&copy;2021 to Present by TohaKepriben</label>
+			<label class="engraved pc"><span>Kalkulator Waris Versi Desktop</span><br>&copy;2021 to Present by TohaKepriben</label>
+			</div>
+		</div>
+		
+		<!--menuDownload-->
+		<div id="menuDownload" dir="rtl" class="center">
+			<p>
+				<label>كتاب التلخيص في علم الفرائض</label><br />
+				للعالم العلامة أبي حكيم عبد الله بن إبراهيم الخبري الفرض المتوفى سنة 476 هـ
+				<br />
+				<a href="javascript:go('https://drive.google.com/file/d/1uhz8ZUcWvZ3SWzmYC3mkQE6juyZljTnG/preview')">Download (10.8 MB)</a>
+			</p><p>
+				<label>شرح الفصول المهمة في مواريث الأمة</label><br />
+				للعالم العلامة بدر الدين بن محمد بن محمد سبط المارديني الدمشقي القاهري الشافعي المتوفى سنة 912 هـ
+				<br />
+				<a href="javascript:go('https://drive.google.com/file/d/1wHoCWkcwtAFLqua56ejYpad7m8iyyvi3/preview')">Download (10.9 MB)</a>
+			</p><p>
+			<!--
+			</p><p>
+				<label></label><br />
+				<br />
+				<a href="">Download ( MB)</a>
+			</p><p>
+			-->
+				<label>نهاية الهداية إلى تحرير الكفاية</label><br />
+				لشيخ الإسلام زكريا بن محمد بن أحمد الأنصاري الشافعي المتوفى سنة 926 هـ
+				<br />
+				<a href="javascript:go('https://drive.google.com/file/d/1-9uTkS3Ut20XLg6ej3NZQDW_UaseGNZY/preview')">Download (10.9 MB)</a>
+			</p><p>
+				<label>حاشية العلامة البقري علر شرح السبط على الرحبية</label><br />
+				للشيخ محمد بن عمر البقري الشافعي
+				<br />
+				<a href="javascript:go('https://drive.google.com/file/d/1-W4ZbYSbP3TSD_2AvBbbXkcnCSg-dVon/preview')">Download (4.4 MB)</a>
+			</p><p>
+				<label>فتح القريب المجيب بشرح الترتيب</label><br />
+				للشيخ عبد الله بن محمد الشنشوري الفرضي الشافعي المتوفى سنة 999 هـ
+				<br />
+				<a href="javascript:go('https://drive.google.com/file/d/1A6fGD5VZQdN0jjKZRBP_PBLzgCGAC1LW/preview')">Download (31.1 MB)</a>
+			</p><p>
+				<label>حاشية الباجوري على شرح الشنشوري على المنظومة الرحبية</label><br />
+				للشيخ إبراهيم بن محمد بن أحمد الشافعي الباجوري المتوفى سنة 1276 هـ
+				<br />
+				<a href="javascript:go('https://drive.google.com/file/d/1vcRkgWh8844X42phP6eedl4gSHuATZGc/preview')">Download (19.2 MB)</a>
+			</p><p>
+				<label>حاشية الباجوري (باب الإرث والوصية) </label><br />
+				للشيخ إبراهيم بن محمد بن أحمد الشافعي الباجوري المتوفى سنة 1276 هـ
+				<br />
+				<a href="javascript:go('https://drive.google.com/file/d/1vUH3wJ0wh5jFhOjXnhnTnlwqtfVJPIkI/preview')">Download (743 KB)</a>
+			</p><p>
+				<label>إعانة الطالبين (باب الوصية والإرث)</label><br />
+				أبو بكر (عثمان)، المشهور بالسيد البكري بن السيد محمد زين العابدين شطا الدمياطي الشافعي المتوفى سنة ١٣١٠ هـ
+				<br />
+				<a href="javascript:go('https://drive.google.com/file/d/1sNFNOANcPmYvyrfrZ-17Ctt8rkn0jNm7/preview')">Download (2.1 MB)</a>
+			</p><p>
+				<label>منظومة عدة الفارض والرحبية وغيرها</label><br />
+				للشيخ سعيد بن سعد بن نبهان الحضرمي الشافعي المتوفى سنة 1354 هـ
+				<br />
+				والشيخ العالم العلامة محمد بن علي الرحبي الشافعي المتوفى سنة 577 هـ
+				<br />
+				<a href="javascript:go('https://play.google.com/store/apps/details?id=com.tohakepriben.majmunadhom',0)">Download (4 MB)</a>
+			</p><p>
+				<label>سلاح الناهض شرح عدة الفارض</label><br />
+				للسيد أحمد بن حسن بن محمد باعقيل
+				<br />
+				<a href="javascript:go('https://drive.google.com/file/d/1jJieZz2v0_rCrRIpH1n6KV8d_Cl1rL5T/preview')">Download (19.7 MB)</a>
+			</p><p>
+				<label>المواريث فى الشريعة الإسلامية فى ضوء الكتاب والسنة</label><br />
+				للشيخ محمد علي الصابوني المتوفى سنة 1442 هـ
+				<br />
+				<a href="javascript:go('https://drive.google.com/file/d/1YtUGkc4DFZl_vGwxSyq3xZVs17KP6k4T/preview')">Download (3.9 MB)</a>
+			</p><p>
+				<label>العذب الفائض شرح عمدة الفارض</label><br />
+				للشيخ ابراهيم بن عبد الله بن ابراهيم الفرضي الحنبلي
+				<br />
+				<a href="javascript:go('https://drive.google.com/file/d/1rF5Sr8K5Az_4bEY7hqXkcdN_dcAUGpbp/preview')">Download (14.5 MB)</a>					
+			</p>
+
+
+		</div>
+	</div>
+	<!--flying-menu-->
+	<div id="flying-menu-back"></div>
+	<div id="flying-menu">
+		<ul class="hidden" style="margin:revert;">
+			<li><a href="#mrw">Rukun-rukun Warisan</a></li>
+			<li><a href="#mspw">Syarat Pelaksanaa Warisan</a></li>
+			<li><a href="#msw">Sebab Warisan</a></li>
+			<li><a href="#mpw">Penghalang Warisan</a></li>
+			<li><a href="#mpsw">Pengeluaran Sebelum Warisan</a></li>
+			<li><a href="#maw">Ahli Waris</a></li>
+			<li><a href="#ms">Siham (Jatah Warisan)</a></li>
+			<li><a href="#mjs">Jadwal Siham</a></li>
+			<li><a href="#mam">Asal Masalah</a></li>
+			<li><a href="#mari">'Aul, Rodd dan Inkisar</a></li>
+			<li><a href="#mds">Daftar Singkatan</a></li>
+		</ul>
+		<ul class="hidden" style="margin:revert;">
+			<li><a href="#sygh">Ghorowain (<label>الغروين</label>)</a></li>
+			<li><a href="#syms">Musytarokah (<label>المشتركة</label>)</a></li>
+			<li><a href="#syji">Jadd Ikhwah (<label>الجد والإخوة</label>)</a></li>
+			<li><a href="#syak">Akdariyah (<label>الأكدرية</label>)</a></li>
+		</ul>
+		<ul class="hidden" style="margin:revert;">
+			<li><a href="#clmw">Langkah&sup2; Menghitung Warisan</a></li>
+			<li><a href="#caul">'Aul (<label>العول</label>)</a></li>
+			<li><a href="#crodd">Rodd (<label>الرد</label>)</a></li>
+			<li><a href="#cinkisar">Inkisar (<label>الإنكسار</label>)</a></li>
+			<li><a href="#cinkisar2">Inkisar Dalam Jadd Ikhwah</a></li>
+			<li><a href="#cpenting">PENTING!!!</a></li>
+		</ul>
+		<ul class="hidden" style="margin:revert;">
+			<li><a href="#lainGonogini">Harta Gono-gini</a></li>
+			<li><a href="#lainWasiat">Wasiat (<label>الوصية</label>)</a></li>
+			<li><a href="#lainHutangSetelahWarisan">Tagihan/Pelunasan Hutang Setelah Warisan</a></li>
+			<li><a href="#lainTarodli">Pembagian Waris Saling Ridlo</a></li>
+			<li><a href="#lainBiayaTahlilan">Biaya Tradisi Tahlilan</a></li>
+			<li><a href="#lainHitungTanah">Cara Membagi Tanah</a></li>
+			<li><a href="#lainWali">Wali Yatim, Gila dan sesamanya</a></li>
+		</ul>
+		<a href="javascript:void(0)" onclick="more();">&bull;&bull;&bull;</a>
+	</div>
+	</div>
+
+
+
+
+</section>
+<div class="popup">
+	<div class="popup_content" id="pop_alert">
+		<h3 class="popup_heading"><span class="popup_title">
+		Title </span><a href="javascript:hidePop()" class="popup_close">&times;</a>
+		</h3>
+		<div class="popup_text"></div>
+	</div>
+
+	<div class="popup_content" id="pop_iframe">
+		<h3 class="popup_heading"><span class="popup_title">
+		Download </span><a href="javascript:hidePop()" class="popup_close">&times;</a>
+		</h3>
+		<div class="popup_text" style="direction: ltr">
+		<iframe style="border:0; width:100%; height: calc(100vh - 140px);"></iframe>
+		</div>
+	</div>
+	
+	<div class="popup_content" id="pop_donasi">
+		<h3 class="popup_heading"><span class="popup_title">
+		Donasi </span><a href="javascript:hidePop()" class="popup_close">&times;</a>
+		</h3>
+		<div class="popup_text"><div dir="ltr">
+		<p>Sisihkan sedikit rezeki anda untuk membantu kami mengembangkan aplikasi ini dan aplikasi-aplikasi bermanfaat lainnya melalui:</p>
+		<ol>
+			<li>Bank BRI <strong>5868-0104-7269-539</strong></li>
+			<li>Bank Mandiri <strong>13900-2704-8309</strong></li>
+			<li>DANA <strong>0896-7058-1924</strong></li>
+			<li>OVO <strong>0896-7058-1924</strong></li>
+		</ol>
+		Semuanya atas nama <strong>Syaeful Qohar</strong>
+		<p>Jazaakallahu khoiron</p>
+		</div></div>
+	</div>
+
+	<div class="popup_content" id="pop_whatsapp">
+		<h3 class="popup_heading"><span class="popup_title">
+		Aturan WA Grup </span><a href="javascript:hidePop()" class="popup_close">&times;</a>
+		</h3>
+		<div class="popup_text" style="direction: ltr">
+		<ol>
+			<li>Grup khusus diskusi ilmu waris dan seputarnya seperti wasiat dan gono-gini.</li>
+			<li>Dilarang keras mengirim atau membahas hal-hal yang tidak berhubungan dengan waris.</li>
+			<li>Pertanyaan tentang penghitungan waris silakan gunakan aplikasi dan mohon tidak ditanyakan di grup kecuali merasa tidak sesuai dengan hasil penghitungan.</li>
+			<li>Boleh guyon/bercanda sewajarnya saja.</li>
+			<li>Melanggar aturan ini berarti anda siap dikeluarkan dari grup.</li>
+		</ol>
+		<div class="center" style="padding: 5px">
+			<input type="checkbox" onclick="$('#whatsapp').prop('disabled', !$(this).is(':checked'));"/> Saya memahami aturan grup<br>
+			<button disabled="" id="whatsapp" onclick="location.href='https://chat.whatsapp.com/H9qvVgAai7UGYsftok3DWR'" style="padding: 0 15px; width: fit-content;margin-top: 10px;">BERGABUNG</button>
+		</div>
+		</div>
+	</div>
+
+	<div class="popup_content" id="pop_petunjuk">
+		<h3 class="popup_heading"><span class="popup_title">
+		Petunjuk </span><a href="javascript:hidePop()" class="popup_close">&times;</a>
+		</h3>
+		<div class="popup_text"><div dir="ltr">
+		Untuk penghitungan waris selain uang agar hasilnya lebih akurat gunakan satuan terkecil, misalnya miligram (mg) untuk emas dan centimeter (cm) untuk tanah.<br>
+		</div></div>
+	</div>
+
+	<div class="popup_content" id="pop_tarodli">
+		<h3 class="popup_heading"><span class="popup_title">
+		Saling Ridlo Pembagian: </span><a href="javascript:hidePop()" class="popup_close">&times;</a>
+		</h3>
+		<div class="popup_text"><div>
+		<label>أسنى المطالب في شرح روض الطالب ج4 ص337 [دار الكتاب الإسلامي]</label>
+		(ويشترط في غير) قسمة (الإجبار) ، وهي القسمة الواقعة بالتراضي من قسمة الرد وغيرها، وإن تولاها منصوب الحاكم (التراضي قبل القرعة) ، وهو ظاهر (وبعدها) أما في قسمة الرد فلأنها بيع، وهو لا يحصل بالقرعة فاشترط التراضي بعدها كما اشترط قبلها، وأما في غيرها مما يقع بالتراضي فقياسا عليها بجامع اشتراط التراضي قبلها فإن لم يحكما القرعة كأن اتفقا على أن يأخذ أحدهما أحد الجانبين والآخر الآخر أو يأخذ أحدهما الخسيس والآخر النفيس ويرد زائد القيمة فلا حاجة إلى تراض ثان أما قسمة الإجبار فلا يعتبر فيها الرضا لا قبل القرعة ولا بعدها (ويكفي) في التراضي بالقسمة بعد خروج القرعة (رضينا بها ونحوه) كرضينا بما أخرجته القرعة وبما جرى؛ لأن الرضا أمر خفي فنيط بأمر ظاهر يدل عليه ولا يكفي مجرد رضيت (ولا يشترط) في القسمة (بيع ولا تمليك) أي التلفظ بهما، وإن كانت بيعا
+		<br />
+		(قوله ويكفي رضينا بها) وظاهر أنه لا بد أن يعلم كل واحد منهما ما صار إليه بالقرعة قبل رضاه
+		<hr>
+		<label>حاشية الشرواني على تحفة المحتاج 10/210 [المكتبة التجارية الكبرى]</label>
+		(ولو ادعاه في قسمة تراض) في غير ربوي بأن نصبا لهما قاسما أو اقتسما بأنفسهما ورضيا بعد القسمة (وقلنا هي بيع) بأن كانت تعديلا أو ردا (فالأصح أنه لا أثر للغلط فلا فائدة لهذه الدعوى) وإن تحقق الغبن لرضا صاحب الحق بتركه فصار كما لو اشترى شيئا وغبن فيه إما ربوي تحقق غلط في كيله، أو وزنه فالقسمة باطلة لا محالة للربا (قلت وإن قلنا إفراز) بأن كانت بالأجزاء (نقضت إن ثبت) بحجة؛ لأنه لا إفراز مع التفاوت (وإلا) يثبت (فيحلف شريكه واهلق أعلم) .
+		<br />
+		(قوله: لرضا صاحب الحق بتركه) هذا يؤيد بل يصرح بما قدمناه عن العناني من أنه لا بد في القسمة بتراض أن يعلم كل من الشريكين ما صار إليه قبل رضاه
+		</div></div>
+	</div>
+
+	<div class="popup_content" id="pop_persusuan">
+	<h3 class="popup_heading"><span class="popup_title">Persusuan: </span><a href="javascript:hidePop()" class="popup_close">&times;</a></h3>
+	<div class="popup_text"><div>
+	<label>شرح النووي على صحيح مسلم ج10 ص19 [دار إحياء التراث العربي]</label>
+	قوله صلى الله عليه وسلم إن الرضاعة تحرم ما تحرمه الولادة وفي رواية يحرم من الرضاع ما يحرم من الولادة وفي حديث قصة حفصة وحديث قصة عائشة الإذن لدخول العم من الرضاعة عليها وفي الحديث الآخر فليلج عليك عمك قلت إنما أرضعتني المرأة ولم يرضعني الرجل قال إنه عمك فليلج عليك هذه الأحاديث متفقة على ثبوت حرمة الرضاع وأجمعت الأمة على ثبوتها بين الرضيع والمرضعة وأنه يصير ابنها يحرم عليه نكاحها أبدا ويحل له النظر إليها والخلوة بها والمسافرة ولا يترتب عليه أحكام الأمومة من كل وجه فلا يتوارثان ولا يجب على واحد منهما نفقة الآخر ولا يعتق عليه بالملك ولا ترد شهادته لها ولا يعقل عنها ولا يسقط عنها القصاص بقتله فهما كالأجنبيين في هذه الأحكام 
+	</div></div>
+	</div>
+
+	<div class="popup_content" id="pop_sebabwaris">
+	<h3 class="popup_heading"><span class="popup_title">
+	Sebab-sebab waris: </span><a href="javascript:hidePop()" class="popup_close">&times;</a>
+	</h3>
+	<div class="popup_text"><div>
+	<label>نظم الرحبية</label>
+	باب أسباب الميراث<br />
+	أسباب ميراث الورى ثلاثه # كل يفيد ربه الوراثه<br />
+	وهي نكاح وولاء ونسب # ما بعدهن للمواريث سبب
+
+	</div></div>
+	</div>
+
+	<div class="popup_content" id="pop_biaya_tahlilan">
+	<h3 class="popup_heading"><span class="popup_title">
+	Biaya Tradisi Tahlilan: </span><a href="javascript:hidePop()" class="popup_close">&times;</a>
+	</h3>
+	<div class="popup_text"><div>
+	<label>حاشية الباجوري على فتح القريب ج1 ص708 [دار الكتب العلمية]</label>
+	مسألة كثيرة الوقوع: وهي انه متى كان في الورثة محجور عليه بان كان فيهم قاصر او سفيه حرم التصرف في شيء من التركة كنحو السبح والجمع وغير ذلك الا ان اوصى به وعند المالكية تعتبر العادة فما جرت به كان بمنزلة الموصى به
+	</div></div>
+	</div>
+
+	<div class="popup_content" id="pop_pengeluaran_sebelum_waris">
+	<h3 class="popup_heading"><span class="popup_title">
+	Pengeluaran Sebelum Warisan </span><a href="javascript:hidePop()" class="popup_close">&times;</a>
+	</h3>
+	<div class="popup_text"><div>
+	<label>شرح الفصول المهمة في مواريث الأمة ج1 ص82 [دار العاصمة]</label>
+فصل في بيان الحقوق المتعلقة بالتركة <br>
+أكثر ما يتعلق بتركة الميت خمسة أنواع من الحقوق؛ للاستقراء من موارد الشريعة. مرتبة بتقديم بعضها على بعض شرعا. <br>
+1 - النوع الأول من الخمسة: الحقوق المتعلقة بعين التركة فتقدم على مؤن التجهيز، وسائر الحقوق كما تقدم على حاجته في حياته، وهي صور كثيرة؛ فلأجل ذلك جمعها، وأشار إليها بكاف التشبيه فقال: كالمرهون، وصورته: أن تكون التركة عينا مرهونة بدين على الميت، فيقضى منها دينه مقدما على الكفن، وسائر الحقوق. <br>
+وكالعبد الجاني المتعلق برقبته مال عوضا عن جناية جناها، كما إذا قتل نفسا، أو قطع طرفا، خطأ، أو شبه عمد، أو عمدا لا قصاص فيه، أو فيه قصاص ولكن عفا مستحق القصاص على مال. أو أتلف مال إنسان بغير تسليط فإنه يقدم حق المجني عليه في جميع هذه الصور على مؤن التجهيز، وغيرها من الديون المرسلة في الذمة والوصايا. فلوا اجتمع رهن، وجناية قذم المجني عليه على المرتهن لانحصار حقه في عين الجاني. <br>
+وكالشيء المبيع إذا مات المشتري مفلسا وكان قد اشتراه بثمن في ذمته، ولم يؤده، ووجد البائع المبيع فله الفسخ وأخذ المبيع، ويقدم به بشرط ألا يتعلق به حق لازم كما إذا كان المبيع عبدا وكاتبه المشتري قبل موته. <br>
+2 - ثم بعد الحقوق المتعلقة بعين تركة الميت تقدم مؤن تجهيزه من كفن، وحنوط وأجرة تغسيل، وحفر، ودفن، ونحوها على الديون المرسلة في الذمة بالمعروف لا بإسراف ولا بتقتير على حسب يسار الميت وإعساره. ولا اعتبار بلباسه في حياته إسرافا وتقتيرا. <br>
+ووجوب تقديم مؤن التجهيز على الديون المرسلة لقوله عليه الصلاة والسلام في المحرم الذي وقصته ناقته: "كفنوه في ثوبيه". متفق عليه. ولم يستفصل ﷺ هل عليه دين أم لا؟ ولأن الحي إذا أفلس يترك له دست ثياب يليق به، وقوت يوم القسمة له، ولمن تلزمه نفقته فالميت أولى أن يقدم بما يحتاج إليه في ستره ومواراته. <br>
+وتستثنى الزوجة فعلى الزوج تكفينها وإن كانت موسرة في الأصح، لأن عليه نفقتها في حياتها، فأشبهت القريب والعبد. فلو كانت ناشزا، أو كان الزوج مفلسا فتكفينها في مالها؛ فلا تستثنى. <br>
+وكثيرا ما يعبر العلماء عن مؤن التجهيز كلها بالتكفين كما فعل المصنف، لأن الشيء قد يسمى باسم جزئه المقصود، أو باسم جزئه الأعظم، كما يقال: الحج عرفة. قال البخاري: قال سفيان: أجر القبر، والغسل هو من الكفن. <br>
+3 - ثم بعد مؤن التجهيز يقدم الدين المطلق على الوصية، والإرث. <br>
+والمطلق هو: المرسل في الذمة، الذي لم يتعلق بعين، سواء كان لآدمي، أو لله تعالى، من زكاة تجارة، أو نذر، أوكفارة، أو حج؛ لأن قضاء الدين واجب، والوصية تبرع؛ فقدم عليها. <br>
+فلو اجتمع دين لله تعالى، ودين لآدمي، وضاق المتروك عنهما قدم حق الله تعالى؛ لقوله عليه الصلاة والسلام: "فدين الله أحق بالقضاء" متفق عليه <br>
+4 - ثم بعد الديون المرسلة تقدم الوصية للأجنبي على الإرث. وتصرف من ثلث الباقي إجماعا ؛ لقوله تعالى: من بعد وصية يوصين بها أو دين. <br>
+فلو كان الدين مستغرقا للتركة تعطلت الوصية، إلا أن يبرئ مستحق الدين، أو يتبرع متبرع بقضائه. <br>
+والمراد بالأجنبي: غير الوارث، وإن كان قريبا ممن لا يرث. واحترز به عن الوارث فإن الوصية له وإن كانت بأقل متمول متوقفة على إجازة باقي الورثة. <br>
+5 - ثم الإرث بعد الوصية، وهو آخر الأنواع الخمسة.
+
+	</div></div>
+	</div>
+
+	<div class="popup_content" id="pop_wasiat_kpd_ahli_waris_mahjub">
+	<h3 class="popup_heading"><span class="popup_title">
+	Wasiat Kpd Ahli Waris Mahjub: </span><a href="javascript:hidePop()" class="popup_close">&times;</a>
+	</h3>
+	<div class="popup_text"><div>
+<label> روضة الطالبين ج٦ ص١١١ [المكتب الإسلامي]</label>
+الخامس: الاعتبار في كونه وارثا بيوم الموت حتى لو أوصى لأخيه ولابن له، فولد له ابن قبل موته صحت. ولو أوصى لأخيه وله ابن، فمات الابن قبل الموصي، فهي وصية لوارث، وهذا متفق عليه. وذكرنا في الإقرار للوارث خلافا في أن الاعتبار بيوم الإقرار، أم الموت؟ والفرق أن استقرار الوصية بالموت، ولا ثبات لها قبله
+<hr>
+<label> المغني لابن قدامة الحنبلي ج6 ص148 [مكتبة القاهرة]</label>
+مسألة قال: (ومن أوصي له، وهو في الظاهر وارث، فلم يمت الموصي حتى صار الموصى له غير وارث، فالوصية له ثابتة؛ لأن اعتبار الوصية بالموت) لا نعلم خلافا بين أهل العلم، في أن اعتبار الوصية بالموت، فلو أوصى لثلاثة إخوة له متفرقين، ولا ولد له، ومات قبل أن يولد له ولد، لم تصح الوصية لغير الأخ من الأب، إلا بالإجازة من الورثة. وإن ولد له ابن، صحت الوصية لهم جميعا من غير إجازة، إذا لم تتجاوز الوصية الثلث. وإن ولدت له بنت، جازت الوصية لأخيه من أبيه وأخيه من أمه، فيكون لهما ثلثا الموصى به بينهما نصفين، ولا يجوز للأخ من الأبوين؛ لأنه وارث. وبهذا يقول الشافعي، وأبو ثور، وابن المنذر، وأصحاب الرأي، وغيرهم. ولا نعلم عن غيرهم خلافهم. ولو أوصى لهم، وله ابن، فمات ابنه قبل موته، لم تجز الوصية لأخيه من أبويه، ولا لأخيه من أمه، وجازت لأخيه من أبيه. فإن مات الأخ من الأبوين قبل موته، لم تجز الوصية للأخ من الأب أيضا؛ لأنه صار وارثا.
+<br>
+فصل: ولو أوصى لامرأة أجنبية، أو أوصت له، ثم تزوجها، لم تجز وصيتهما إلا بالإجازة من الورثة. وإن أوصى أحدهما للآخر، ثم طلقها، جازت الوصية، لأنه صار غير وارث، إلا أنه إن طلقها في مرض موته، فقياس المذهب أنها لا تعطى أكثر من ميراثها؛ لأنه يتهم في أنه طلقها ليوصل إليها ماله بالوصية، فلم ينفذ لها ذلك، كما لو طلقها في مرض موته أو أوصى لها بأكثر مما كانت ترث
+
+	</div></div>
+	</div>
+
+	<div class="popup_content" id="pop_akh_mubarok">
+	<h3 class="popup_heading"><span class="popup_title">
+	Referensi: </span><a href="javascript:hidePop()" class="popup_close">&times;</a>
+	</h3>
+	<div class="popup_text"><div>
+	<label>الحاوي الكبير ج8 ص103</label>
+فلو ترك بنتي ابن وبنت ابن ابن وبنت ابن ابن ابن معها أخوها كان لبنتي الابن الثلثان والباقي بين بنت ابن الابن وبين بنت ابن ابن الابن وأخيها للذكر مثل حظ الأنثيين لأن استيفاء بنتي الابن الثلثين يسقط فرض من بعدهما ويأخذ الباقي بمشاركة الذكر الذي في درجتهن أو أسفل منهن بالتعصيب
+
+	
+	</div></div>
+	</div>
+
+	<div class="popup_content" id="pop_perwalian">
+		<h3 class="popup_heading"><span class="popup_title">
+		Perwalian </span><a href="javascript:hidePop()" class="popup_close">&times;</a>
+		</h3>
+		<div class="popup_text"><div>
+			<label>مغني المحتاج ج3 ص152</label>
+			فصل ولي الصبي أبوه ثم جده ثم وصيهما ثم القاضي ولا تلي الأم في الأصح ويتصرف الولي بالمصلحة<br>
+			قال الجرجاني: وإذا لم يوجد أحد من الأولياء المذكورين، فعلى المسلمين النظر في حال محجورهم وتولي حفظ ماله<br>
+			(ولا تلي الأم في الأصح) كولاية النكاح. والثاني: تلي بعد الأب والجد وتقدم على وصيهما لكمال شفقتها، وكذا لا ولاية لسائر العصبات كالأخ والعم. نعم لهم الإنفاق من مال الطفل في تأديبه وتعليمه وإن لم يكن لهم عليه ولاية؛ لأنه قليل فسومح به، قاله في المجموع في إحرام الولي عن الصبي. قال شيخنا: ومثله المجنون والسفيه اهـ<br>
+			(ويتصرف) له (الولي بالمصلحة) وجوبا لقوله تعالى {ولا تقربوا مال اليتيم إلا بالتي هي أحسن} [الأنعام: 152] وقوله تعالى {وإن تخالطوهم فإخوانكم والله يعلم المفسد من المصلح} [البقرة: 220] وقضية كلامه كأصله أن التصرف الذي لا خير فيه ولا شر ممنوع منه إذ لا مصلحة فيه وهو كذلك كما صرح به الشيخ أبو محمد والماوردي، ويجب على الولي حفظ مال الصبي عن أسباب التلف واستنماؤه قدر ما تأكله المؤن من نفقة وغيرها إن أمكن، ولا تلزمه المبالغة، ولو خاف الولي استيلاء ظالم على مال اليتيم، فله بذل بعضه لتخليصه وجوبا
+
+			<hr/>
+			<label>مغني المحتاج ج3 ص140</label>
+			(فلو بذر بعد ذلك) أي بعد بلوغه رشيدا (حجر) أي حجر القاضي (عليه) لا غيره من أب وجد لأنه في محل الاجتهاد، وإنما حجر عليه لآية {ولا تؤتوا السفهاء أموالكم} [النساء: 5] أي أموالهم لقوله تعالى {وارزقوهم فيها واكسوهم} [النساء: 5] ولخبر «خذوا على يد سفهائكم» رواه الطبراني بإسناد صحيح، ونقل الروياني عن الشافعي أن القاضي إذا حجر عليه استحب أن يرد أمره إلى الأب والجد، فإن لم يكن فسائر العصبات؛ لأنهم أشفق
+		
+		</div></div>
+	</div>
+
+	<div class="popup_content" id="pop_1_orang_2_status">
+		<h3 class="popup_heading"><span class="popup_title">
+		Satu orang dua status / lebih </span><a href="javascript:hidePop()" class="popup_close">&times;</a>
+		</h3>
+		<div class="popup_text"><div>
+			<label>سلاح الناهض ص135</label>
+			واعلم أن الأسباب الأربعة قد تجتمع في شخص واحد وذلك بأن يشتري ابنة عمه ثم يعتقها ثم يتزوجها ثم تموت والحال أنه إمام المسلمين فهو ابن عمها وزوجها ومولاها وصاحب بيت المال وحينئذ يرث بالزوجية وبنوة العم فقط		
+		</div></div>
+	</div>
+
+	<div class="popup_content" id="pop_sama_rata_dalam_musytarokah">
+		<h3 class="popup_heading"><span class="popup_title">
+		Sama rata dalam musytarokah </span><a href="javascript:hidePop()" class="popup_close">&times;</a>
+		</h3>
+		<div class="popup_text"><div>
+			<label>عدة الفارض رقم النظم 84</label>
+			وَسَوِّ فِيهِ بَيْنَ أُنْثَى وَذَكَرْ # وَعَنْ أَبِي الشَّقِيقِ فَاقْطَعِ النَّظَرْ
+		</div></div>
+	</div>
+	
+	<div class="popup_content" id="pop_iysho">
+		<h3 class="popup_heading"><span class="popup_title">
+		Referensi: </span><a href="javascript:hidePop()" class="popup_close">&times;</a>
+		</h3>
+		<div class="popup_text"><div>
+		<label>إعانة الطالبين ج3 ص255 دار الفكر</label>
+		الإيصاء لغة الإيصال، كالوصية. وشرعا إثبات تصرف مضاف لما بعد الموت ولو تقديرا وإن لم يكن فيه تبرع، كالإيصاء بالقيام على أمر أطفاله، ورد ودائعه، وقضاء ديونه، فإنه لا تبرع في شئ من ذلك بخلاف الوصية فإنه لا بد فيها من التبرع
+		</div></div>
+	</div>
+	
+	<div class="popup_content" id="pop_mencabut_wasiat">
+		<h3 class="popup_heading"><span class="popup_title">
+		Referensi: </span><a href="javascript:hidePop()" class="popup_close">&times;</a>
+		</h3>
+		<div class="popup_text"><div>
+		<label>إعانة الطالبين ج3 ص253 دار الفكر</label>
+		(وتبطل الوصية برجوع) عن الوصية (بنحو نقضتها)، كأبطلتها أو رددتها أو أزلتها. والاوجه صحة تعليق الرجوع فيها على شرط لجواز التعليق فيها، فأولى في الرجوع عنها (و) بنحو (هذا لوارثي) أو ميراث عني، سواء أنسي الوصية أم ذكرها (و) بنحو (بيع ورهن) ولو بلا قبول (وعرض عليه) وتوكيل فيه (و) نحو (غراس) في أرض أوصى بها، بخلاف زرعه بها. [ملخص]
+		
+		</div></div>
+	</div>	
+
+	
+	<div class="popup_content" id="pop_syirkahabdan">
+		<h3 class="popup_heading">
+			<span class="popup_title">Referensi: </span><a href="javascript:hidePop()" class="popup_close">&times;</a>
+		</h3>
+		<div class="popup_text">
+			<div>
+				<label>إعانة الطالبين ج3 ص124</label>
+				(تتمة) الشركة نوعان: أحدهما فيما ملك اثنان مشتركا بإرث أو شراء.
+والثاني أربعة أقسام: منها قسم صحيح، وهو أن يشترط اثنان في مال لهما ليتجرا فيه، وسائر الاقسام باطلة، كأن يشترك اثنان ليكون كسبهما بينهما بتساو، أو تفاوت، أو ليكون بينهما ربح ما يشتريانه في ذمتهما بمؤجل، أو حال، أو ليكون بينهما كسبهما وربحهما ببدنهما، أو مالهما، وعليهما ما يعرض من غرم
+				<br/>
+								(قوله: كأن يشترك اثنان ليكون كسبهما بينهما) أي مكسوبهما ببدنهما خاصة، وإلا كانت عين شركة المفاوضة الآتية، سواء اتفقا حرفة، كخياطين، أو اختلفا فيها، كخياط ورفاء، وهذه تسمى شركة الأبدان، وهي باطلة، لعدم المال، فمن انفرد بشئ، فهو له، وما اشتركا فيه يوزع عليهما بنسبة أجرة المثل، بحسب الكسب، وجوزها أبو حنيفة رضي الله عنه مطلقا، ومالك وأحمد رضي الله عنهما مع اتحاد الحرفة
+				<hr>
+				<label>بغية المسترشدين ج330</label>
+			(مسألة ك) اختلط مال الزوجين ولم يعلم لأيهما أكثر ، ولا قرينة تميز أحدهما ، وحصلت بينهما فرقة أو موت ، لم يصح لأحدهما ولا وارثه تصرف في شيء منه قبل التمييز أو الصلح إلا مع صاحبه ، إذ لا مرجح كما قالوا فيما لو اختلط حمامهما ، وحينئذ فإن أمكن معرفتهما وإلا وقف الأمر حتى يصطلح الزوجان أو ورثتهما بلفظ صلح أو تواهب بتساو أو تفاوت إن كانوا كاملين ، ويجب أن لا ينقص عن النصف في المحجور ، نعم إن جرت العادة المطردة بأن أحدهما يكسب أكثر من الآخر كان الصلح والتواهب على نحو ذلك ، فإن لم يتفقوا على شيء من ذلك فمن بيده شيء من المال فالقول قوله بيمينه أنه ملكه ، فإن كان بيدهما فلكل تحليف الآخر ثم يقسم نصفين
+			</div>
+		</div>
+	</div>
+
+	<div class="popup_content" id="pop_komputer">
+		<h3 class="popup_heading">
+			<span class="popup_title">Kalk. Waris Versi Komputer</span><a href="javascript:hidePop()" class="popup_close">&times;</a>
+		</h3>
+		<div class="popup_text">
+			<div>
+			Kini aplikasi Kalkulator Waris sudah tersedia versi Komputer/PC yang dapat berjalan pada sistem operasi Windows.<br>
+			Untuk mengunduhnya silakan kunjungi alamat https://waris.tohakepriben.com menggunakan browser komputer anda.<br>
+			Petunjuk: Bagi pengguna windows 8 ke bawah, jika aplikasi tidak dapat dijalankan, silakan download dan install "WebView2InstallerD.exe" yang sudah disediakan pada link di atas.
+			</div>
+		</div>
+	</div>
+	
+	<div class="popup_content" id="pop_ijma_rod">
+		<h3 class="popup_heading">
+			<span class="popup_title">Referensi: </span><a href="javascript:hidePop()" class="popup_close">&times;</a>
+		</h3>
+		<div class="popup_text">
+			<div>
+				<label>الاستذكار ج5 ص366</label>
+				واجمعوا أن لا يرد على زوج ولا زوجة إلا شيء روي عن عثمان لا يصح ولعل ذلك الزوج أن يكون عصبة
+				<hr/>
+				<label>التلخيص في علم الفرائض ص174</label>
+				وروي أن عثمان أعطى الزوج المال كله، وعن علي نحوه، وبه قال جابر بن زيد. ولعله كان عصبة ولم يعلم الراوي فلا يكون خلافا للإجماع
+				<hr/>
+				<label>نهاية المطلب ج9 ص193</label>
+				إنه لا يرد على الزوج بالزوجيّة، وإنما الرد على ذوي الفروض من أهل القرابة، وروى جابرُ بن زيد أن عثمان رضي الله عنهم أجمعين كان يرى الردَّ على الزوج والزوجة، وهذه رواية غريبة، لم يعوِّل عليها الفرضيون
+			</div>
+		</div>
+	</div>
+
+	
+	<div class="popup_content" id="pop_paman_ayah">
+		<h3 class="popup_heading">
+			<span class="popup_title">Referensi: </span><a href="javascript:hidePop()" class="popup_close">&times;</a>
+		</h3>
+		<div class="popup_text">
+			<div>
+				<label>شرح الشنشوري على الرحبية ص133</label>
+				(والأعمام) لأبوين او لأب لا لأم بدليل ما سبق في الفروض وكأعمام الميت أعمام أبيه وأعمام جده وهكذا (والسيد المعتق ذي الانعام) بالعتق ذكرا كان او أنثى (وهكذا بنوهم جميعا) اي بنو الأعمام وبنو المعتقين وإن نزلوا بمحض الذكور 
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+	var curMenu, jkMayit, jmlHarta, satuanHarta, logs;
+	var closeModal;
+	var lang = (urlParams.get('lang') || 'id');
+	const suffix = '20240130';
+	
+	function adsHitung()	{
+		let cntHitung=Number(localStorage.getItem('cntHitung')) || 0;
+		if (cntHitung>1) {
+			showInterstitialAds();
+			localStorage.setItem('cntHitung', 0);
+		} else {
+			localStorage.setItem('cntHitung', cntHitung+1);
+		}
+	}
+	function adsJawab()	{
+		let cntAcak=Number(localStorage.getItem('cntAcak')) || 0;
+		if (cntAcak>3) {
+			showInterstitialAds();
+			localStorage.setItem('cntAcak', 0);
+		} else {
+			localStorage.setItem('cntAcak', cntAcak+1);
+		}
+	}
+	function showInterstitialAds()	{
+		if (typeof JsInterface !== 'undefined') JsInterface.showInterstitialAds();
+		if (typeof Website2APK !== 'undefined') Website2APK.showInterstitialAd();
+	}
+	function showPop(id,title=''){
+		$('.popup_content'+id).addClass('show');
+		if(title != '') $('.popup_content'+id+' .popup_title').html(title);
+	}
+	function showPopAlert(title,text, dir='ltr'){
+		$('#pop_alert').addClass('show');
+		$('#pop_alert .popup_title').html(title);
+		$('#pop_alert .popup_text').html(text);
+		$('#pop_alert .popup_text').css('direction', dir);
+	}
+	function hidePop(){$('.popup_content.show').removeClass('show');}
+	function gantiMenu(menu){
+		localStorage.setItem('firstTimne', 0);
+		localStorage.setItem(curMenu+'_scroll', document.querySelector('.scrollable').scrollTop);
+		if(menu=='menuIklan'){
+			document.querySelector('.select-menu').value = curMenu;
+			Website2APK.showInterstitialAd();
+			return;
+		}
+		var divMenu=document.querySelectorAll('.scrollable>div');
+		for(var i=1;i<divMenu.length;i++){
+			divMenu[i].classList.add('hidden');
+		}
+
+		document.getElementById(menu).classList.remove('hidden');
+		const flying_menu = document.getElementById('flying-menu');
+		const menu_with_flying_menu = ['menuMateri', 'menuSyadz', 'menuCara', 'menuLain'];
+		if(menu_with_flying_menu.indexOf(menu) > -1){
+			flying_menu.classList.add('fixed');
+			flying_menu.classList.remove('hidden');
+			if(flying_menu.offsetHeight>50){
+				flying_menu.style.height ='50px';
+				flying_menu.style.width ='50px';
+				$(flying_menu).find('ul').addClass('hidden');
+			}
+		}
+		else{
+			flying_menu.classList.add('hidden');
+			flying_menu.classList.remove('fixed');
+		}
+		curMenu=menu;
+		document.querySelector('.scrollable').scrollTop = (localStorage.getItem(menu+'_scroll') || 0);
+		console.log(menu);
+	}
+	function more(){
+		let flying_menu = document.getElementById('flying-menu');
+		let idDaftarIsi;
+		switch(curMenu){
+			case 'menuSyadz': idDaftarIsi=1; break;
+			case 'menuCara': idDaftarIsi=2; break;
+			case 'menuLain': idDaftarIsi=3; break;
+			default: idDaftarIsi=0; break;
+		}
+		//let flyingMenuHight=curMenu==='menuMateri' ? '350px' : '170px'; 
+		let daftarIsi=flying_menu.querySelectorAll('ul')[idDaftarIsi];
+		if(flying_menu.offsetHeight>50){
+			flying_menu.style.height ='50px';
+			flying_menu.style.width ='50px';		
+			daftarIsi.classList.add('hidden');
+			$('#flying-menu-back').css('visibility', 'hidden');
+		}else{
+			flying_menu.style.height ='auto';
+			flying_menu.style.width ='90%';
+			daftarIsi.classList.remove('hidden');
+			$('#flying-menu-back').css('visibility', 'visible');
+		}
+	}
+	function changeFontSize(val){
+		var ctlFontSize=document.querySelector('#fontSize');
+		var fontSize=parseInt(ctlFontSize.textContent)+val;
+		if(fontSize<1)fontSize=1;
+		if(fontSize>8)fontSize=8;
+		ctlFontSize.textContent=fontSize;
+		document.querySelector('body').style.fontSize='1.'+fontSize+'em';
+		localStorage.setItem('fontSize', fontSize);
+	}
+	function changeTheme(){
+		var mainhtml=document.querySelector('html');
+		var ctlTheme=document.querySelector('#theme');
+		var curTheme=ctlTheme.textContent;
+		if(curTheme==='Cerah') mainhtml.classList.add('thm-gelap');
+		else mainhtml.classList.remove('thm-gelap');
+		var newTheme=curTheme==='Gelap'?'Cerah':'Gelap';
+		ctlTheme.textContent=newTheme;
+		localStorage.setItem('theme', newTheme);
+	}
+	function minplus(ctl,val){
+		var parent=ctl.closest('tr');
+		var awid=parseInt(parent.querySelectorAll('td')[1].dataset.id);
+		var lbl=parent.querySelector('.ig-area>label');
+		var vallbl=parseInt(lbl.textContent);
+		var valnow=vallbl+val;
+		var valmax=32;
+		if(awid===1 || (awid>=7 && awid<=11) || awid===50) valmax=1;
+		else if(awid===2) valmax=4;
+			 
+		if(valnow<0)valnow=0;
+		else if(valnow>valmax)valnow=valmax;
+		
+		lbl.textContent=valnow;
+		if(valnow>0) parent.classList.add('bg-green');
+		else parent.classList.remove('bg-green');
+	}
+	function resetJml(){
+		var ctl = document.querySelectorAll('#tbl-kalk-aw tr');
+		for(var t=1; t<ctl.length; t++){
+			ctl[t].querySelectorAll('label')[0].textContent=0;
+			ctl[t].classList.remove('bg-green');
+		}	
+	}
+	function resizeCB(){
+		var cbs=document.querySelectorAll('td select');
+		for(var t=0; t<cbs.length; t++){
+			var parentHeight=cbs[t].parentElement.offsetHeight;
+			cbs[t].style.height = parentHeight+"px";
+		}	
+	}
+	function lanjut(ke){
+		jmlHarta = $('input[name=jml-harta]').val();
+		satuanHarta = $('select[name=satuan-harta] :selected').text();
+		if(ke==='step2'){
+			var jk=document.querySelector('input[name=jk]:checked').value;
+			if(jkMayit!=jk){
+				jkMayit=jk;
+				if(jk==='lk'){
+					$('#tbl-kalk-aw tr:has([data-id="01"])').addClass('hidden');
+					$('#tbl-kalk-aw tr:has([data-id="02"])').removeClass('hidden');
+				}else{
+					$('#tbl-kalk-aw tr:has([data-id="01"])').removeClass('hidden');
+					$('#tbl-kalk-aw tr:has([data-id="02"])').addClass('hidden');
+				}
+			}
+			if(jmlHarta < 1){
+				var pesan='Tentukan Jumlah Harta Warisan!';
+				showPopAlert('Error', pesan)
+				return;
+			}
+		}
+		else if(ke==='step3'){	//Hitung warisan
+			if(!$('#tbl-kalk-aw tr.bg-green:not(.hidden)').length) return showPopAlert('Error', l_belumpilihaw[lang]);
+			logs=l_log[lang];
+			hitungWaris();
+			reviewApp();
+		}
+		document.getElementById('step1').classList.add('hidden');
+		document.getElementById('step2').classList.add('hidden');
+		document.getElementById('step3').classList.add('hidden');
+		document.getElementById(ke).classList.remove('hidden');
+		if(ke==='step2' || ke==='step3') document.querySelector('.scrollable').scrollTop = 0;
+	}
+	function go(url, inframe=1){
+		if(inframe){
+			showPop('#pop_iframe');
+			$('#pop_iframe iframe').prop('src', url);
+		}else{
+			if(JsInterface !== 'undefined') JsInterface.openExternal(url);
+			else location.href=url;
+		}
+	}
+	function yt(videoId){
+		// <a class="quest" href="javascript:yt('videoId')">&rect;</a>
+		showPop('#pop_iframe');
+		$('#pop_iframe iframe').prop('src', 'https://www.youtube.com/embed/'+videoId+'?autoplay=1');
+	}
+	function reviewApp(){
+		let cntToReview = Number(localStorage.getItem('cntToReview') || 0) + 1;
+		if(cntToReview==5){
+			if(JsInterface !== 'undefined') JsInterface.reviewApp();
+		} else if(cntToReview>5){
+			let lastMonth = localStorage.getItem('lastMonth') || '2024-01';
+			let curMonth = new Date().toISOString().split('T')[0].substring(0, 7);
+			if(lastMonth != curMonth){
+				localStorage.setItem('lastMonth', curMonth)
+				if(JsInterface !== 'undefined') JsInterface.reviewApp();
+			}
+		}
+		localStorage.setItem('cntToReview', cntToReview)
+	}
+
+	function setup(){
+		if(typeof dhc !== 'undefined'){
+			var menuItems = JSON.stringify([
+		     {"id": 1,	"caption": "KALKULATOR"},
+		     {"id": 2,	"caption": "PENDAHULUAN"},
+		     {"id": 3,	"caption": "MATERI WARIS"},
+		     {"id": 4,	"caption": "CARA HITUNG"},
+		     {"id": 5,	"caption": "MASAIL SYADZAH"},
+		     {"id": 6,	"caption": "AW TIDAK JELAS"},
+		     {"id": 7,	"caption": "LAIN-LAIN"},
+		     {"id": 8,	"caption": "KUIS"},
+		     {"id": 9,	"caption": "PENGATURAN"},
+		     {"id": 10,	"caption": "TENTANG"},
+		     {"id": 11,	"caption": "DOWNLOAD"},
+		  ]);
+
+		  dhc.isRuntime().then((isRuntime) => {
+		     if (!isRuntime) return false;
+		     dhc.mainMenu.setItems({items: menuItems});
+		  });
+		   
+			dhc.events.onMainMenuItemClick = function (itemId) {
+				if(itemId==1 && location.href !== 'index.html') hidePop();
+				$('.select-menu option').eq(itemId-1).prop('selected', true);
+				$('.select-menu').change();			
+			};
+			
+			$('.pc').removeClass('hidden');
+			$('.android').addClass('hidden');
+		}
+		else{		
+			const arrIklan = [
+				{
+					href: 'https://play.google.com/store/apps/details?id=com.tohakepriben.fathulqorib',
+					img: 'res/fathul-qorib.png'
+				},{
+					href: 'https://play.google.com/store/apps/details?id=com.tohakepriben.majmunadhom',
+					img: 'res/majmu-nadham.png'
+				},{
+					href: 'https://play.google.com/store/apps/details?id=com.tohakepriben.quranutsmani',
+					img: 'res/quran-utsmani-featured.png'
+				}
+			];
+
+			let cntIklan = Number(localStorage.getItem('cntIklan') || 0) + 1;
+			if(cntIklan>10){
+				let rnd = Math.floor(Math.random() * arrIklan.length);
+				ctlIklan = '<a href="'+arrIklan[rnd].href+'"><img src="'+arrIklan[rnd].img+'"></a>';
+				$('#iklan').html(ctlIklan);
+			}else{
+				localStorage.getItem('cntIklan', cntIklan)
+			}
+
+			$('.android').removeClass('hidden');
+			$('.pc').addClass('hidden');
+			
+			closeModal = function(){
+				if(document.getElementById('flying-menu').offsetHeight>50){
+					more();
+					return 1;
+				}
+				if($('.popup_content.show').length){
+					$('.popup_content.show').removeClass('show');
+					return 1;
+				}
+				if(curMenu !== 'menuKalk'){
+					$('.select-menu').val('menuKalk').change();
+					return 1;
+				}
+				if(!$('#step3').hasClass('hidden')){
+					lanjut('step2');
+					return 1;
+				}
+				if(!$('#step2').hasClass('hidden')){
+					lanjut('step1');
+					return 1;
+				}
+				return 0;
+			}
+		}
+	}
+	$(function(){
+		if (typeof JsInterface === 'undefined' && typeof dhc === 'undefined'){
+			if(urlParams.get('android') != 1) location.replace('info.html');
+		}
+		//$('section').load(lang+suffix+'.html', null, function(){
+			gantiMenu('menuKalk');
+			let menuItems=document.querySelectorAll('#flying-menu a');
+			let fontSize = parseInt(localStorage.getItem('fontSize'));
+			for(var i=0;i<menuItems.length-1;i++){
+				menuItems[i].addEventListener('click', function(){more();});
+			}
+			if(fontSize>0){
+				document.querySelector('#fontSize').textContent=fontSize;
+				document.querySelector('body').style.fontSize='1.'+fontSize+'em';
+			}
+			document.querySelector("#theme").textContent=localStorage.getItem("theme")==="Gelap"?"Cerah":"Gelap";
+			changeTheme();
+			$('#flying-menu-back').click(more);
+			
+			let isiTbl= '<tr><td><label>Jml.</label><button class="btn-reset" onclick="resetJml()" style="float:right;"><span style="transform: rotate(180deg);font-weight:bold">&olarr;<span></button></td><td><label>Ahli Waris</label></td></tr>';
+			$.each(arrAw, function(){
+				if(this.i !== '100') isiTbl += '<tr><td><div class="ig"><div class="ig-icon" onclick="minplus(this,-1);">&laquo;</div><div class="ig-area"><label>0</label></div><div class="ig-icon" onclick="minplus(this,1);">&raquo;</div></div></td><td data-id="'+this.i+'"><label>'+this.ar+'</label>'+(this[lang] !== 'ar' ? '<br>('+this[lang]+')' : '') +'</td></tr>';
+			});
+			$('#tbl-kalk-aw').html(isiTbl);
+			setup()
+			checkUpdate()
+		});
+	//});
+</script>
+<script src="js/kw7.js"></script>
+
+<!-- ======================================================================================== -->
+</body>
+</html>
